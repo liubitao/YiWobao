@@ -1,0 +1,38 @@
+//
+//  WiWobao.pch
+//  YiWobao
+//
+//  Created by 刘毕涛 on 16/4/26.
+//  Copyright © 2016年 浙江蚁窝投资管理有限公司. All rights reserved.
+//
+
+#ifndef WiWobao_pch
+#define WiWobao_pch
+
+#import "UIView+Frame.h"
+#import "FrameAutoScaleLFL.h"
+
+
+// ...表示宏定义的可变参数
+// __VA_ARGS__:表示函数里面的可变参数
+#ifdef DEBUG // 调试
+
+#define YWLog(...) NSLog(__VA_ARGS__)
+
+#else // 发布
+
+#define YWLog(...)
+
+#endif
+
+
+
+#define kScreenWidth       [UIScreen mainScreen].bounds.size.width
+#define KscreenHeight      [UIScreen mainScreen].bounds.size.height
+
+
+
+
+
+
+#endif /* WiWobao_pch */
