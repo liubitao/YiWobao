@@ -11,6 +11,8 @@
 
 #import "UIView+Frame.h"
 #import "FrameAutoScaleLFL.h"
+#import "UIImage+YWimage.h"
+#import <NSString+MD5.h>
 
 
 // ...表示宏定义的可变参数
@@ -22,13 +24,26 @@
 #else // 发布
 
 #define YWLog(...)
-
 #endif
 
-
+#define YWKeyWindow [UIApplication sharedApplication].keyWindow
 
 #define kScreenWidth       [UIScreen mainScreen].bounds.size.width
 #define KscreenHeight      [UIScreen mainScreen].bounds.size.height
+
+#define KviewColor          [UIColor colorWithRed:235.0/255 green:235.0/255 blue:243.0/255 alpha:1.0]
+
+
+//接口
+#define  sKey               @"b8036a5e528d50d8ea8299328f08c020"
+
+//登录接口
+#define YWLogin             @"http://api.yiwob.com/shop/ywbapp.php/Index/doLogin"
+#define login               @"doLogin"
+
+//修改会员资料接口
+#define YWEdit              @"http://api.yiwob.com/shop/ywbapp.php/Member/editInfo1"
+#define Edit                @"edit_info1"
 
 
 

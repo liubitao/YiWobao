@@ -7,6 +7,7 @@
 //
 
 #import "YWnaviViewController.h"
+#import "YWmainViewController.h"
 
 @interface YWnaviViewController ()<UITextFieldDelegate>
 
@@ -27,6 +28,22 @@
     return YES;
 }
 
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (self.childViewControllers.count > 0) {
+        YWmainViewController *tabarViewController = (YWmainViewController*)self.tabBarController;
+        tabarViewController.tabBarView.hidden = YES;
+    }
+    [super pushViewController:viewController animated:YES];
+}
+
+- (nullable UIViewController *)popViewControllerAnimated:(BOOL)animated{
+    if (self.childViewControllers.count == 2) {
+        YWmainViewController *tabarViewController = (YWmainViewController*)self.tabBarController;
+        tabarViewController.tabBarView.hidden = NO;
+    }
+    return [super popViewControllerAnimated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

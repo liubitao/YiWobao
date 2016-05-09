@@ -7,6 +7,7 @@
 //
 
 #import "YlListButton.h"
+#import "UIImage+YWimage.h"
 
 @implementation YlListButton
 
@@ -14,6 +15,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        [self setBackgroundImage:[UIImage imageWithStretchableName:@"navigationbar_filter_background_highlighted"] forState:UIControlStateHighlighted];
     }
     return self;
 }
@@ -26,10 +29,10 @@
     if (self.currentImage == nil) return;
     
     // title
-    self.titleLabel.x = self.imageView.x;
+    self.titleLabel.x = 0;
     
     // image
-    self.imageView.x = CGRectGetMaxX(self.titleLabel.frame);
+    self.imageView.x = CGRectGetWidth(self.titleLabel.frame);
 }
 
 // 重写setTitle方法，扩展计算尺寸功能

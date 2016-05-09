@@ -1,4 +1,4 @@
-//
+ //
 //  YWmainViewController.m
 //  YiWobao
 //
@@ -11,8 +11,11 @@
 #import "YWshoppingController.h"
 #import "YWnaviViewController.h"
 #import "YWItemView.h"
+#import "YWUserTool.h"
+#import "YWLoginViewController.h"
 
-@interface YWmainViewController (){
+@interface YWmainViewController ()
+{
     //记录标签栏选中的按钮
     YWItemView *_lastItem;
 }
@@ -33,17 +36,19 @@
 }
 
 -(void)initViews{
+    
     //创建商城视图
     YWshoppingController *shoppingVC = [[YWshoppingController alloc]init];
-    
+ 
     //创建个人视图
     YWpersonalViewController *personalVC = [[YWpersonalViewController alloc]init];
     
-    NSArray *Viewcontrollers = @[shoppingVC,personalVC];
-    
+    NSArray *ViewControllers = @[shoppingVC,personalVC];
+
     //为每个视图添加一个导航控制器
     NSMutableArray *baseNavArr = [NSMutableArray array];
-    for (UIViewController *viewController in Viewcontrollers) {
+
+    for (UIViewController *viewController in ViewControllers) {
         YWnaviViewController *naviVC = [[YWnaviViewController alloc]initWithRootViewController:viewController];
         [baseNavArr addObject:naviVC];
     }
@@ -53,9 +58,7 @@
 
 -(void)_initCustomView{
     // 1.移除系统控件
-    for (UIView *subView in self.tabBar.subviews) {
-        [subView removeFromSuperview];
-    }
+    self.tabBar.hidden = YES;
     //添加背景图片
     _tabBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, KscreenHeight-49, kScreenWidth, 49)];
     _tabBarView.userInteractionEnabled = YES;
@@ -69,6 +72,7 @@
     float width = kScreenWidth/imageNames.count;
     for (int i = 0 ; i<imageNames.count; i++) {
         YWItemView *itemView = [[YWItemView alloc] initWithFrame:CGRectMake(i*width, 0.f, width, 49.f)];
+        itemView.tag = i;
         [itemView setItemImage:imageNames[i] forControlState:UIControlStateNormal];
         [itemView setItemImage:selectImageNames[i] forControlState:UIControlStateSelected];
         [itemView setItemTitle:titles[i] withSpecialTextColor:[UIColor orangeColor]];
@@ -79,11 +83,8 @@
         
         // 绑定tag
         itemView.tag = i;
-        
-        
         if (0 == i) {
             itemView.selected = YES;
-            
             _lastItem = itemView;
         }
     }
@@ -91,17 +92,26 @@
 
 
 -(void)buttonAction:(YWItemView *)sender{
-    //取消上一个按钮的选中状态
-    _lastItem.selected = NO;
+    if (sender.tag == _lastItem.tag) return;
     
-    //更新标签栏控制器的索引
-    self.selectedIndex = sender.tag;
-    
-    //更新按钮的状态
-    sender.selected = YES;
-    
-    //再次记录当前选中的按钮
-    _lastItem = sender;
+    //判断登录没有，没有登录就跳转到登录的页面，登录了就正常跳
+        if ([YWUserTool account] == nil ) {
+            YWnaviViewController *loginVC = [[YWnaviViewController alloc]initWithRootViewController:[[YWLoginViewController alloc]init]];
+            [self presentViewController:loginVC animated:YES completion:nil];
+        }
+        else{
+            //取消上一个按钮的选中状态
+            _lastItem.selected = NO;
+            
+            //更新标签栏控制器的索引
+            self.selectedIndex = sender.tag;
+            
+            //更新按钮的状态
+            sender.selected = YES;
+            
+            //再次记录当前选中的按钮
+            _lastItem = sender;
+        }
 }
 
 - (void)didReceiveMemoryWarning {
