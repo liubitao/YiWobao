@@ -18,6 +18,10 @@
 #import "YWUserTool.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Utils.h"
+#import "YWHttptool.h"
+#import "YWOrderViewController.h"
+#import "YWListViewController.h"
+#import "YWInViewController.h"
 
 
 @interface YWpersonalViewController ()<YWCoverDelegate,YWLeftDelegate,YWmainViewDelegate>
@@ -48,8 +52,8 @@
     [super viewDidLoad];
     self.title = @"会员中心";
     self.view.backgroundColor = KviewColor;
-    self.navigationController.navigationBar.hidden = YES;
-    
+
+
     //创建上面的视图
     [self createHead];
     //创建中间的视图
@@ -157,14 +161,10 @@
         }else{
             name_label.text = user.username;
         }
-        number_label.text = user.ID;
+        number_label.text = [NSString stringWithFormat:@"编号：%@",user.ID];
         day_number.text = user.sr_7;
         all_number.text = user.sr_0;
         
-    }else{
-        portrait.image = [UIImage imageNamed:@"default－portrait"];
-         work_label.text = @"游客";
-        name_label.text = @"未登录";
     }
 }
 //创建钱币UI
@@ -196,7 +196,7 @@
     
     
     //创建提现
-    UIButton *cashs_button = [[UIButton alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:375*3/4 Y:0 width:375/4 height:50]];
+    UIButton *cashs_button = [[UIButton alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:375*3/4 Y:0 width:375/4+1 height:50]];
     cashs_button.tag = 20;
     cashs_button.backgroundColor = [UIColor grayColor];
     [cashs_button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
@@ -234,13 +234,15 @@
     mainView.mainDelegate = self;
     
     NSArray *array = @[@{@"订单" : @"0"}, // title => imageString
-                       @{@"转账" : @"0"},
+                      @{@"帮我代付" : @"0"},
                        @{@"我要代付" : @"0"},
-                       @{@"帮我代付" : @"0"},
+                       @{@"转账" : @"0"},
                        @{@"收益记录" : @"0"},
-                       @{@"转账记录" : @"0"},
                        @{@"提现记录" : @"0"},
+                       @{@"支出记录":@"0"},
+                       @{@"转账记录" : @"0"},
                        @{@"充值记录" : @"0"},
+                      
                        @{@"转发分享" : @"0"},
                        ];
     NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:9];
@@ -260,8 +262,10 @@
 //充值或提现
 - (void)click:(UIButton *)sender{
     if (sender.tag == 10) {
-        YWLog(@"充值");
+     
     }else{
+        YWInViewController *VC = [[YWInViewController alloc]init];
+        [self.navigationController pushViewController:VC animated:YES];
         YWLog(@"提现");
     }
 }
@@ -295,8 +299,18 @@
 
 //点击左边的总监，经理等
 -(void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    UIViewController *VC = [[UIViewController alloc]init];
+    //隐藏蒙版
     [self coverDidClickCover:nil];
+    YWUser *user = [YWUserTool account];
+    NSMutableDictionary *paramter = [Utils paramter:List ID:user.ID];
+    NSString *str = [NSString stringWithFormat:@"%ld",indexPath.row+1];
+    paramter[@"zkd"] = [[str dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+    [YWHttptool GET:YWList parameters:paramter success:^(id responseObject) {
+        YWLog(@"%@",responseObject);
+    } failure:^(NSError *error) {
+        
+    }];
+    UIViewController *VC = [[UIViewController alloc]init];
     VC.view.backgroundColor = [UIColor grayColor];
     VC.title = _leftView.dataArray[indexPath.row];
     [self.navigationController pushViewController:VC animated:YES];
@@ -312,11 +326,34 @@
 //点击功能按钮
 -(void)clickButton:(NSInteger)number{
     YWLog(@"点击%ld",(long)number);
+    YWUser *user = [YWUserTool account];
+    NSMutableDictionary *paramter = [Utils paramter:Trlist ID:user.ID];
+    if (number == 4 || number == 5 || number == 6 ||number == 7 || number ==8) {
+        NSArray *array = @[@"收益记录",@"提现记录",@"支出记录",@"转账记录",@"充值记录"];
+        YWListViewController *listVC = [[YWListViewController alloc]init];
+        listVC.type = [NSString stringWithFormat:@"%ld",number-3];
+        listVC.title = array[number-4];
+        [self.navigationController pushViewController:listVC animated:YES];
+        NSString *str = [NSString stringWithFormat:@"%ld",number-3];
+        paramter[@"tkd"] = [[str dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+        [YWHttptool GET:YWTrlist parameters:paramter success:^(id responseObject) {
+            YWLog(@"%@",responseObject);
+        } failure:^(NSError *error) {
+            
+        }];
+    }else{
+        NSArray *array = @[@"我的订单",@"帮我代付",@"我要代付"];
+        YWOrderViewController *orderVC = [[YWOrderViewController alloc]init];
+        orderVC.type = [NSString stringWithFormat:@"%ld",number+1];
+        orderVC.title = array[number];
+        [self.navigationController pushViewController:orderVC animated:YES];
+    }
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

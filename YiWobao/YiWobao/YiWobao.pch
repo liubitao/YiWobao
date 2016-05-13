@@ -45,9 +45,32 @@
 #define YWEdit              @"http://api.yiwob.com/shop/ywbapp.php/Member/editInfo1"
 #define Edit                @"edit_info1"
 
+//获取手机验证码
+#define YWCode              @"http://api.yiwob.com/shop/ywbapp.php/Member/getCode"
+#define Code                @"get_code"
 
+//修改登录、支付密码
+#define YWEdit2             @"http://api.yiwob.com/shop/ywbapp.php/Member/editInfo2"
+#define Edit2               @"edit_info2"
 
+//获取总裁，总监，经理信息
+#define YWList              @"http://api.yiwob.com/shop/ywbapp.php/Member/zcList"
+#define List                @"zc_list"
 
+//获取充值、提现、转账、收益、支出记录
+#define YWTrlist            @"http://api.yiwob.com/shop/ywbapp.php/Member/trList"
+#define Trlist              @"tr_list"
+
+//获取所有订单、推荐人代付订单、我要代付订单
+#define YWOrderList         @"http://api.yiwob.com/shop/ywbapp.php/Member/orderList"
+#define OrderList           @"order_list"
+
+//图片的前缀
+#define  YWpic              @"http://api.yiwob.com"
+
+//提现
+#define  YWPick             @"http://api.yiwob.com/shop/ywbapp.php/Member/pickCash"
+#define  Pick               @"pick_cash"
 
 
 #endif /* WiWobao_pch */

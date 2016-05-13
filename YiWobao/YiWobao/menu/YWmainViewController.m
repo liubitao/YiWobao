@@ -18,6 +18,7 @@
 {
     //记录标签栏选中的按钮
     YWItemView *_lastItem;
+    
 }
 
 @end

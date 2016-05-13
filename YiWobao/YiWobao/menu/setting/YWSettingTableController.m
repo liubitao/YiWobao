@@ -10,11 +10,17 @@
 #import "YWInformationController.h"
 #import "YWUserTool.h"
 #import "YWmainViewController.h"
+#import "YWAddressController.h"
+#import "RegisterController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
+#import "Utils.h"
 
 @interface YWSettingTableController (){
     NSArray *_settingImages;
     NSArray *_settingTitles;
     NSArray *_settingClass;
+    MBProgressHUD *_hudView;
 }
 
 @end
@@ -24,12 +30,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"设置";
+    self.tableView.backgroundColor = [UIColor grayColor];
     self.tableView.backgroundColor = KviewColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.bounces = NO;
     _settingTitles = @[@"个人信息修改",@"管理收货地址",@"支付密码修改",@"登录密码修改",@"清除缓存"];
     _settingImages = @[@"ic_person",@"ic_home",@"ic_lock",@"ic_phonelink_lock",@"ic_clear"];
-    _settingClass = @[[YWInformationController class]];
+    _settingClass = @[[YWInformationController class],[YWAddressController class],[RegisterController class],[RegisterController class]];
 
     //添加退出按钮
     UIButton *exitButton = [[UIButton alloc]initWithFrame:CGRectMake(0, KscreenHeight-114, kScreenWidth, 50)];
@@ -39,6 +46,8 @@
    
     [exitButton addTarget:self action:@selector(exit:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:exitButton];
+    
+    
 }
 
 - (void)exit:(UIButton *)sender{
@@ -82,6 +91,7 @@
     }
     
     cell.imageView.image = [UIImage imageNamed:_settingImages[indexPath.row]];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.textLabel.text = _settingTitles[indexPath.row];
     
     //设置cell上图片和文字的大小
@@ -92,21 +102,42 @@
     cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 49-1, kScreenWidth, 1)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 45-1, kScreenWidth, 1)];
     view.backgroundColor = [UIColor blackColor];
-    view.alpha = 0.5;
+    view.alpha = 0.1;
     [cell.contentView addSubview:view];
+    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 45;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIViewController *VC = [[(Class )_settingClass[indexPath.row] alloc]init];
-    [self.navigationController pushViewController:VC animated:YES];
+    if (indexPath.row == 4) {
+        [[SDImageCache sharedImageCache] clearDisk];
+        _hudView = [Utils createHUD];
+        _hudView.userInteractionEnabled = NO;
+        [_hudView hide:YES afterDelay:1];
+        _hudView.labelText = @"正在清除";
+    }else{
+        
+        UIViewController *VC = [[(Class )_settingClass[indexPath.row] alloc]init];
+        if ([VC isKindOfClass:[RegisterController class]]) {
+            if (indexPath.row == 2) {
+                ((RegisterController *)VC).type_r = @"3";
+                ((RegisterController *)VC).act = @"支付密码修改";
+            }else{
+                ((RegisterController *)VC).type_r = @"2";
+                ((RegisterController *)VC).act = @"登录密码修改";
+            }
+        }
+        [self.navigationController pushViewController:VC animated:YES];
+    }
+    
+    
     
 }
 

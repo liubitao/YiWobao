@@ -97,6 +97,7 @@
     }
     
     cell.imageView.image = [UIImage imageNamed:_settingImages[indexPath.row]];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.textLabel.text = _settingTitles[indexPath.row];
     
     //设置cell上图片和文字的大小
@@ -107,7 +108,7 @@
     cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 50-1, kScreenWidth, 1)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 45-1, kScreenWidth, 1)];
     view.backgroundColor = [UIColor blackColor];
     view.alpha = 0.5;
     [cell.contentView addSubview:view];
@@ -118,7 +119,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 45;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -173,7 +174,7 @@
     _hudView = [Utils createHUD];
     _hudView.userInteractionEnabled = NO;
     _hudView.labelText = @"正在修改";
-    NSMutableDictionary *parameter = [Utils paramter:Edit id:user.ID];
+    NSMutableDictionary *parameter = [Utils paramter:Edit ID:user.ID];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:user.mj_keyValues options:NSJSONWritingPrettyPrinted error:nil];
     NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];

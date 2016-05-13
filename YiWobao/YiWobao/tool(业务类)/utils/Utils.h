@@ -20,7 +20,10 @@
 //检查银行卡号
 + (BOOL)checkCardNo:(NSString*) cardNo;
 
+//倒计时
++(void)timeDecrease:(UIButton *)button;
+
 +(BOOL)isNull:(id)object;
 
-+(NSMutableDictionary *)paramter:(NSString *)act id:(NSString *)ID;
++(NSMutableDictionary *)paramter:(NSString *)act ID:(NSString *)ID;
 @end
