@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class YWAddressModel;
 
 @interface YWAddressEditController : UIViewController
 
-@property (nonatomic,copy) NSString *name;
-@property (nonatomic,copy) NSString *phone;
-@property (nonatomic,copy) NSString *address;
+@property (nonatomic,strong) YWAddressModel *addressModel;
+
+@property (nonatomic,copy) NSString *type;
 
 @end

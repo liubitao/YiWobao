@@ -106,18 +106,18 @@
 
     YWAddressModel *model = addressFrame.model;
     _name.frame = addressFrame.nameFrame;
-    _name.text = model.name;
+    _name.text = model.pickname;
     
     _phone.frame = addressFrame.phoneFrame;
-    _phone.text = model.phone;
+    _phone.text = model.pickphone;
     
     _address.frame = addressFrame.addressFrame;
-    _address.text = model.address;
+    _address.text = [NSString stringWithFormat:@"%@%@%@%@",model.addr1,model.addr2,model.addr3,model.addr4];
     
     _line.frame = CGRectMake(0, CGRectGetHeight(_address.frame)+55, kScreenWidth, 1);
     
     _defaultButoon.frame = addressFrame.defalutFrame;
-    if (model.defualt) {
+    if ([model.isselect isEqualToString:@"1"]) {
         [_defaultButoon setImage:[UIImage imageNamed:@"tabbar_profile"] forState:UIControlStateNormal];
     }
     

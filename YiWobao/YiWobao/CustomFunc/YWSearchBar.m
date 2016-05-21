@@ -14,7 +14,7 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame: frame];
     if(self){
-        self.font = [UIFont systemFontOfSize:13];
+        self.font = [UIFont systemFontOfSize:15];
         UIImage *image = [UIImage imageNamed:@"searchbar_textfield_background"];
         self.background = [image stretchableImageWithLeftCapWidth:image.size.width * 0.5 topCapHeight:image.size.height * 0.5];
         
@@ -29,6 +29,12 @@
         
     }
     return self;
+}
+
+
+- (CGRect)borderRectForBounds:(CGRect)bounds{
+    bounds.size.height = 80;
+    return bounds;
 }
 
 

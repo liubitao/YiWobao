@@ -63,7 +63,8 @@
     _picView = imageView;
     
     //商品名称
-    UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(90, 0, 100, 60)];
+    UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(90, 0, 150, 60)];
+    title_label.scrollEnabled = NO;
     title_label.backgroundColor = [UIColor clearColor];
     title_label.font = [UIFont systemFontOfSize:15];
     [view addSubview:title_label];

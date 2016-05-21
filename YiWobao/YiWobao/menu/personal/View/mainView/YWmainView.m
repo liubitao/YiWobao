@@ -32,6 +32,7 @@
         NSString *imageStr = model.imageString;
         [button setImage:[UIImage imageNamed:imageStr] forState:UIControlStateNormal];
         [button setTitle:model.title forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
         if ((idx+1)%4 != 0) {
             

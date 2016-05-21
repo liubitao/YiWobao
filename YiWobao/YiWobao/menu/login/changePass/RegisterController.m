@@ -12,6 +12,7 @@
 #import "YWUserTool.h"
 #import "YWUser.h"
 #import "YWHttptool.h"
+#import <NSString+MD5.h>
 
 
 
@@ -101,7 +102,7 @@
     YWUser *user = [YWUserTool account];
     NSMutableDictionary *paramter = [Utils paramter:Edit2 ID:user.ID];
     paramter[@"bhcode"] = [[_message.text dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-    paramter[@"bhlpwd"] = [[_password1.text dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+    paramter[@"bhlpwd"] = [_password1.text MD5Digest];
     paramter[@"pkd"] = [[_type_r dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWEdit2 parameters:paramter success:^(id responseObject) {
         NSInteger isError = [responseObject[@"isError"] integerValue];

@@ -9,16 +9,16 @@
 #import "YWLoginViewController.h"
 #import <AFNetworking.h>
 #import "Utils.h"
-#import <MBProgressHUD.h>
+#import "MBProgressHUD+MJ.h"
 #import "YWHttptool.h"
 #import <NSString+MD5.h>
 #import "YWmainViewController.h"
 #import "YWUser.h"
 #import "YWUserTool.h"
+#import "RegisterController.h"
 
 @interface YWLoginViewController ()<UIGestureRecognizerDelegate>
 {
-    MBProgressHUD *_hudView;
     UIView *bgView;
     UITextField *_phone;
     UITextField *_passWord;
@@ -94,16 +94,15 @@
 
 //登录
 -(void)landClick{
-    _hudView = [Utils createHUD];
-    _hudView.userInteractionEnabled = NO;
-    _hudView.labelText = @"正在登录";
-    [_hudView hide:YES afterDelay:1];
+    [MBProgressHUD showMessage:@"正在登陆"];
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
     parameter[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[login MD5Digest],sKey]MD5Digest];
     parameter[@"mbh"] = [[_phone.text dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     parameter[@"mpd"] = [_passWord.text MD5Digest];
 
     [YWHttptool Post:YWLogin parameters:parameter success:^(id responseObject) {
+        NSLog(@"%@",responseObject);
+        [MBProgressHUD hideHUD];
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {
             YWUser *user = [YWUser yw_objectWithKeyValues:responseObject[@"result"]];
@@ -113,14 +112,10 @@
             return ;
         }
         //输入密码错误
-        _hudView.mode = MBProgressHUDModeCustomView;
-        _hudView.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        _hudView.labelText = @"用户名或密码不正确";
-    
+        [MBProgressHUD showError:@"用户名和密码有误"];
     } failure:^(NSError *error) {
-        _hudView.mode = MBProgressHUDModeCustomView;
-        _hudView.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        _hudView.labelText = @"网络异常，请检查网络";
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"请检查网络"];
     }];
 }
 

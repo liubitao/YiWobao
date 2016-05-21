@@ -34,21 +34,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.bounces = NO;
     
-    _settingImages = @[@"ic_person",@"ic_phone",@"weixin_icon_xxh",@"ic_store",@"ic_payment"];
-    _settingTitles = @[@"姓名",@"手机",@"微信账号",@"开户银行",@"银行账号"];
-    
-    YWUser *user = [YWUserTool account];
-    if ([Utils isNull:user.username]) {
-        user.username = user.wxname;
-    }
-    if ([Utils isNull:user.bankname]) {
-        user.bankname = @"请添加银行名(精确到支行)";
-    }if ([Utils isNull:user.banknum]) {
-        user.banknum = @"请添加银行账号";
-    }
-    if ([Utils isNull:user.phone]) {
-        user.phone = @"请添加手机号码";
-    }
+    _settingImages = @[@"ic_person",@"ic_phone",@"weixin_icon_xxh",@"ic_store",@"ic_payment",@"ic_person"];
+    _settingTitles = @[@"姓名",@"手机",@"微信账号",@"开户银行",@"银行账号",@"开户人"];
     _detailedArray = [self dataArray];
 
 }
@@ -67,7 +54,10 @@
     if ([Utils isNull:user.phone]) {
         user.phone = @"请添加手机号码";
     }
-    return [NSMutableArray arrayWithArray:@[user.username,user.phone,user.wxname,user.bankname,user.banknum]];
+    if ([Utils isNull:user.bankaccount]) {
+        user.bankaccount = @"请添加开户人";
+    }
+    return [NSMutableArray arrayWithArray:@[user.username,user.phone,user.wxname,user.bankname,user.banknum,user.bankaccount]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -160,6 +150,9 @@
                    [writerVC presentViewController:alertController animated:NO completion:nil];
                    return ;
                }
+               break;
+            case 5:
+               user.bankaccount = showText;
                break;
            default:
                break;

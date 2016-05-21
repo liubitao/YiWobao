@@ -22,9 +22,14 @@
 #import "YWOrderViewController.h"
 #import "YWListViewController.h"
 #import "YWInViewController.h"
+#import "YWtransferViewController.h"
+#import "YWTjrTableController.h"
 
 
-@interface YWpersonalViewController ()<YWCoverDelegate,YWLeftDelegate,YWmainViewDelegate>
+@interface YWpersonalViewController ()<YWCoverDelegate,YWLeftDelegate,YWmainViewDelegate>{
+    UILabel *ant_number;
+    UILabel *name_label;
+}
 
 @property (nonatomic,strong) NSArray *functionData;
 
@@ -33,6 +38,7 @@
 @property (nonatomic,weak) YlListButton *leftButton;
 
 @property (strong, nonatomic) YWmainView *menu;
+
 
 @end
 
@@ -43,7 +49,7 @@
     if (_leftView == nil) {
         _leftView = [[YWLeftViewController alloc]init];
         _leftView.delegate = self;
-        _leftView.dataArray = @[@"总裁",@"总监",@"经理"];
+        _leftView.dataArray = @[@"我的推荐人",@"总裁",@"总监",@"经理"];
     }
     return _leftView;
 }
@@ -105,7 +111,7 @@
     [headView addSubview:work_label];
     
     //昵称
-    UILabel *name_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:105 width:205 height:30]];
+    name_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:105 width:205 height:30]];
     name_label.textAlignment = NSTextAlignmentCenter;
     [headView addSubview:name_label];
     
@@ -175,7 +181,7 @@
     [self.view addSubview:ant_view];
     
     //创建蚁币
-    UILabel *ant_number = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:0 width:375/2 height:50]];
+    ant_number = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:0 width:375/2 height:50]];
     ant_number.textAlignment = NSTextAlignmentCenter;
     ant_number.font = [UIFont systemFontOfSize:14];
     //判断是否有存储在本地的数据
@@ -310,10 +316,14 @@
     } failure:^(NSError *error) {
         
     }];
-    UIViewController *VC = [[UIViewController alloc]init];
-    VC.view.backgroundColor = [UIColor grayColor];
-    VC.title = _leftView.dataArray[indexPath.row];
-    [self.navigationController pushViewController:VC animated:YES];
+    if (indexPath.row == 0) {
+        YWTjrTableController *VC = [[YWTjrTableController alloc]init];
+        VC.title = _leftView.dataArray[indexPath.row];
+        [self.navigationController pushViewController:VC animated:YES];
+    }else{
+        
+    }
+   
 }
 
 
@@ -325,23 +335,19 @@
 
 //点击功能按钮
 -(void)clickButton:(NSInteger)number{
-    YWLog(@"点击%ld",(long)number);
-    YWUser *user = [YWUserTool account];
-    NSMutableDictionary *paramter = [Utils paramter:Trlist ID:user.ID];
     if (number == 4 || number == 5 || number == 6 ||number == 7 || number ==8) {
         NSArray *array = @[@"收益记录",@"提现记录",@"支出记录",@"转账记录",@"充值记录"];
         YWListViewController *listVC = [[YWListViewController alloc]init];
         listVC.type = [NSString stringWithFormat:@"%ld",number-3];
         listVC.title = array[number-4];
         [self.navigationController pushViewController:listVC animated:YES];
-        NSString *str = [NSString stringWithFormat:@"%ld",number-3];
-        paramter[@"tkd"] = [[str dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-        [YWHttptool GET:YWTrlist parameters:paramter success:^(id responseObject) {
-            YWLog(@"%@",responseObject);
-        } failure:^(NSError *error) {
-            
-        }];
-    }else{
+    }else if (number == 3 ){
+        YWtransferViewController *transferVC = [[YWtransferViewController alloc]init];
+        [self.navigationController pushViewController:transferVC animated:YES];
+    }else if (number == 9){
+        
+    }
+    else{
         NSArray *array = @[@"我的订单",@"帮我代付",@"我要代付"];
         YWOrderViewController *orderVC = [[YWOrderViewController alloc]init];
         orderVC.type = [NSString stringWithFormat:@"%ld",number+1];
@@ -351,6 +357,13 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    YWUser *user = [YWUserTool account];
+    if ([Utils isNull:user.username]) {
+        name_label.text = user.wxname;
+    }else{
+        name_label.text = user.username;
+    }
+    ant_number.text = [NSString stringWithFormat:@"蚁币：%@",user.chmoney];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     

@@ -22,11 +22,11 @@
     UIFont *nameFont = [UIFont systemFontOfSize:14.f]; //字体的大小
     NSDictionary *attribute = [NSDictionary dictionaryWithObjectsAndKeys:nameFont,NSFontAttributeName, nil];
     
-    CGRect rect = [model.address boundingRectWithSize:CGSizeMake(kScreenWidth-20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil];
+    CGRect rect = [[NSString stringWithFormat:@"%@%@%@%@",model.addr1,model.addr2,model.addr3,model.addr4] boundingRectWithSize:CGSizeMake(kScreenWidth-20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attribute context:nil];
     _addressFrame = CGRectMake(10, 50, kScreenWidth-20, CGRectGetHeight(rect));
     
     //默认地址的尺寸
-    _defalutFrame = CGRectMake(10, 60+CGRectGetHeight(rect), 120, 30);
+    _defalutFrame = CGRectMake(0, 60+CGRectGetHeight(rect), 100, 30);
     
     _editorFrame = CGRectMake(kScreenWidth-140, 60+CGRectGetHeight(rect), 60, 30);
     _deleteFrame = CGRectMake(kScreenWidth-70, 60+CGRectGetHeight(rect), 60, 30);

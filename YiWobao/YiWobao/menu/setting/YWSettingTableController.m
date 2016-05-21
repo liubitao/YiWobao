@@ -91,7 +91,7 @@
     }
     
     cell.imageView.image = [UIImage imageNamed:_settingImages[indexPath.row]];
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.text = _settingTitles[indexPath.row];
     
     //设置cell上图片和文字的大小
@@ -123,7 +123,6 @@
         [_hudView hide:YES afterDelay:1];
         _hudView.labelText = @"正在清除";
     }else{
-        
         UIViewController *VC = [[(Class )_settingClass[indexPath.row] alloc]init];
         if ([VC isKindOfClass:[RegisterController class]]) {
             if (indexPath.row == 2) {

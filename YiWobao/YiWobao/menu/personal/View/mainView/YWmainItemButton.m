@@ -15,7 +15,7 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        self.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.titleLabel.font = [UIFont systemFontOfSize:14];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return self;
@@ -23,16 +23,16 @@
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
 {
-    CGFloat h = self.height * 0.3;
+    CGFloat h = self.height * 0.5;
     CGFloat w = h;
     CGFloat x = (self.width - w) * 0.5;
-    CGFloat y = self.height * 0.3;
+    CGFloat y = self.height * 0.2;
     return CGRectMake(x, y, w, h);
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect
 {
-    return CGRectMake(0, self.height * 0.6, self.width, self.height * 0.3);
+    return CGRectMake(0, self.height * 0.7, self.width, self.height * 0.3);
 }
 
 

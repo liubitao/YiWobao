@@ -11,6 +11,11 @@
 #import "YWAderssCell.h"
 #import "YWAddressFrame.h"
 #import "YWAddressEditController.h"
+#import "YWUser.h"
+#import "YWUserTool.h"
+#import "Utils.h"
+#import "YWHttptool.h"
+
 
 @interface YWAddressController ()<UITableViewDelegate,UITableViewDataSource,YWAderssCellDelegate>
 {
@@ -18,6 +23,8 @@
     YWAderssCell *_lastCell;
     
 }
+@property (nonatomic,strong) UILabel *label;
+
 @property (nonatomic,strong) UITableView *tableView;
 @end
 
@@ -36,29 +43,46 @@
     //请求网络上的地址数据
     [self requestAddress];
     
-    //添加退出按钮
+    //添加添加按钮
     UIButton *exitButton = [[UIButton alloc]initWithFrame:CGRectMake(0, KscreenHeight-50, kScreenWidth, 50)];
     exitButton.backgroundColor = [UIColor redColor];
     [exitButton setTitle:@"添加地址" forState:UIControlStateNormal];
     [exitButton setBackgroundImage:[UIImage imageWithColor:[UIColor grayColor]] forState:UIControlStateHighlighted];
     [exitButton addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:exitButton];
+    
+    _label = [[UILabel alloc]init];
+    _label.frame = CGRectMake(0, self.view.center.y-50, kScreenWidth, 40);
+    _label.text = @"您还没有保存收货地址";
+    _label.font = [UIFont systemFontOfSize:20];
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.hidden = YES;
+    [self.view addSubview:_label];
+    
 }
 
 
 - (void)requestAddress{
-    YWAddressModel *model = [[YWAddressModel alloc]init];
-    model.name = @"刘毕涛";
-    model.address = @"湖北省仙桃市西流河镇周壕村一组湖北省仙桃市西流河镇周壕村一组湖北省仙桃市西流河镇周壕村一组湖北省仙桃市西流河镇周壕村一组湖北省仙桃市西流河镇周壕村一组湖北省仙桃市西流河镇周壕村一组";
-    model.phone = @"15068891471";
-    model.defualt = NO;
-    NSArray *array = @[model,model,model,model];
-    _addressFrames = [NSMutableArray array];
-    for (YWAddressModel *adderss in array){
-        YWAddressFrame *addressFrame = [[YWAddressFrame alloc]init];
-        addressFrame.model = adderss;
-        [_addressFrames addObject:addressFrame];
-    }
+    _label.hidden = YES;
+    YWUser *user = [YWUserTool account];
+    NSMutableDictionary *parameters = [Utils paramter:Addres ID:user.ID];
+    [YWHttptool GET:YWAddrList parameters:parameters success:^(id responseObject) {
+        if ([Utils isNull:responseObject[@"result"]]) {
+            _label.hidden = NO;
+        }else{
+              NSMutableArray *array = [YWAddressModel yw_objectWithKeyValuesArray:responseObject[@"result"]];
+            _addressFrames = [NSMutableArray array];
+            for (YWAddressModel *adderss in array){
+                YWAddressFrame *addressFrame = [[YWAddressFrame alloc]init];
+                addressFrame.model = adderss;
+                [_addressFrames addObject:addressFrame];
+            }
+            [_tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,12 +107,9 @@
     }
     //获取address模型
     YWAddressFrame *addressFrame = _addressFrames[indexPath.section];
-    
     cell.indexpath = indexPath;
-    
     cell.delegate = self;
-    
-    if (addressFrame.model.defualt) {
+    if ([addressFrame.model.isselect isEqualToString:@"1"]) {
         _lastCell = cell;
     }
     //给cell传递模型
@@ -100,7 +121,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 20;
+    return 10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -117,16 +138,13 @@
             YWAderssCell *cell = [self.tableView cellForRowAtIndexPath:indexpath];
             [cell.defaultButoon setImage:[UIImage imageNamed:@"tabbar_profile"] forState:UIControlStateNormal];
             _lastCell = cell;
-            
+            [self setOrdelete:[NSString stringWithFormat:@"%ld",tag] indexpath:indexpath];
         }
             break;
         case 2:
         {   YWAddressFrame *frame = _addressFrames[indexpath.section];
-            YWAddressModel *model = frame.model;
             YWAddressEditController *editVC = [[YWAddressEditController alloc]init];
-            editVC.name = model.name;
-            editVC.phone = model.phone;
-            editVC.address = model.address;
+            editVC.addressModel = frame.model;
             [self.navigationController pushViewController:editVC animated:YES];
         }
             break;
@@ -134,8 +152,7 @@
         { //设置提醒框
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认删除" message:nil preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                YWLog(@"删除");
-                
+                [self setOrdelete:[NSString stringWithFormat:@"%ld",tag-1] indexpath:indexpath];
             }];
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
             [alertController addAction:action1];
@@ -149,9 +166,43 @@
     }
 }
 
+//删除，设置默认地址
+- (void)setOrdelete:(NSString *)number indexpath:(NSIndexPath*)indexpath{
+    YWUser *user = [YWUserTool account];
+    YWAddressFrame *frame = _addressFrames[indexpath.section];
+    YWAddressModel *model = frame.model;
+    NSMutableDictionary *parametrs = [Utils paramter:SetAddr ID:user.ID];
+    parametrs[@"aim"] = [[model.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+    parametrs[@"akd"] = [[number dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+    [YWHttptool Post:YWSetAddr parameters:parametrs success:^(id responseObject) {
+        YWLog(@"%@",responseObject);
+        _addressFrames = [NSMutableArray array];
+        if ([number isEqualToString:@"2"]) {
+            if (![Utils isNull:responseObject[@"result"]]){
+                _label.hidden = YES;
+                NSMutableArray *array = [YWAddressModel yw_objectWithKeyValuesArray:responseObject[@"result"]];
+                for (YWAddressModel *adderss in array){
+                    YWAddressFrame *addressFrame = [[YWAddressFrame alloc]init];
+                    addressFrame.model = adderss;
+                    [_addressFrames addObject:addressFrame];
+                }
+            }else{
+                _label.hidden = NO;
+            }
+             [_tableView reloadData];
+            }
+    } failure:^(NSError *error) {
+    }];
+}
 
 - (void)add:(UIButton *)sender{
-       YWAddressEditController *editVC = [[YWAddressEditController alloc]init];
+    YWAddressEditController *editVC = [[YWAddressEditController alloc]init];
+    editVC.type = @"1";
     [self.navigationController pushViewController:editVC animated:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self requestAddress];
 }
 @end

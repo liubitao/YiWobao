@@ -22,4 +22,14 @@ MJCodingImplementation
     
     return [self mj_objectWithKeyValues:dict];
 }
+
++ (NSMutableArray*)yw_objectWithKeyValuesArray:(NSArray *)array{
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSDictionary *dict in array) {
+        YWGoods *model = [self yw_objectWithKeyValues:dict];
+        [result addObject:model];
+    }
+    return result;
+}
+
 @end

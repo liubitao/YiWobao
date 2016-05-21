@@ -27,12 +27,25 @@
 
 @interface YWAddressModel : NSObject
 
-@property (nonatomic,copy) NSString *name;
+@property (nonatomic,copy) NSString *ID;
 
-@property (nonatomic,copy) NSString *phone;
+@property (nonatomic,copy) NSString *pickname;
 
-@property (nonatomic,copy) NSString *address;
+@property (nonatomic,copy) NSString *pickphone;
 
-@property (nonatomic,assign) BOOL defualt;
+@property (nonatomic,copy) NSString *addr1;//省份
+
+@property (nonatomic,copy) NSString *addr2;//市区
+
+@property (nonatomic,copy) NSString *addr3;//区县
+
+@property (nonatomic,copy) NSString *addr4;//详细地址
+
+@property (nonatomic,copy) NSString *isselect;//默认地址
+
+
++ (instancetype)yw_objectWithKeyValues:(NSDictionary*)dict;
+
++ (NSMutableArray*)yw_objectWithKeyValuesArray:(NSArray *)array;
 
 @end

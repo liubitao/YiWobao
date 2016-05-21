@@ -52,7 +52,7 @@
 
 @property (nonatomic,copy) NSString *userimg;//用户头像
 
-@property (nonatomic,copy) NSString *bankaccount; //银行卡账号
+@property (nonatomic,copy) NSString *bankaccount; //银行卡注册人
 
 @property (nonatomic,copy) NSString *bankname;//银行名字
 

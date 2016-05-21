@@ -121,6 +121,11 @@
         return YES;
     }else if (object == nil){
         return YES;
+    }else if([object isKindOfClass:[NSArray class]]){
+        NSArray *array = (NSArray*)object;
+        if (array.count == 0) {
+            return YES;
+        }
     }else if ([object isKindOfClass:[NSString class]]){
         NSString *str = (NSString *)object;
         if (str.length == 0) {

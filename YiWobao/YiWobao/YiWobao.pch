@@ -13,6 +13,7 @@
 #import "FrameAutoScaleLFL.h"
 #import "UIImage+YWimage.h"
 #import <NSString+MD5.h>
+#import <Masonry.h>
 
 
 // ...表示宏定义的可变参数
@@ -72,5 +73,34 @@
 #define  YWPick             @"http://api.yiwob.com/shop/ywbapp.php/Member/pickCash"
 #define  Pick               @"pick_cash"
 
+//地址列表
+#define YWAddrList          @"http://api.yiwob.com/shop/ywbapp.php/Member/addrList"
+#define Addres              @"addr_list"
+
+//添加，修改收货地址
+#define YWAddaddr           @"http://api.yiwob.com/shop/ywbapp.php/Member/addAddr"
+#define Addaddr             @"add_addr"
+
+//删除，设置默认地址
+#define YWSetAddr           @"http://api.yiwob.com/shop/ywbapp.php/Member/setAddr"
+#define SetAddr             @"set_addr"
+
+//获取会员信息
+#define YWGetinfo           @"http://api.yiwob.com/shop/ywbapp.php/Goods/getinfo"
+#define Getinfo             @"get_info"
+
+
+//转账
+#define YWTrans             @"http://api.yiwob.com/shop/ywbapp.php/Member/transTo"
+#define Trans               @"trans_to"
+
+
+//商品搜索
+#define YWSearch            @"http://api.yiwob.com/shop/ywbapp.php/Goods/goodsSearch"
+#define Search              @"goods_search"
+
+//商城所有的商品和分类
+#define YWGood             @"http://api.yiwob.com/shop/ywbapp.php/Goods/goodsList"
+#define Good               @"goods_list"
 
 #endif /* WiWobao_pch */

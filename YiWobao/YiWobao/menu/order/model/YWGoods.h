@@ -60,7 +60,11 @@
 
 @property (nonatomic,copy) NSString *regtime;//商品添加时间
 
+@property (nonatomic,copy) NSString *descrition;//商品详情
+
 
 + (instancetype)yw_objectWithKeyValues:(NSDictionary*)dict;
+
++ (NSMutableArray*)yw_objectWithKeyValuesArray:(NSArray *)array;
 
 @end

@@ -7,12 +7,24 @@
 //
 
 #import "YWAddressEditController.h"
+#import "YWUserTool.h"
+#import "YWUser.h"
+#import "YWHttptool.h"
+#import "Utils.h"
+#import "YWAddressModel.h"
+#import "CityPickView.h"
+#import <MBProgressHUD.h>
 
-
-@interface YWAddressEditController ()<UIGestureRecognizerDelegate>{
+@interface YWAddressEditController ()<UIGestureRecognizerDelegate,CityPickViewDelegate>{
     UITextField *name_text;
     UITextField *phone_text;
+    UIButton *address_btn;
+    MBProgressHUD *_hudView;
+    
 }
+@property (nonatomic,strong) NSDictionary *pickerDic;
+
+@property (nonatomic,strong) CityPickView *pickView;
 @property (nonatomic,strong) UITextView *feedbackTextView;
 @end
 
@@ -20,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = KviewColor;
     
     //创建UI
@@ -46,8 +59,8 @@
     name_label.text = @"收货人";
     [self.view addSubview:name_label];
     
-    name_text = [[UITextField alloc]initWithFrame:CGRectMake(200, 74, kScreenWidth-240, 30)];
-    name_text.text = _name;
+    name_text = [[UITextField alloc]initWithFrame:CGRectMake(130, 74, kScreenWidth-150, 30)];
+    name_text.text = _addressModel.pickname;
     name_text.font = [UIFont systemFontOfSize:14];
     name_text.textAlignment = NSTextAlignmentRight;
     name_text.borderStyle = UITextBorderStyleNone;
@@ -63,8 +76,8 @@
     phone_label.text = @"联系电话";
     [self.view addSubview:phone_label];
     
-    phone_text = [[UITextField alloc]initWithFrame:CGRectMake(100, 124, kScreenWidth-140, 30)];
-    phone_text.text =_phone;
+    phone_text = [[UITextField alloc]initWithFrame:CGRectMake(130, 124, kScreenWidth-150, 30)];
+    phone_text.text = _addressModel.pickphone;
     phone_text.font = [UIFont systemFontOfSize:14];
     phone_text.textAlignment = NSTextAlignmentRight;
     phone_text.borderStyle = UITextBorderStyleNone;
@@ -74,15 +87,30 @@
     line2.backgroundColor = [UIColor colorWithWhite:0 alpha:0.1];
     [self.view addSubview:line2];
     
-    //联系地址
     UILabel *address_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 164, 60, 30)];
     address_label.font = [UIFont systemFontOfSize:14];
-    address_label.text = @"联系地址";
+    address_label.text = @"所在地区";
     [self.view addSubview:address_label];
     
-    _feedbackTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 204, kScreenWidth-20, 100)];
-    if (_address) {
-        _feedbackTextView.text = _address;
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 164, kScreenWidth-200, 30)];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [button addTarget:self action:@selector(pickAddress) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    address_btn = button;
+    
+    //联系地址
+    UILabel *address2_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 204, 60, 30)];
+    address2_label.font = [UIFont systemFontOfSize:14];
+    address2_label.text = @"所在街道";
+    [self.view addSubview:address2_label];
+    
+    _feedbackTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 244, kScreenWidth-20, 100)];
+    if (_addressModel) {
+        name_text.text = _addressModel.pickname;
+        phone_text.text = _addressModel.pickphone;
+        [address_btn setTitle:[NSString stringWithFormat:@"%@%@%@",_addressModel.addr1,_addressModel.addr2,_addressModel.addr3] forState:UIControlStateNormal];
+        _feedbackTextView.text = _addressModel.addr4;
     }else{
         _feedbackTextView.text = @"请填写详细地址，不少于5个字";
     }
@@ -91,11 +119,68 @@
     [self.view addSubview:_feedbackTextView];
     _feedbackTextView.backgroundColor = [UIColor whiteColor];
     
+    _pickView = [[CityPickView alloc] initWithFrame:CGRectMake(0, KscreenHeight-180, self.view.bounds.size.width, 180)];
+    _pickView.backgroundColor = [UIColor yellowColor];
+    _pickView.delegate = self;
+    [self.view addSubview:_pickView];
+    _pickView.hidden = YES;
+    
+}
+
+- (void)pickAddress{
+    [name_text resignFirstResponder];
+    [phone_text resignFirstResponder];
+    [_feedbackTextView resignFirstResponder];
+    _pickView.hidden = NO;
+}
+
+- (void)selectCity:(NSString *)city{
+    [address_btn setTitle:city forState:UIControlStateNormal];
+    _pickView.hidden = YES;
 }
 
 - (void)save{
-    YWLog(@"保存");
+    if (![Utils checkTelNumber:phone_text.text]||[Utils isNull:name_text.text]) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提醒" message:@"填写的资料有误，请重新填写" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"知道了" style:(UIAlertActionStyleCancel) handler:nil];
+        [alertController addAction:cancelAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    else{
+    _hudView = [Utils createHUD];
+    _hudView.userInteractionEnabled = NO;
+    _hudView.labelText = @"正在修改";
+    [_hudView hide:YES afterDelay:2];
+    YWUser *user = [YWUserTool account];
+    NSMutableDictionary *paramters = [Utils paramter:Addaddr ID:user.ID];
+    paramters[@"akd"] = [[self.type dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (![Utils isNull:_addressModel]) {
+        dict[@"id"] = _addressModel.ID;
+    }
+    dict[@"pickname"] = name_text.text;
+    dict[@"pickphone"] = phone_text.text;
+    dict[@"addr1"] = [_pickView.provinceArray objectAtIndex:[_pickView.pickerView selectedRowInComponent:0]];
+    dict[@"addr2"] = [_pickView.cityArray objectAtIndex:[_pickView.pickerView selectedRowInComponent:1]];
+    dict[@"addr3"] = [_pickView.townArray objectAtIndex:[_pickView.pickerView selectedRowInComponent:2]];
+    dict[@"addr4"] = _feedbackTextView.text;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    paramters[@"dzinfo"] = str;
+    
+    [YWHttptool Post:YWAddaddr parameters:paramters success:^(id responseObject) {
+        _hudView.mode = MBProgressHUDModeCustomView;
+        _hudView.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+        _hudView.labelText = @"修改成功";
+        [_hudView hide:YES afterDelay:2];
+    } failure:^(NSError *error) {
+        _hudView.mode = MBProgressHUDModeCustomView;
+        _hudView.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+        _hudView.labelText = @"网络异常，修改失败";
+        [_hudView hide:YES afterDelay:1];
+    }];
     [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 //确定这个手势是否可以实现

@@ -26,17 +26,9 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:YWAccountFileName];
     if (!blHave) {
-        NSLog(@"no  have");
         return ;
     }else {
-        NSLog(@" have");
-        BOOL blDele= [fileManager removeItemAtPath:YWAccountFileName error:nil];
-        if (blDele) {
-            NSLog(@"dele success");
-        }else {
-            NSLog(@"dele fail");
-        }
-        
+       [fileManager removeItemAtPath:YWAccountFileName error:nil];
     }
 }
 @end
