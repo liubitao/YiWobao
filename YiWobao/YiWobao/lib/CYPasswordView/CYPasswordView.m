@@ -44,7 +44,6 @@ static NSString *tempStr;
 
 - (void)dealloc
 {
-    CYLog(@"cy =========== %@：我走了", [self class]);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -173,7 +172,7 @@ static NSString *tempStr;
     [UIView animateWithDuration:CYPasswordViewAnimationDuration delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
         self.passwordInputView.y = (self.height - self.passwordInputView.height);
     } completion:^(BOOL finished) {
-        CYLog(@"%@", NSStringFromCGRect(self.passwordInputView.frame));
+        
     }];
 }
 

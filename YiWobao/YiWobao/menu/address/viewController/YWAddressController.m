@@ -175,9 +175,8 @@
     parametrs[@"aim"] = [[model.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     parametrs[@"akd"] = [[number dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool Post:YWSetAddr parameters:parametrs success:^(id responseObject) {
-        YWLog(@"%@",responseObject);
-        _addressFrames = [NSMutableArray array];
         if ([number isEqualToString:@"2"]) {
+            [_addressFrames removeAllObjects];
             if (![Utils isNull:responseObject[@"result"]]){
                 _label.hidden = YES;
                 NSMutableArray *array = [YWAddressModel yw_objectWithKeyValuesArray:responseObject[@"result"]];

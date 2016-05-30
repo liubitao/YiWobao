@@ -91,18 +91,15 @@
                     [MBProgressHUD showSuccess:@"转账成功"];
                     [weakSelf.passwordView requestComplete:YES message:@"转账成功"];
                     [weakSelf.passwordView stopLoading];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [weakSelf.passwordView hide];
-                    });
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 }
                 else{
                     [MBProgressHUD showError:responseObject[@"errorMessage"]];
                     [weakSelf.passwordView requestComplete:NO message:responseObject[@"errorMessage"]];
                     [weakSelf.passwordView stopLoading];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [weakSelf.passwordView hide];
-                    });
+                    [weakSelf.passwordView hide];
+    
                 }
             } failure:^(NSError *error) {
                 

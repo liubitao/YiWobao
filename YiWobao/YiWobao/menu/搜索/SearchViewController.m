@@ -12,8 +12,10 @@
 #import "YWGoods.h"
 #import "YWGoodsViewController.h"
 #import "MBProgressHUD+MJ.h"
+#import "YWBuyViewController.h"
+#import "YWSorts.h"
 
-@interface SearchViewController ()<UIGestureRecognizerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface SearchViewController ()<UIGestureRecognizerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,YWgoodsCellDelegate>
 {
     UITableView *_tableView;
     UISearchBar *_searchView;
@@ -114,6 +116,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     YWgoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"goodsCell" forIndexPath:indexPath];
     [cell setCellModel:_dataArray[indexPath.row]];
+    cell.delegate = self;
+    
     return cell;
     
 }
@@ -128,6 +132,14 @@
     YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
     goodsVC.Goods = _dataArray[indexPath.row];
     [self.navigationController pushViewController:goodsVC animated:YES]; 
+}
+
+- (void)coverDidClick:(NSIndexPath *)indexPath{
+    YWBuyViewController *buyVC = [[YWBuyViewController alloc]init];
+    YWSorts *sorts = _dataArray[indexPath.section];
+    buyVC.goods = sorts.Goods[indexPath.row];
+    [self.navigationController pushViewController:buyVC animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

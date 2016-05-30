@@ -63,6 +63,8 @@
 
 @property (nonatomic,copy) NSString *paystatus; //订单状态
 
+@property (nonatomic,copy) NSString *paykind;//支付方式
+
 + (instancetype)yw_objectWithKeyValues:(NSDictionary*)dict;
 
 @end

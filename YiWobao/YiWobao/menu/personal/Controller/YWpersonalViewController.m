@@ -29,6 +29,7 @@
 @interface YWpersonalViewController ()<YWCoverDelegate,YWLeftDelegate,YWmainViewDelegate>{
     UILabel *ant_number;
     UILabel *name_label;
+    YWCover *cover;
 }
 
 @property (nonatomic,strong) NSArray *functionData;
@@ -38,6 +39,7 @@
 @property (nonatomic,weak) YlListButton *leftButton;
 
 @property (strong, nonatomic) YWmainView *menu;
+
 
 
 @end
@@ -129,8 +131,9 @@
     
     //七日收益的数量
     UILabel *day_number = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:190 width:104 height:20]];
-    day_number.font = [UIFont systemFontOfSize:14];
+    day_number.font = [UIFont systemFontOfSize:16];
     day_number.textAlignment = NSTextAlignmentCenter;
+    day_number.textColor = [UIColor redColor];
     [headView addSubview:day_number];
     
     //中间的线
@@ -147,8 +150,9 @@
     
     //累计收益的数量
     UILabel *all_number = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:105 Y:190 width:104 height:20]];
-    all_number.font = [UIFont systemFontOfSize:14];
+    all_number.font = [UIFont systemFontOfSize:16];
     all_number.textAlignment = NSTextAlignmentCenter;
+    all_number.textColor = [UIColor redColor];
     [headView addSubview:all_number];
     //判断是否有存储在本地的数据
     YWUser *user = [YWUserTool account];
@@ -183,7 +187,7 @@
     //创建蚁币
     ant_number = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:0 width:375/2 height:50]];
     ant_number.textAlignment = NSTextAlignmentCenter;
-    ant_number.font = [UIFont systemFontOfSize:14];
+    ant_number.font = [UIFont boldSystemFontOfSize:18];
     //判断是否有存储在本地的数据
     YWUser *user = [YWUserTool account];
     if (user) {
@@ -281,13 +285,14 @@
     sender.selected = !sender.selected;
     
     //弹出蒙版
-    YWCover *cover = [YWCover show];
+    cover = [YWCover show];
     cover.delegate = self;
+    [cover setDimBackground:NO];
     
     // 弹出pop菜单
-    CGFloat popW = 90;
+    CGFloat popW = 150;
     CGFloat popX = 20;
-    CGFloat popH = 150;
+    CGFloat popH = 200;
     CGFloat popY = 55;
     YWPopView *menu = [YWPopView showInRect:CGRectMake(popX, popY, popW, popH)];
     
@@ -297,16 +302,18 @@
 //点击蒙版的时候调用
 - (void)coverDidClickCover:(YWCover *)cover
 {
+    
     // 隐藏pop菜单
     [YWPopView hide];
     _leftButton.selected = NO;
-    
 }
 
 //点击左边的总监，经理等
 -(void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //隐藏蒙版
-    [self coverDidClickCover:nil];
+    [cover removeFromSuperview];
+    [self coverDidClickCover:cover];
+    
     YWUser *user = [YWUserTool account];
     NSMutableDictionary *paramter = [Utils paramter:List ID:user.ID];
     NSString *str = [NSString stringWithFormat:@"%ld",indexPath.row+1];
@@ -358,12 +365,26 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     YWUser *user = [YWUserTool account];
-    if ([Utils isNull:user.username]) {
-        name_label.text = user.wxname;
-    }else{
-        name_label.text = user.username;
-    }
-    ant_number.text = [NSString stringWithFormat:@"蚁币：%@",user.chmoney];
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    parameter[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[login MD5Digest],sKey]MD5Digest];
+    parameter[@"mbh"] = [[[NSString stringWithFormat:@"50%@",user.ID] dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+    parameter[@"mpd"] = user.logpwd;
+    //每次切换到该界面的时候，就会自动的刷新个人中心的界面
+    [YWHttptool Post:YWLogin parameters:parameter success:^(id responseObject) {
+        NSInteger isError = [responseObject[@"isError"] integerValue];
+        if (!isError) {
+            YWUser *user = [YWUser yw_objectWithKeyValues:responseObject[@"result"]];
+            [YWUserTool saveAccount:user];
+            if ([Utils isNull:user.username]) {
+                name_label.text = user.wxname;
+            }else{
+                name_label.text = user.username;
+            }
+            ant_number.text = [NSString stringWithFormat:@"蚁币：%@",user.chmoney];
+        }
+        
+    } failure:^(NSError *error) {
+    }];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     

@@ -54,8 +54,8 @@
     
     
     //联系人
-    UILabel *name_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 74, 60, 30)];
-    name_label.font = [UIFont systemFontOfSize:14];
+    UILabel *name_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 74, 80, 30)];
+    name_label.font = [UIFont systemFontOfSize:16];
     name_label.text = @"收货人";
     [self.view addSubview:name_label];
     
@@ -71,8 +71,8 @@
     [self.view addSubview:line1];
     
     //电话
-    UILabel *phone_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 124, 60, 30)];
-    phone_label.font = [UIFont systemFontOfSize:14];
+    UILabel *phone_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 124, 80, 30)];
+    phone_label.font = [UIFont systemFontOfSize:16];
     phone_label.text = @"联系电话";
     [self.view addSubview:phone_label];
     
@@ -80,19 +80,19 @@
     phone_text.text = _addressModel.pickphone;
     phone_text.font = [UIFont systemFontOfSize:14];
     phone_text.textAlignment = NSTextAlignmentRight;
-    phone_text.borderStyle = UITextBorderStyleNone;
+    phone_text.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:phone_text];
     
     UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, 163,kScreenWidth, 1)];
     line2.backgroundColor = [UIColor colorWithWhite:0 alpha:0.1];
     [self.view addSubview:line2];
     
-    UILabel *address_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 164, 60, 30)];
-    address_label.font = [UIFont systemFontOfSize:14];
+    UILabel *address_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 174, 80, 30)];
+    address_label.font = [UIFont systemFontOfSize:16];
     address_label.text = @"所在地区";
     [self.view addSubview:address_label];
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 164, kScreenWidth-200, 30)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 174, kScreenWidth-200, 30)];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:15];
     [button addTarget:self action:@selector(pickAddress) forControlEvents:UIControlEventTouchUpInside];
@@ -100,12 +100,12 @@
     address_btn = button;
     
     //联系地址
-    UILabel *address2_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 204, 60, 30)];
+    UILabel *address2_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 214, 80, 30)];
     address2_label.font = [UIFont systemFontOfSize:14];
     address2_label.text = @"所在街道";
     [self.view addSubview:address2_label];
     
-    _feedbackTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 244, kScreenWidth-20, 100)];
+    _feedbackTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 254, kScreenWidth-20, 100)];
     if (_addressModel) {
         name_text.text = _addressModel.pickname;
         phone_text.text = _addressModel.pickphone;

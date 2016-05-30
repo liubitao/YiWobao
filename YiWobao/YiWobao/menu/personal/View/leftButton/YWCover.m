@@ -18,7 +18,7 @@
         self.alpha = 0.5;
     }
     else{
-        self.alpha = 1;
+        self.alpha = 0.5;
         self.backgroundColor = [UIColor whiteColor];
     }
 }

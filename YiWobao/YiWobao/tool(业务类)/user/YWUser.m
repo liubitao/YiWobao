@@ -8,6 +8,7 @@
 
 #import "YWUser.h"
 #import <MJExtension.h>
+
 @implementation YWUser
 // 底层便利当前的类的所有属性，一个一个归档和接档
 MJCodingImplementation

@@ -103,4 +103,22 @@
 #define YWGood             @"http://api.yiwob.com/shop/ywbapp.php/Goods/goodsList"
 #define Good               @"goods_list"
 
+//直接购买、跳转到购买界面
+#define YWGoodBuy          @"http://api.yiwob.com/shop/ywbapp.php/Member/goodsBuy"
+#define Goods_buy          @"goods_buy"
+
+//直接购买,提交表单
+#define YWGoodsOrder       @"http://api.yiwob.com/shop/ywbapp.php/Member/goodsOrder"
+#define Goods_order        @"goods_order"
+
+//取消、拒绝代付订单
+#define YWDelOrder         @"http://api.yiwob.com/shop/ywbapp.php/Member/delOrder"
+#define Del_order          @"del_order"
+
+//代付表单处理
+#define YWDoOrder          @"http://api.yiwob.com/shop/ywbapp.php/Member/doDfOrder"
+#define do_order           @"do_df_order"
+
+
+
 #endif /* WiWobao_pch */

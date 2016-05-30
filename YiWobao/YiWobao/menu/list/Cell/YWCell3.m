@@ -31,8 +31,17 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     _time.text =[dateFormatter stringFromDate: detaildate];
     
-    _money.text = [NSString stringWithFormat:@"金额：%@",model.cgmoney];
-    _mome.text = [NSString stringWithFormat:@"说明：%@",model.memo];
+    NSString *str1 = [NSString stringWithFormat:@"金额：%@",model.cgmoney];
+    NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:str1 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.f],
+                                                                                                            NSForegroundColorAttributeName:[UIColor redColor]}];
+    [string1 addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
+    
+    _money.attributedText = string1;
+    
+    NSString *str2 = [NSString stringWithFormat:@"说明：%@",model.memo];
+    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:str2 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.f],                                                                                                                                                NSForegroundColorAttributeName:[UIColor redColor]}];
+    [string2 addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
+    _mome.attributedText = string2;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

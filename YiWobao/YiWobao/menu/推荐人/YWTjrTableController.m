@@ -44,19 +44,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-        
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     YWUser *user = [YWUserTool account];
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.text = user.tjrname;
+            cell.textLabel.text = @"名字";
+            cell.detailTextLabel.text = user.tjrname;
             break;
         case 1:
-            cell.textLabel.text = user.tjrphone;
+            cell.textLabel.text = @"电话";
+            cell.detailTextLabel.text = user.tjrphone;
             break;
         case 2:
-            cell.textLabel.text = user.tjrwxname;
+            cell.textLabel.text = @"微信名";
+            cell.detailTextLabel.text = user.tjrwxname;
             break;
         default:
             break;

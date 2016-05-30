@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0C006B101CEEE6F80014B0F2 /* YWGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C006B0F1CEEE6F80014B0F2 /* YWGoodsViewController.m */; };
-		0C006B121CEEEE730014B0F2 /* detail.php in Resources */ = {isa = PBXBuildFile; fileRef = 0C006B111CEEEE730014B0F2 /* detail.php */; };
 		0C006B171CEEF69F0014B0F2 /* YWBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C006B151CEEF69F0014B0F2 /* YWBuyViewController.m */; };
 		0C130B441CE1E3B800ABCEF8 /* YWAddressEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C130B431CE1E3B800ABCEF8 /* YWAddressEditController.m */; };
 		0C1A54431CCF62C700216B7F /* YWmainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A54421CCF62C700216B7F /* YWmainViewController.m */; };
@@ -73,6 +72,7 @@
 		0CAA80671CDC35F9000126CA /* YWUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA80661CDC35F9000126CA /* YWUser.m */; };
 		0CAA806D1CDC3649000126CA /* YWHttptool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA806C1CDC3649000126CA /* YWHttptool.m */; };
 		0CAA80701CDC3CC7000126CA /* YWUserTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA806F1CDC3CC7000126CA /* YWUserTool.m */; };
+		0CCFE2DB1CF7EE0200A71D8D /* YWBuyGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCFE2DA1CF7EE0200A71D8D /* YWBuyGoods.m */; };
 		0CD33BFC1CED60F20094C53D /* CYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD33BF01CED60F20094C53D /* CYConst.m */; };
 		0CD33BFD1CED60F20094C53D /* CYPasswordInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD33BF21CED60F20094C53D /* CYPasswordInputView.m */; };
 		0CD33BFE1CED60F20094C53D /* CYPasswordView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0CD33BF31CED60F20094C53D /* CYPasswordView.bundle */; };
@@ -116,7 +116,6 @@
 /* Begin PBXFileReference section */
 		0C006B0E1CEEE6F80014B0F2 /* YWGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWGoodsViewController.h; sourceTree = "<group>"; };
 		0C006B0F1CEEE6F80014B0F2 /* YWGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWGoodsViewController.m; sourceTree = "<group>"; };
-		0C006B111CEEEE730014B0F2 /* detail.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = detail.php; sourceTree = "<group>"; };
 		0C006B141CEEF69F0014B0F2 /* YWBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWBuyViewController.h; sourceTree = "<group>"; };
 		0C006B151CEEF69F0014B0F2 /* YWBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWBuyViewController.m; sourceTree = "<group>"; };
 		0C130B421CE1E3B800ABCEF8 /* YWAddressEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWAddressEditController.h; sourceTree = "<group>"; };
@@ -239,6 +238,8 @@
 		0CAA806C1CDC3649000126CA /* YWHttptool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWHttptool.m; sourceTree = "<group>"; };
 		0CAA806E1CDC3CC7000126CA /* YWUserTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWUserTool.h; sourceTree = "<group>"; };
 		0CAA806F1CDC3CC7000126CA /* YWUserTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWUserTool.m; sourceTree = "<group>"; };
+		0CCFE2D91CF7EE0200A71D8D /* YWBuyGoods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWBuyGoods.h; sourceTree = "<group>"; };
+		0CCFE2DA1CF7EE0200A71D8D /* YWBuyGoods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWBuyGoods.m; sourceTree = "<group>"; };
 		0CD33BEF1CED60F20094C53D /* CYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYConst.h; sourceTree = "<group>"; };
 		0CD33BF01CED60F20094C53D /* CYConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYConst.m; sourceTree = "<group>"; };
 		0CD33BF11CED60F20094C53D /* CYPasswordInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYPasswordInputView.h; sourceTree = "<group>"; };
@@ -321,6 +322,8 @@
 			children = (
 				0C006B141CEEF69F0014B0F2 /* YWBuyViewController.h */,
 				0C006B151CEEF69F0014B0F2 /* YWBuyViewController.m */,
+				0CCFE2D91CF7EE0200A71D8D /* YWBuyGoods.h */,
+				0CCFE2DA1CF7EE0200A71D8D /* YWBuyGoods.m */,
 			);
 			path = "购买";
 			sourceTree = "<group>";
@@ -706,7 +709,6 @@
 		0C7EF00E1CCF566000BFC1A6 /* YiWobao */ = {
 			isa = PBXGroup;
 			children = (
-				0C006B111CEEEE730014B0F2 /* detail.php */,
 				0C9573EF1CD0BE2000BC8430 /* lib */,
 				0C9573E41CD0A9F600BC8430 /* Category */,
 				0C22543B1CD086D5006E4461 /* CustomFunc */,
@@ -1081,7 +1083,6 @@
 				0C679C8A1CEC07F1004F8FF7 /* YWCell6.xib in Resources */,
 				0C84B2941CE5D33200A0B4BE /* YWInViewController.xib in Resources */,
 				0C7EF01C1CCF566000BFC1A6 /* Assets.xcassets in Resources */,
-				0C006B121CEEEE730014B0F2 /* detail.php in Resources */,
 				0C679C941CEC08EB004F8FF7 /* YWCell3.xib in Resources */,
 				0CD33BFE1CED60F20094C53D /* CYPasswordView.bundle in Resources */,
 				0C5EEB201CE30BF400F585C3 /* RegisterController.xib in Resources */,
@@ -1188,6 +1189,7 @@
 				0CD33C061CED614D0094C53D /* MBProgressHUD+MJ.m in Sources */,
 				0C27EC671CE1AABE003BBF23 /* YWAddressFrame.m in Sources */,
 				0C27EC5F1CE182E0003BBF23 /* YWAddressModel.m in Sources */,
+				0CCFE2DB1CF7EE0200A71D8D /* YWBuyGoods.m in Sources */,
 				0CE1C36E1CEB03D000D0BE1A /* YWCell4.m in Sources */,
 				0C5EEB1F1CE30BF400F585C3 /* RegisterController.m in Sources */,
 				0CD33C0A1CEDA5190094C53D /* YWTjrTableController.m in Sources */,
@@ -1367,6 +1369,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = YiWobao/YiWobao.pch;
 				INFOPLIST_FILE = YiWobao/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1383,6 +1386,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = YiWobao/YiWobao.pch;
 				INFOPLIST_FILE = YiWobao/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

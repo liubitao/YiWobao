@@ -54,7 +54,6 @@
 
 - (void)dealloc
 {
-    CYLog(@"cy =========== %@：我走了", [self class]);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

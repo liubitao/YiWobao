@@ -9,7 +9,9 @@
 #import "YWnaviViewController.h"
 #import "YWmainViewController.h"
 
-@interface YWnaviViewController ()<UITextFieldDelegate>
+@interface YWnaviViewController ()<UITextFieldDelegate,UINavigationControllerDelegate>
+
+
 
 @end
 
@@ -18,10 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [UITextField appearance].delegate = self;
- 
+    
+    // 禁用 iOS7 返回手势
+    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
-
-
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
@@ -30,7 +34,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if (self.childViewControllers.count > 0) {
+    if (self.childViewControllers.count == 1) {
         YWmainViewController *tabarViewController = (YWmainViewController*)self.tabBarController;
         tabarViewController.tabBarView.hidden = YES;
     }
@@ -49,6 +53,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation
