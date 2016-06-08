@@ -58,6 +58,7 @@
 }
 
 -(void)_initCustomView{
+    
     // 1.移除系统控件
     self.tabBar.hidden = YES;
     //添加背景图片

@@ -20,10 +20,15 @@
 #import "MBProgressHUD+MJ.h"
 #import "YWBuyViewController.h"
 #import "YWClassViewController.h"
+#import "YWUser.h"
+#import "YWUserTool.h"
+#import <UMSocial.h>
+#import "YWViewController.h"
+#import "YWLoginViewController.h"
 
 
 
-@interface YWshoppingController ()<SDCycleScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,YWgoodsCellDelegate>{
+@interface YWshoppingController ()<SDCycleScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,YWgoodsCellDelegate,UMSocialUIDelegate>{
     YWSearchBar *searchBar;
     UITableView *_tableView;
     NSMutableArray *_dataArray;
@@ -90,10 +95,10 @@
     [self.view addSubview:view];
     
     NSArray *titles = @[@"所有商品",@"商品分类",@"转发分享",@"创业指导"];
-    NSArray *images = @[@"default－portrait",
-                        @"default－portrait",
-                        @"default－portrait",
-                        @"default－portrait"];
+    NSArray *images = @[@"ic_all_goods_72",
+                        @"ic_goods_category_72",
+                        @"ic_mall_share_72",
+                        @"ic_syb_72"];
     
     for (int i = 0; i<4; i++) {
         YWmainItemButton *button = [[YWmainItemButton alloc]initWithFrame:CGRectMake(i*itemWidth, 0, itemWidth, itemWidth)];
@@ -146,6 +151,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    YWSorts *sorts = _dataArray[section];
+    if (sorts.Goods.count<2) {
+        return sorts.Goods.count;
+    }
     return 2;
 }
 
@@ -197,7 +206,6 @@
     YWSorts *sorts = _dataArray[indexPath.section];
     buyVC.goods = sorts.Goods[indexPath.row];
     [self.navigationController pushViewController:buyVC animated:YES];
- 
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
@@ -209,8 +217,17 @@
 //点击分类
 - (void)clickBtn:(UIButton *)sender{
     switch (sender.tag) {
-        case 0:
-            
+        case 0:{
+            YWViewController *classVC = [[YWViewController alloc]init];
+            NSMutableArray *dataArray = [NSMutableArray array];
+            for (YWSorts *sorts in _dataArray) {
+                for (int i = 0 ;i< sorts.Goods.count  ;i++) {
+                    [dataArray addObject:sorts.Goods[i]];
+                }
+            }
+            classVC.dataArray = dataArray;
+            [self.navigationController pushViewController:classVC animated:YES];
+        }
             break;
         case 1:{
             YWClassViewController *classVC = [[YWClassViewController alloc]init];
@@ -219,12 +236,50 @@
         }
             break;
         case 2:
-            
+        {
+            YWUser *user = [YWUserTool account];
+            if ([Utils isNull:user]) {
+                YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
+                [self.navigationController pushViewController:loginVC animated:YES];
+                return;
+            }
+            NSMutableDictionary *parameters = [Utils paramter:Share ID:user.ID];
+            [YWHttptool   GET:YWShare parameters:parameters success:^(id responseObject) {
+                UIImage *image = [UIImage imageNamed:@"weixin_icon_xxh"];
+                NSString *str = responseObject[@"result"][@"saddr"];
+                [UMSocialData defaultData].extConfig.wechatSessionData.url = str;
+                [UMSocialData defaultData].extConfig.wechatTimelineData.url = str;
+                //调用快速分享接口
+                [UMSocialSnsService presentSnsIconSheetView:self
+                                                     appKey:@"574cf23967e58e27de0001da"
+                                                  shareText:@"蚁窝宝希望您的参与。"                                                                     shareImage:image
+                                            shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,nil]
+                                                   delegate:self];
+            } failure:^(NSError *error) {
+                
+            }];
+        }
             break;
+        case 3:
+        break;
         default:
             break;
     }
 }
+
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
+
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        [MBProgressHUD showSuccess:@"分享成功"];
+    }
+    else{
+        [MBProgressHUD showError:@"分享失败"];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

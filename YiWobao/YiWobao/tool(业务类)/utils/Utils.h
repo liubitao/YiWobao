@@ -26,4 +26,7 @@
 +(BOOL)isNull:(id)object;
 
 +(NSMutableDictionary *)paramter:(NSString *)act ID:(NSString *)ID;
+
++(UIImage *)coreBlurImage:(UIImage *)image
+           withBlurNumber:(CGFloat)blur;
 @end

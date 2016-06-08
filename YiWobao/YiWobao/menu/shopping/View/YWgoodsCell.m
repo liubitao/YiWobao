@@ -48,6 +48,8 @@
     _sale.text = [NSString stringWithFormat:@"已出售：%@",model.selnum];
 }
 - (IBAction)buy:(id)sender {
+    
+    
     if ([self.delegate respondsToSelector:@selector(coverDidClick:)]) {
         [self.delegate coverDidClick:_indexPath];
     }

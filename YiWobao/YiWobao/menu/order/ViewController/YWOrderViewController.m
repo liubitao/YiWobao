@@ -16,11 +16,13 @@
 #import "MBProgressHUD+MJ.h"
 #import "CYPasswordView.h"
 #import <NSString+MD5.h>
+#import <UMSocial.h>
+#import "YWGoods.h"
 
 #define kRequestTime 3.0f
 #define kDelay 1.0f
 
-@interface YWOrderViewController ()<YWOrderCellDelegate>
+@interface YWOrderViewController ()<YWOrderCellDelegate,UMSocialUIDelegate>
 {
     UILabel *label;
     
@@ -179,7 +181,6 @@
             [MBProgressHUD showError:@"请检查网络"];
         }];
     }else{
-        YWLog(@"分享代付码");
         if ([type isEqualToString:@"2"]) {
             __weak YWOrderViewController *weakSelf = self;
             self.passwordView = [[CYPasswordView alloc] init];
@@ -223,9 +224,38 @@
 
         };
         }
+        else{
+            YWOrderModel *orederModel = _dataArray[indexPath.section];
+            YWUser *user = [YWUserTool account];
+            NSMutableDictionary *parameters = [Utils paramter:SeeEwm ID:user.ID];
+            parameters[@"doid"] = [[orederModel.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+            //商品图片
+            YWGoods *good = orederModel.goods;
+            NSString *imageUrl = [NSString stringWithFormat:@"%@%@",YWpic,good.pic];
+            
+           //内容
+            NSString *str = [NSString stringWithFormat:@"长按二维码识别,帮我代付%@,数量：%@，总价：%@米",good.title,orederModel.num,orederModel.pmoney];
+            
+            [YWHttptool GET:YWSeeEwm parameters:parameters success:^(id responseObject) {
+                NSString *picStr = [NSString stringWithFormat:@"%@%@",YWShareCode,responseObject[@"result"]];
+               [UMSocialData defaultData].extConfig.wechatSessionData.url = picStr;
+                
+                UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage url:
+                                                    imageUrl];
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:str image:nil location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *shareResponse){
+                    if (shareResponse.responseCode == UMSResponseCodeSuccess) {
+                        [MBProgressHUD showSuccess:@"分享成功"];
+                    }
+                }];
+            } failure:^(NSError *error) {
+                [MBProgressHUD showError:@"分享失败"];
+            }];
+            
+        }
     }
         
 }
+
 
 
 

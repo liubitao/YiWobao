@@ -5,3 +5,5 @@ pod 'MD5Digest','~>1.1.0'
 pod 'MJExtension', '~> 3.0.10'
 pod 'SDWebImage', '~> 3.7.5' 
 pod 'Masonry', '~> 1.0.0'
+pod 'UMengSocialCOM', '~> 5.2.1'
+

@@ -28,6 +28,9 @@
 		0C33868D1CE46650005FBA32 /* YWOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C33868C1CE46650005FBA32 /* YWOrderModel.m */; };
 		0C3386901CE469D4005FBA32 /* YWGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C33868F1CE469D4005FBA32 /* YWGoods.m */; };
 		0C3386931CE475AB005FBA32 /* YWOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3386921CE475AB005FBA32 /* YWOrderCell.m */; };
+		0C388A2F1D0541F700DB6927 /* TabHomeRightTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A2B1D0541F700DB6927 /* TabHomeRightTableCell.m */; };
+		0C388A301D0541F700DB6927 /* YWClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A2E1D0541F700DB6927 /* YWClassViewController.m */; };
+		0C388A341D05423E00DB6927 /* YWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A331D05423E00DB6927 /* YWViewController.m */; };
 		0C5EB4F41CEB110100870E06 /* YWModel4.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5EB4F31CEB110100870E06 /* YWModel4.m */; };
 		0C5EB4F81CEB15C600870E06 /* YWCell5.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5EB4F61CEB15C600870E06 /* YWCell5.m */; };
 		0C5EB4F91CEB15C600870E06 /* YWCell5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5EB4F71CEB15C600870E06 /* YWCell5.xib */; };
@@ -39,8 +42,6 @@
 		0C673BF31CDB344F0088CA78 /* YWInformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C673BF21CDB344F0088CA78 /* YWInformationController.m */; };
 		0C673BF71CDB46A50088CA78 /* YWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C673BF61CDB46A50088CA78 /* YWLoginViewController.m */; };
 		0C673BFB1CDB49680088CA78 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C673BFA1CDB49680088CA78 /* Utils.m */; };
-		0C6740F71CF04A2F00612209 /* YWClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6740F61CF04A2F00612209 /* YWClassViewController.m */; };
-		0C6740FA1CF04A6E00612209 /* TabHomeRightTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6740F91CF04A6E00612209 /* TabHomeRightTableCell.m */; };
 		0C679C891CEC07F1004F8FF7 /* YWCell6.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C679C871CEC07F1004F8FF7 /* YWCell6.m */; };
 		0C679C8A1CEC07F1004F8FF7 /* YWCell6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C679C881CEC07F1004F8FF7 /* YWCell6.xib */; };
 		0C679C8E1CEC08BC004F8FF7 /* YWCell7.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C679C8C1CEC08BC004F8FF7 /* YWCell7.m */; };
@@ -53,7 +54,6 @@
 		0C7D43771CE07450001B3FB2 /* YWWriterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7D43761CE07450001B3FB2 /* YWWriterViewController.m */; };
 		0C7EF0111CCF566000BFC1A6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7EF0101CCF566000BFC1A6 /* main.m */; };
 		0C7EF01C1CCF566000BFC1A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C7EF01B1CCF566000BFC1A6 /* Assets.xcassets */; };
-		0C7EF01F1CCF566000BFC1A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C7EF01D1CCF566000BFC1A6 /* LaunchScreen.storyboard */; };
 		0C7EF02A1CCF566000BFC1A6 /* YiWobaoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7EF0291CCF566000BFC1A6 /* YiWobaoTests.m */; };
 		0C7EF0351CCF566000BFC1A6 /* YiWobaoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7EF0341CCF566000BFC1A6 /* YiWobaoUITests.m */; };
 		0C84B2811CE5B4C200A0B4BE /* YWListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C84B2801CE5B4C100A0B4BE /* YWListViewController.m */; };
@@ -156,6 +156,12 @@
 		0C33868F1CE469D4005FBA32 /* YWGoods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWGoods.m; sourceTree = "<group>"; };
 		0C3386911CE475AB005FBA32 /* YWOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWOrderCell.h; sourceTree = "<group>"; };
 		0C3386921CE475AB005FBA32 /* YWOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWOrderCell.m; sourceTree = "<group>"; };
+		0C388A2A1D0541F700DB6927 /* TabHomeRightTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabHomeRightTableCell.h; sourceTree = "<group>"; };
+		0C388A2B1D0541F700DB6927 /* TabHomeRightTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabHomeRightTableCell.m; sourceTree = "<group>"; };
+		0C388A2D1D0541F700DB6927 /* YWClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWClassViewController.h; sourceTree = "<group>"; };
+		0C388A2E1D0541F700DB6927 /* YWClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWClassViewController.m; sourceTree = "<group>"; };
+		0C388A321D05423E00DB6927 /* YWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWViewController.h; sourceTree = "<group>"; };
+		0C388A331D05423E00DB6927 /* YWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWViewController.m; sourceTree = "<group>"; };
 		0C5EB4F21CEB110100870E06 /* YWModel4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWModel4.h; sourceTree = "<group>"; };
 		0C5EB4F31CEB110100870E06 /* YWModel4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWModel4.m; sourceTree = "<group>"; };
 		0C5EB4F51CEB15C600870E06 /* YWCell5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCell5.h; sourceTree = "<group>"; };
@@ -176,10 +182,6 @@
 		0C673BF61CDB46A50088CA78 /* YWLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWLoginViewController.m; sourceTree = "<group>"; };
 		0C673BF91CDB49680088CA78 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		0C673BFA1CDB49680088CA78 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
-		0C6740F51CF04A2F00612209 /* YWClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWClassViewController.h; sourceTree = "<group>"; };
-		0C6740F61CF04A2F00612209 /* YWClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWClassViewController.m; sourceTree = "<group>"; };
-		0C6740F81CF04A6E00612209 /* TabHomeRightTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabHomeRightTableCell.h; sourceTree = "<group>"; };
-		0C6740F91CF04A6E00612209 /* TabHomeRightTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabHomeRightTableCell.m; sourceTree = "<group>"; };
 		0C679C861CEC07F1004F8FF7 /* YWCell6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCell6.h; sourceTree = "<group>"; };
 		0C679C871CEC07F1004F8FF7 /* YWCell6.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCell6.m; sourceTree = "<group>"; };
 		0C679C881CEC07F1004F8FF7 /* YWCell6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCell6.xib; sourceTree = "<group>"; };
@@ -199,7 +201,6 @@
 		0C7EF00C1CCF565F00BFC1A6 /* YiWobao.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiWobao.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C7EF0101CCF566000BFC1A6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0C7EF01B1CCF566000BFC1A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0C7EF01E1CCF566000BFC1A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C7EF0201CCF566000BFC1A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C7EF0251CCF566000BFC1A6 /* YiWobaoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YiWobaoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C7EF0291CCF566000BFC1A6 /* YiWobaoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YiWobaoTests.m; sourceTree = "<group>"; };
@@ -342,7 +343,8 @@
 			children = (
 				0C1A54411CCF62C700216B7F /* YWmainViewController.h */,
 				0C1A54421CCF62C700216B7F /* YWmainViewController.m */,
-				0C6740EF1CF044BB00612209 /* 分类 */,
+				0C388A311D05421A00DB6927 /* 全部的商品 */,
+				0C388A281D0541F700DB6927 /* 分类 */,
 				0C006B131CEEF4EF0014B0F2 /* 购买 */,
 				0C006B0D1CEEE6DB0014B0F2 /* 商品详情 */,
 				0CD33C251CEDBFEF0094C53D /* 搜索 */,
@@ -587,6 +589,42 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		0C388A281D0541F700DB6927 /* 分类 */ = {
+			isa = PBXGroup;
+			children = (
+				0C388A291D0541F700DB6927 /* cell */,
+				0C388A2C1D0541F700DB6927 /* viewController */,
+			);
+			path = "分类";
+			sourceTree = "<group>";
+		};
+		0C388A291D0541F700DB6927 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				0C388A2A1D0541F700DB6927 /* TabHomeRightTableCell.h */,
+				0C388A2B1D0541F700DB6927 /* TabHomeRightTableCell.m */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
+		0C388A2C1D0541F700DB6927 /* viewController */ = {
+			isa = PBXGroup;
+			children = (
+				0C388A2D1D0541F700DB6927 /* YWClassViewController.h */,
+				0C388A2E1D0541F700DB6927 /* YWClassViewController.m */,
+			);
+			path = viewController;
+			sourceTree = "<group>";
+		};
+		0C388A311D05421A00DB6927 /* 全部的商品 */ = {
+			isa = PBXGroup;
+			children = (
+				0C388A321D05423E00DB6927 /* YWViewController.h */,
+				0C388A331D05423E00DB6927 /* YWViewController.m */,
+			);
+			path = "全部的商品";
+			sourceTree = "<group>";
+		};
 		0C5EEB1A1CE30BF400F585C3 /* changePass */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,34 +682,6 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
-		0C6740EF1CF044BB00612209 /* 分类 */ = {
-			isa = PBXGroup;
-			children = (
-				0C6740F31CF04A2F00612209 /* cell */,
-				0C6740F41CF04A2F00612209 /* viewController */,
-			);
-			name = "分类";
-			path = "购买/分类";
-			sourceTree = "<group>";
-		};
-		0C6740F31CF04A2F00612209 /* cell */ = {
-			isa = PBXGroup;
-			children = (
-				0C6740F81CF04A6E00612209 /* TabHomeRightTableCell.h */,
-				0C6740F91CF04A6E00612209 /* TabHomeRightTableCell.m */,
-			);
-			path = cell;
-			sourceTree = "<group>";
-		};
-		0C6740F41CF04A2F00612209 /* viewController */ = {
-			isa = PBXGroup;
-			children = (
-				0C6740F51CF04A2F00612209 /* YWClassViewController.h */,
-				0C6740F61CF04A2F00612209 /* YWClassViewController.m */,
-			);
-			path = viewController;
-			sourceTree = "<group>";
-		};
 		0C679C951CEC471A004F8FF7 /* transfer */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,7 +727,6 @@
 				0C1A54331CCF622000216B7F /* menu */,
 				0C1A543C1CCF622000216B7F /* other */,
 				0C7EF01B1CCF566000BFC1A6 /* Assets.xcassets */,
-				0C7EF01D1CCF566000BFC1A6 /* LaunchScreen.storyboard */,
 				0C7EF0201CCF566000BFC1A6 /* Info.plist */,
 				0C1A544A1CCF674D00216B7F /* YiWobao.pch */,
 				0C7EF00F1CCF566000BFC1A6 /* Supporting Files */,
@@ -1079,7 +1088,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C5EB4F91CEB15C600870E06 /* YWCell5.xib in Resources */,
-				0C7EF01F1CCF566000BFC1A6 /* LaunchScreen.storyboard in Resources */,
 				0C679C8A1CEC07F1004F8FF7 /* YWCell6.xib in Resources */,
 				0C84B2941CE5D33200A0B4BE /* YWInViewController.xib in Resources */,
 				0C7EF01C1CCF566000BFC1A6 /* Assets.xcassets in Resources */,
@@ -1164,7 +1172,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CF4E8071CD842A700DDC120 /* YWFunctionCell.m in Sources */,
-				0C6740F71CF04A2F00612209 /* YWClassViewController.m in Sources */,
 				0C5EB4F41CEB110100870E06 /* YWModel4.m in Sources */,
 				0CAA806D1CDC3649000126CA /* YWHttptool.m in Sources */,
 				0C006B171CEEF69F0014B0F2 /* YWBuyViewController.m in Sources */,
@@ -1176,6 +1183,7 @@
 				0CA971631CD0625A00E09656 /* YWnaviViewController.m in Sources */,
 				0C673BFB1CDB49680088CA78 /* Utils.m in Sources */,
 				0C84B2811CE5B4C200A0B4BE /* YWListViewController.m in Sources */,
+				0C388A341D05423E00DB6927 /* YWViewController.m in Sources */,
 				0C25DC991CEEB4660048B1D6 /* YWSorts.m in Sources */,
 				0C5EB4F81CEB15C600870E06 /* YWCell5.m in Sources */,
 				0CAA80671CDC35F9000126CA /* YWUser.m in Sources */,
@@ -1210,7 +1218,7 @@
 				0C679C981CEC4742004F8FF7 /* YWtransferViewController.m in Sources */,
 				0C21C88D1CD2F88B00561938 /* UIImage+YWimage.m in Sources */,
 				0C130B441CE1E3B800ABCEF8 /* YWAddressEditController.m in Sources */,
-				0C6740FA1CF04A6E00612209 /* TabHomeRightTableCell.m in Sources */,
+				0C388A2F1D0541F700DB6927 /* TabHomeRightTableCell.m in Sources */,
 				0C27EC631CE1831A003BBF23 /* YWAderssCell.m in Sources */,
 				0C21C8991CD3074000561938 /* YWLeftViewController.m in Sources */,
 				0C9F28561CD9D99600E76450 /* YlListButton.m in Sources */,
@@ -1218,6 +1226,7 @@
 				0C1A54491CCF66DF00216B7F /* YWshoppingController.m in Sources */,
 				0CD33C231CEDB2AD0094C53D /* SDCycleScrollView.m in Sources */,
 				0C673BF31CDB344F0088CA78 /* YWInformationController.m in Sources */,
+				0C388A301D0541F700DB6927 /* YWClassViewController.m in Sources */,
 				0CD33BFC1CED60F20094C53D /* CYConst.m in Sources */,
 				0C7EF0111CCF566000BFC1A6 /* main.m in Sources */,
 				0CD33C241CEDB2AD0094C53D /* UIView+SDExtension.m in Sources */,
@@ -1267,17 +1276,6 @@
 			targetProxy = 0C7EF0311CCF566000BFC1A6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		0C7EF01D1CCF566000BFC1A6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0C7EF01E1CCF566000BFC1A6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		0C7EF0371CCF566000BFC1A6 /* Debug */ = {
@@ -1367,6 +1365,7 @@
 			baseConfigurationReference = EF2C9E36DEDA68893EE18D5B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -1384,6 +1383,7 @@
 			baseConfigurationReference = 5933B00DB78DF7FAAA8CB697 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;

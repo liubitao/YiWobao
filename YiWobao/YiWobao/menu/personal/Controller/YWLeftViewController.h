@@ -17,6 +17,8 @@
 @interface YWLeftViewController : UITableViewController
 @property (nonatomic,strong) NSArray *dataArray;
 
+@property (nonatomic,strong) NSArray *numberArray;
+
 @property (nonatomic,assign) id <YWLeftDelegate> delegate;
 
 

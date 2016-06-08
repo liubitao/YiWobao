@@ -432,7 +432,6 @@
     parameters[@"gid"] = [[_goods.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     parameters[@"gnum"] = [[@"1" dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool Post:YWGoodBuy parameters:parameters success:^(id responseObject) {
-        YWLog(@"%@",responseObject);
         if (![Utils isNull:responseObject[@"result"]]) {
             _buyGoods = [YWBuyGoods yw_objectWithKeyValues:responseObject[@"result"]];
             if ([Utils isNull:responseObject[@"result"][@"buyAddr"]]) {

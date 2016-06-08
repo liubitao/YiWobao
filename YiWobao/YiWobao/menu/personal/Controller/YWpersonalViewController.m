@@ -24,9 +24,13 @@
 #import "YWInViewController.h"
 #import "YWtransferViewController.h"
 #import "YWTjrTableController.h"
+#import <UMSocial.h>
+#import "MBProgressHUD+MJ.h"
 
 
-@interface YWpersonalViewController ()<YWCoverDelegate,YWLeftDelegate,YWmainViewDelegate>{
+
+
+@interface YWpersonalViewController ()<YWCoverDelegate,YWLeftDelegate,YWmainViewDelegate,UMSocialUIDelegate>{
     UILabel *ant_number;
     UILabel *name_label;
     YWCover *cover;
@@ -59,9 +63,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"会员中心";
-    self.view.backgroundColor = KviewColor;
-
-
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    YWUser *user = [YWUserTool account];
+    UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:user.userimg]]];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:0 width:kScreenWidth height:290]];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.image = [Utils coreBlurImage:image withBlurNumber:0.5];
+    imageView.clipsToBounds=YES;
+    [self.view addSubview:imageView];
+    
     //创建上面的视图
     [self createHead];
     //创建中间的视图
@@ -95,6 +106,9 @@
 }
 //创建中间的视图
 - (void)createUser{
+    //判断是否有存储在本地的数据
+    YWUser *user = [YWUserTool account];
+    
     UIView *headView = [[UIView alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:85 Y:64 width:205 height:220]];
     headView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:headView];
@@ -154,8 +168,7 @@
     all_number.textAlignment = NSTextAlignmentCenter;
     all_number.textColor = [UIColor redColor];
     [headView addSubview:all_number];
-    //判断是否有存储在本地的数据
-    YWUser *user = [YWUserTool account];
+   
     if (user) {
         [portrait sd_setImageWithURL:[NSURL URLWithString:user.userimg] placeholderImage:[UIImage imageNamed:@"default－portrait"]];
         if ([user.userkind isEqualToString:@"0"]) {
@@ -172,9 +185,17 @@
             name_label.text = user.username;
         }
         number_label.text = [NSString stringWithFormat:@"编号：%@",user.ID];
-        day_number.text = user.sr_7;
-        all_number.text = user.sr_0;
-        
+        if ([Utils isNull:user.sr_0]) {
+            day_number.text = @"+0";
+        }else{
+            all_number.text = [NSString stringWithFormat:@"+%@",user.sr_0];
+        }
+        if ([Utils isNull:user.sr_7]) {
+            all_number.text = @"+0";
+        }
+        else{
+        day_number.text = [NSString stringWithFormat:@"+%@",user.sr_7];
+        }
     }
 }
 //创建钱币UI
@@ -243,17 +264,16 @@
     mainView.showsVerticalScrollIndicator = NO;
     mainView.mainDelegate = self;
     
-    NSArray *array = @[@{@"订单" : @"0"}, // title => imageString
-                      @{@"帮我代付" : @"0"},
-                       @{@"我要代付" : @"0"},
-                       @{@"转账" : @"0"},
-                       @{@"收益记录" : @"0"},
-                       @{@"提现记录" : @"0"},
-                       @{@"支出记录":@"0"},
-                       @{@"转账记录" : @"0"},
-                       @{@"充值记录" : @"0"},
-                      
-                       @{@"转发分享" : @"0"},
+    NSArray *array = @[@{@"订单" : @"ic_me_order_72"}, 
+                      @{@"帮我代付" : @"ic_help_me_pay_72"},
+                       @{@"我要代付" : @"ic_help_other_pay_72.png"},
+                       @{@"转账" : @"ic_transfer_accounts_72"},
+                       @{@"收益记录" : @"ic_gain_recording_72"},
+                       @{@"提现记录" : @"income"},
+                       @{@"支出记录":@"ic_withdraw_recording_72"},
+                       @{@"转账记录" : @"ic_transfer_accounts_recording_72"},
+                       @{@"充值记录" : @"ic_recharge_recording_72"},
+                       @{@"转发分享" : @"ic_mall_share_72"},
                        ];
     NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:9];
     for (NSDictionary *dictionary in array) {
@@ -323,7 +343,7 @@
     } failure:^(NSError *error) {
         
     }];
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0){
         YWTjrTableController *VC = [[YWTjrTableController alloc]init];
         VC.title = _leftView.dataArray[indexPath.row];
         [self.navigationController pushViewController:VC animated:YES];
@@ -352,7 +372,22 @@
         YWtransferViewController *transferVC = [[YWtransferViewController alloc]init];
         [self.navigationController pushViewController:transferVC animated:YES];
     }else if (number == 9){
-        
+        YWUser *user = [YWUserTool account];
+        NSMutableDictionary *parameters = [Utils paramter:Share ID:user.ID];
+        [YWHttptool   GET:YWShare parameters:parameters success:^(id responseObject) {
+            UIImage *image = [UIImage imageNamed:@"weixin_icon_xxh"];
+            NSString *str = responseObject[@"result"][@"saddr"];
+            [UMSocialData defaultData].extConfig.wechatSessionData.url = str;
+            [UMSocialData defaultData].extConfig.wechatTimelineData.url = str;
+            //调用快速分享接口
+            [UMSocialSnsService presentSnsIconSheetView:self
+                                                 appKey:@"574cf23967e58e27de0001da"
+                                              shareText:@"蚁窝宝希望您的参与。"                                                                     shareImage:image
+                                        shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,nil]
+                                               delegate:self];
+        } failure:^(NSError *error) {
+            
+        }];
     }
     else{
         NSArray *array = @[@"我的订单",@"帮我代付",@"我要代付"];
@@ -388,6 +423,18 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
+}
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
+    
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        [MBProgressHUD showSuccess:@"分享成功"];
+    }
+    else{
+        [MBProgressHUD showError:@"分享失败"];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

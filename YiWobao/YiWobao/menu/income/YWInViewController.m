@@ -43,7 +43,7 @@
 
 - (void)getData{
     YWUser *user = [YWUserTool account];
-    if ([Utils isNull:user.bankname]) {
+    if ([Utils isNull:user.bankname]||[Utils isNull:user.bankname]||[Utils isNull:user.bankaccount]) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提醒" message:@"您还没有填写您的银行账号，请到设置的个人中心填写" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"知道了" style:(UIAlertActionStyleCancel) handler:nil];
         [alertController addAction:cancelAction];

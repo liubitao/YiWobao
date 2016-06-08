@@ -69,6 +69,9 @@
 //图片的前缀
 #define  YWpic              @"http://api.yiwob.com"
 
+//二维码
+#define  YWShareCode        @"http://api.yiwob.com/shop/"
+
 //提现
 #define  YWPick             @"http://api.yiwob.com/shop/ywbapp.php/Member/pickCash"
 #define  Pick               @"pick_cash"
@@ -118,6 +121,14 @@
 //代付表单处理
 #define YWDoOrder          @"http://api.yiwob.com/shop/ywbapp.php/Member/doDfOrder"
 #define do_order           @"do_df_order"
+
+//查看代付码
+#define YWSeeEwm           @"http://api.yiwob.com/shop/ywbapp.php/Member/seeEwm"
+#define SeeEwm             @"do_pay_order"
+
+//推广链接
+#define YWShare            @"http://api.yiwob.com/shop/ywbapp.php/Member/shareMe"
+#define Share              @"share_me"
 
 
 
