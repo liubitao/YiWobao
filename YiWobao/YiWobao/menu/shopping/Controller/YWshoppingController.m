@@ -173,7 +173,7 @@
     UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
     YWSorts *sorts = _dataArray[section];
     title.text = sorts.title;
-    title.textColor = [UIColor greenColor];
+    title.textColor = [UIColor orangeColor];
     title.font = [UIFont systemFontOfSize:20];
     title.textAlignment = NSTextAlignmentCenter;
     [view addSubview:title];

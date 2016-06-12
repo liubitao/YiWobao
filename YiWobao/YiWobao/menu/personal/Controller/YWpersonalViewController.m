@@ -26,7 +26,8 @@
 #import "YWTjrTableController.h"
 #import <UMSocial.h>
 #import "MBProgressHUD+MJ.h"
-
+#import "YWNextPerson.h"
+#import "YWNextViewController.h"
 
 
 
@@ -53,9 +54,27 @@
 
 -(YWLeftViewController*)leftView{
     if (_leftView == nil) {
+        YWUser *user = [YWUserTool account];
         _leftView = [[YWLeftViewController alloc]init];
         _leftView.delegate = self;
-        _leftView.dataArray = @[@"我的推荐人",@"总裁",@"总监",@"经理"];
+        _leftView.dataArray = [NSMutableArray array];
+        [_leftView.dataArray addObject:@"我的推荐人"];
+        if ([Utils isNull:user.zc_g1]) {
+            [_leftView.dataArray addObject:@"总裁(0)"];
+        }else{
+        [_leftView.dataArray addObject:[NSString stringWithFormat:@"总裁(%@)",user.zc_g1]];
+        }
+        if ([Utils isNull:user.zc_g2]) {
+            [_leftView.dataArray addObject:@"总监(0)"];
+        }else{
+            [_leftView.dataArray addObject:[NSString stringWithFormat:@"总监(%@)",user.zc_g2]];
+        }
+        if ([Utils isNull:user.zc_g3]) {
+            [_leftView.dataArray addObject:@"经理(0)"];
+        }else{
+            [_leftView.dataArray addObject:[NSString stringWithFormat:@"经理(%@)",user.zc_g3]];
+        }
+       
     }
     return _leftView;
 }
@@ -333,24 +352,26 @@
     //隐藏蒙版
     [cover removeFromSuperview];
     [self coverDidClickCover:cover];
-    
-    YWUser *user = [YWUserTool account];
-    NSMutableDictionary *paramter = [Utils paramter:List ID:user.ID];
-    NSString *str = [NSString stringWithFormat:@"%ld",indexPath.row+1];
-    paramter[@"zkd"] = [[str dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-    [YWHttptool GET:YWList parameters:paramter success:^(id responseObject) {
-        YWLog(@"%@",responseObject);
-    } failure:^(NSError *error) {
-        
-    }];
     if (indexPath.row == 0){
         YWTjrTableController *VC = [[YWTjrTableController alloc]init];
         VC.title = _leftView.dataArray[indexPath.row];
         [self.navigationController pushViewController:VC animated:YES];
-    }else{
-        
+        return;
     }
-   
+    YWUser *user = [YWUserTool account];
+    NSMutableDictionary *paramter = [Utils paramter:List ID:user.ID];
+    NSString *str = [NSString stringWithFormat:@"%ld",indexPath.row];
+    paramter[@"zkd"] = [[str dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+    [YWHttptool GET:YWList parameters:paramter success:^(id responseObject) {
+        NSMutableArray *dataArray = [YWNextPerson yw_objectWithKeyValuesArray:responseObject[@"result"]];
+        YWNextViewController *VC = [[YWNextViewController alloc]init];
+        NSArray *array = @[@"总裁",@"总监",@"经理"];
+        VC.title = array[indexPath.row];
+        VC.dataArray = dataArray;
+        [self.navigationController pushViewController:VC animated:YES];
+        
+    } failure:^(NSError *error) {
+    }];
 }
 
 

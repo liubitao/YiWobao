@@ -82,11 +82,11 @@
 
 @property (nonatomic,copy) NSString *sr_0;//总收益
 
-@property (nonatomic,copy) NSArray *zc_g1;//总裁数
+@property (nonatomic,copy) NSString *zc_g1;//总裁数
 
-@property (nonatomic,copy) NSArray *zc_g2;
+@property (nonatomic,copy) NSString *zc_g2;
 
-@property (nonatomic,copy) NSArray *zc_g3;
+@property (nonatomic,copy) NSString *zc_g3;
 
 
 
