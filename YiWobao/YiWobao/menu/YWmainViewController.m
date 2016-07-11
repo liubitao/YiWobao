@@ -64,13 +64,17 @@
     //添加背景图片
     _tabBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, KscreenHeight-49, kScreenWidth, 49)];
     _tabBarView.userInteractionEnabled = YES;
-    _tabBarView.backgroundColor = [UIColor whiteColor];
+    _tabBarView.backgroundColor = [UIColor colorWithHexString:@"3E3A39"];
     [self.view addSubview:_tabBarView];
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2, 10, 1, 49-20)];
+    line.backgroundColor = [UIColor whiteColor];
+    [_tabBarView addSubview:line];
     
     //创建标签控制器上面的按钮
     NSArray *imageNames = @[@"tabbar_home",@"tabbar_profile"];
     NSArray *selectImageNames = @[@"tabbar_home_selected",@"tabbar_profile_selected"];
-    NSArray *titles = @[@"蚁窝商城",@"会员中心"];
+    NSArray *titles = @[@"蚁窝商城",@"个人中心"];
     float width = kScreenWidth/imageNames.count;
     for (int i = 0 ; i<imageNames.count; i++) {
         YWItemView *itemView = [[YWItemView alloc] initWithFrame:CGRectMake(i*width, 0.f, width, 49.f)];

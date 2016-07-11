@@ -47,13 +47,13 @@
     /** 注册取消按钮点击的通知 */
     [CYNotificationCenter addObserver:self selector:@selector(cancel) name:CYPasswordViewCancleButtonClickNotification object:nil];
     [CYNotificationCenter addObserver:self selector:@selector(forgetPWD) name:CYPasswordViewForgetPWDButtonClickNotification object:nil];
-   
+    
     
 }
 
 //取消
 - (void)cancel{
-     [MBProgressHUD showSuccess:@"关闭密码框"];
+    [MBProgressHUD showSuccess:@"关闭密码框"];
 }
 
 //忘记支付密码
@@ -67,49 +67,88 @@
 }
 
 - (IBAction)turnMoney:(id)sender {
-    __weak YWTurnViewController *weakSelf = self;
-    self.passwordView = [[CYPasswordView alloc] init];
-    self.passwordView.title = @"输入交易密码";
-    self.passwordView.loadingText = @"提交中...";
-    [self.passwordView showInView:self.view.window];
-    self.passwordView.finish = ^(NSString *password) {
-        [weakSelf.passwordView hideKeyboard];
-        [weakSelf.passwordView startLoading];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kRequestTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            YWUser *user = [YWUserTool account];
-            NSMutableDictionary *paramters = [Utils paramter:Trans ID:user.ID];
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            dict[@"tbh"] = weakSelf.user.ID;
-            dict[@"tje"] = weakSelf.money_text.text;
-            dict[@"tpaypwd"] = [password MD5Digest];
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
-            NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            paramters[@"transarr"] = str;
-            [YWHttptool Post:YWTrans parameters:paramters success:^(id responseObject) {
-                NSInteger isError = [responseObject[@"isError"] integerValue];
-                if (!isError) {
-                    [MBProgressHUD showSuccess:@"转账成功"];
-                    [weakSelf.passwordView requestComplete:YES message:@"转账成功"];
-                    [weakSelf.passwordView stopLoading];
-                        [weakSelf.passwordView hide];
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
-                }
-                else{
-                    [MBProgressHUD showError:responseObject[@"errorMessage"]];
-                    [weakSelf.passwordView requestComplete:NO message:responseObject[@"errorMessage"]];
-                    [weakSelf.passwordView stopLoading];
-                    [weakSelf.passwordView hide];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    //增加确定按钮；
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [MBProgressHUD showMessage:@"正在支付" toView:self.view];
+        YWUser *user = [YWUserTool account];
+        NSMutableDictionary *paramters = [Utils paramter:Trans ID:user.ID];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[@"tbh"] = self.user.ID;
+        dict[@"tje"] = self.money_text.text;
+        dict[@"tpaypwd"] = [alertController.textFields[0].text MD5Digest];
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        paramters[@"transarr"] = str;
+        [YWHttptool Post:YWTrans parameters:paramters success:^(id responseObject) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            NSInteger isError = [responseObject[@"isError"] integerValue];
+            if (!isError) {
+                [MBProgressHUD showSuccess:@"转账成功"];
+            }
+            else{
+                [MBProgressHUD showError:responseObject[@"errorMessage"] toView:self.view];
+            }
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:@"请检查网络" toView:self.view];
+        }];
+        
+    }]];
+    //增加取消按钮；
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     
-                }
-            } failure:^(NSError *error) {
-                
-            }];
-        });
-    };
-
+    //定义第一个输入框；
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入支付密码";
+        textField.secureTextEntry = YES;
+        textField.font = [UIFont systemFontOfSize:20];
+        textField.borderStyle = UITextBorderStyleNone;
+    }];
+    [self presentViewController:alertController animated:true completion:nil];
+    //    __weak YWTurnViewController *weakSelf = self;
+    //    self.passwordView = [[CYPasswordView alloc] init];
+    //    self.passwordView.title = @"输入交易密码";
+    //    self.passwordView.loadingText = @"提交中...";
+    //    [self.passwordView showInView:self.view.window];
+    //    self.passwordView.finish = ^(NSString *password) {
+    //        [weakSelf.passwordView hideKeyboard];
+    //        [weakSelf.passwordView startLoading];
+    //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kRequestTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //            YWUser *user = [YWUserTool account];
+    //            NSMutableDictionary *paramters = [Utils paramter:Trans ID:user.ID];
+    //            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    //            dict[@"tbh"] = weakSelf.user.ID;
+    //            dict[@"tje"] = weakSelf.money_text.text;
+    //            dict[@"tpaypwd"] = [password MD5Digest];
+    //            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+    //            NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    //            paramters[@"transarr"] = str;
+    //            [YWHttptool Post:YWTrans parameters:paramters success:^(id responseObject) {
+    //                NSInteger isError = [responseObject[@"isError"] integerValue];
+    //                if (!isError) {
+    //                    [MBProgressHUD showSuccess:@"转账成功"];
+    //                    [weakSelf.passwordView requestComplete:YES message:@"转账成功"];
+    //                    [weakSelf.passwordView stopLoading];
+    //                        [weakSelf.passwordView hide];
+    //                    [weakSelf.navigationController popViewControllerAnimated:YES];
+    //                }
+    //                else{
+    //                    [MBProgressHUD showError:responseObject[@"errorMessage"]];
+    //                    [weakSelf.passwordView requestComplete:NO message:responseObject[@"errorMessage"]];
+    //                    [weakSelf.passwordView stopLoading];
+    //                    [weakSelf.passwordView hide];
+    //
+    //                }
+    //            } failure:^(NSError *error) {
+    //
+    //            }];
+    //        });
+    //    };
     
     
-   
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -118,13 +157,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

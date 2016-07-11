@@ -21,4 +21,5 @@
 + (UIImage *)imageWithColor:(UIColor *)color;
 
 
+- (UIImage *)blurredImageWithRadius:(CGFloat)radius iterations:(NSUInteger)iterations tintColor:(UIColor *)tintColor;
 @end

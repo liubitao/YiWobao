@@ -14,6 +14,9 @@
 #import "MBProgressHUD+MJ.h"
 #import "YWBuyViewController.h"
 #import "YWSorts.h"
+#import "YWLoginViewController.h"
+#import "YWUserTool.h"
+
 
 @interface SearchViewController ()<UIGestureRecognizerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,YWgoodsCellDelegate>
 {
@@ -43,7 +46,8 @@
     _searchView = [[UISearchBar alloc]init];
     _searchView.barStyle = UIBarStyleDefault;
     _searchView.backgroundColor = [UIColor clearColor];
-    _searchView.placeholder = @"请输入地点";
+    _searchView.placeholder = @"请输入商品";
+
     for (UIView *view in _searchView.subviews) {
         if ([view isKindOfClass:NSClassFromString(@"UIView")] && view.subviews.count > 0) {
             [[view.subviews objectAtIndex:0] removeFromSuperview];
@@ -123,7 +127,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 90;
+    return 100;
 }
 
 
@@ -135,6 +139,11 @@
 }
 
 - (void)coverDidClick:(NSIndexPath *)indexPath{
+    if (![YWUserTool account]) {
+        YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
+        [self presentViewController:loginVC animated:YES completion:nil];
+        return;
+    }
     YWBuyViewController *buyVC = [[YWBuyViewController alloc]init];
     YWSorts *sorts = _dataArray[indexPath.section];
     buyVC.goods = sorts.Goods[indexPath.row];

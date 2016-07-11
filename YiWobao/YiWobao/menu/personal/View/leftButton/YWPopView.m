@@ -8,7 +8,7 @@
 
 #import "YWPopView.h"
 #import "UIImage+YWimage.h"
-
+#import "YWCover.h"
 @implementation YWPopView
 
 // 显示弹出菜单
@@ -16,19 +16,32 @@
 {
     YWPopView *menu = [[YWPopView alloc] initWithFrame:rect];
     menu.userInteractionEnabled = YES;
-    menu.image = [UIImage imageWithStretchableName:@"popover_background_left"];
-    
     [YWKeyWindow addSubview:menu];
+    if (rect.size.height == 0) {
+        [menu mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(YWKeyWindow);
+            make.left.equalTo(YWKeyWindow).with.offset(30);
+            make.right.equalTo(YWKeyWindow).with.offset(-30);
+            make.height.mas_equalTo(@220);
+        }];
+    }
+  
     
     return menu;
 }
 
 // 隐藏弹出菜单
-+ (void)hide
-{
++ (void)hide{
     for (UIView *popMenu in YWKeyWindow.subviews) {
         if ([popMenu isKindOfClass:self]) {
-            [popMenu removeFromSuperview];
+            [UIView animateWithDuration:0.5
+                             animations:^{
+                                 popMenu.transform = CGAffineTransformMakeScale(0.01, 0.01);
+                             } completion:^(BOOL finished) {
+                                 if (finished) {
+                                     [popMenu removeFromSuperview];
+                                 }
+                             }];
         }
     }
 }
@@ -40,7 +53,7 @@
     [_contentView removeFromSuperview];
     
     _contentView = contentView;
-    contentView.backgroundColor = [UIColor clearColor];
+    contentView.backgroundColor = [UIColor whiteColor];
     
     [self addSubview:contentView];
     

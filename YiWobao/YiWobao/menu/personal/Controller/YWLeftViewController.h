@@ -14,7 +14,7 @@
 
 @end
 
-@interface YWLeftViewController : UITableViewController
+@interface YWLeftViewController : UIViewController
 @property (nonatomic,strong) NSMutableArray *dataArray;
 
 @property (nonatomic,strong) NSArray *numberArray;

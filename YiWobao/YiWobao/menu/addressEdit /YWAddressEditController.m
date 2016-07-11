@@ -15,7 +15,7 @@
 #import "CityPickView.h"
 #import <MBProgressHUD.h>
 
-@interface YWAddressEditController ()<UIGestureRecognizerDelegate,CityPickViewDelegate>{
+@interface YWAddressEditController ()<UIGestureRecognizerDelegate,CityPickViewDelegate,UITextViewDelegate>{
     UITextField *name_text;
     UITextField *phone_text;
     UIButton *address_btn;
@@ -59,11 +59,19 @@
     name_label.text = @"收货人";
     [self.view addSubview:name_label];
     
+    YWUser *user = [YWUserTool account];
+    
     name_text = [[UITextField alloc]initWithFrame:CGRectMake(130, 74, kScreenWidth-150, 30)];
     name_text.text = _addressModel.pickname;
     name_text.font = [UIFont systemFontOfSize:14];
     name_text.textAlignment = NSTextAlignmentRight;
     name_text.borderStyle = UITextBorderStyleNone;
+    if (![Utils isNull:user.username]) {
+        name_text.text = user.username;
+    }else{
+        name_text.text = user.wxname;
+    }
+    
     [self.view addSubview:name_text];
     
     UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(0, 113,kScreenWidth, 1)];
@@ -74,6 +82,7 @@
     UILabel *phone_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 124, 80, 30)];
     phone_label.font = [UIFont systemFontOfSize:16];
     phone_label.text = @"联系电话";
+  
     [self.view addSubview:phone_label];
     
     phone_text = [[UITextField alloc]initWithFrame:CGRectMake(130, 124, kScreenWidth-150, 30)];
@@ -81,6 +90,9 @@
     phone_text.font = [UIFont systemFontOfSize:14];
     phone_text.textAlignment = NSTextAlignmentRight;
     phone_text.keyboardType = UIKeyboardTypeNumberPad;
+    if (![Utils isNull:user.phone]) {
+        phone_text.text = user.phone;
+    }
     [self.view addSubview:phone_text];
     
     UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, 163,kScreenWidth, 1)];
@@ -106,6 +118,8 @@
     [self.view addSubview:address2_label];
     
     _feedbackTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 254, kScreenWidth-20, 100)];
+    _feedbackTextView.delegate = self;
+    _feedbackTextView.textColor = [UIColor colorWithWhite:0.6 alpha:0.6];
     if (_addressModel) {
         name_text.text = _addressModel.pickname;
         phone_text.text = _addressModel.pickphone;
@@ -181,6 +195,38 @@
     }];
     [self.navigationController popViewControllerAnimated:YES];
     }
+}
+/**实现place holder效果,开始编辑时,清除hint
+ */
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    //	NSLog(@"开始编辑");
+    
+    if ([textView.text isEqualToString:@"请填写详细地址，不少于5个字"]) {
+        textView.text = @"";
+    }
+    textView.textColor = [UIColor blackColor];
+}
+
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    //	NSLog(@"结束编辑");
+    
+    if (textView.text.length == 0) {
+        textView.text = @"请填写详细地址，不少于5个字";
+        textView.textColor = [UIColor colorWithWhite:0.6 alpha:0.6];
+    }
+}
+
+/**当点击回车时,结束输入,键盘收起
+ */
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]){
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 //确定这个手势是否可以实现

@@ -34,7 +34,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = KviewColor;
     self.title = @"地址管理";
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -20, kScreenWidth, KscreenHeight) style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, KscreenHeight-50-64) style:UITableViewStyleGrouped];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -45,8 +45,8 @@
     
     //添加添加按钮
     UIButton *exitButton = [[UIButton alloc]initWithFrame:CGRectMake(0, KscreenHeight-50, kScreenWidth, 50)];
-    exitButton.backgroundColor = [UIColor redColor];
-    [exitButton setTitle:@"添加地址" forState:UIControlStateNormal];
+    exitButton.backgroundColor = KthemeColor;
+    [exitButton setTitle:@"添加新地址" forState:UIControlStateNormal];
     [exitButton setBackgroundImage:[UIImage imageWithColor:[UIColor grayColor]] forState:UIControlStateHighlighted];
     [exitButton addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:exitButton];
@@ -118,6 +118,9 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.1;
+}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -134,9 +137,13 @@
     switch (tag) {
         case 1:
         {
-            [_lastCell.defaultButoon setImage:[UIImage imageNamed:@"0"] forState:UIControlStateNormal];
+            [_lastCell.defaultButoon setImage:[UIImage imageNamed:@"4"] forState:UIControlStateNormal];
+            [_lastCell.defaultButoon setTitle:@"设为默认" forState:UIControlStateNormal];
+            [_lastCell.defaultButoon setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             YWAderssCell *cell = [self.tableView cellForRowAtIndexPath:indexpath];
-            [cell.defaultButoon setImage:[UIImage imageNamed:@"tabbar_profile"] forState:UIControlStateNormal];
+            [cell.defaultButoon setImage:[UIImage imageNamed:@"3"] forState:UIControlStateNormal];
+            [cell.defaultButoon setTitle:@"默认地址" forState:UIControlStateNormal];
+            [cell.defaultButoon setTitleColor:KthemeColor forState:UIControlStateNormal];
             _lastCell = cell;
             [self setOrdelete:[NSString stringWithFormat:@"%ld",tag] indexpath:indexpath];
         }

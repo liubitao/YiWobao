@@ -78,6 +78,8 @@
 
 @property (nonatomic,copy) NSString *tjrwxname;//推荐人的微信名
 
+@property (nonatomic,copy) NSString *pid;//顶级id
+
 @property (nonatomic,copy) NSString *sr_7;//七天收益
 
 @property (nonatomic,copy) NSString *sr_0;//总收益

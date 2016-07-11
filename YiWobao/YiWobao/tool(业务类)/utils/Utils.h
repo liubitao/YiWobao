@@ -27,6 +27,5 @@
 
 +(NSMutableDictionary *)paramter:(NSString *)act ID:(NSString *)ID;
 
-+(UIImage *)coreBlurImage:(UIImage *)image
-           withBlurNumber:(CGFloat)blur;
++ (CGFloat)labelWidth:(NSString *)text font:(NSInteger)font;
 @end

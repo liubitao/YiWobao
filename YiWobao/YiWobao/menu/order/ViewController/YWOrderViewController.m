@@ -36,7 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = KviewColor;
+    self.view.backgroundColor = [UIColor colorWithHexString:@"E5E6E6"];;
     _dataArray = [NSMutableArray array];
     
     self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
@@ -54,11 +54,13 @@
 }
 
 - (void)request{
+    [MBProgressHUD showMessage:@"正在获取数据" toView:self.tableView];
     label.hidden = YES;
     YWUser *user = [YWUserTool account];
     NSMutableDictionary *paramter = [Utils paramter:Trlist ID:user.ID];
     paramter[@"okd"] = [[_type dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWOrderList parameters:paramter success:^(id responseObject) {
+        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {
             [_dataArray removeAllObjects];
@@ -78,7 +80,7 @@
             
         }
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
         [MBProgressHUD showError:@"请检查网络"];
     }];
 }
@@ -145,9 +147,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     YWOrderModel *orederModel = _dataArray[indexPath.section];
     if ([orederModel.paystatus isEqualToString:@"0"] && [orederModel.paykind isEqualToString:@"2"]) {
-        return 150;
+        return 164;
     }
-    return  120;
+    return  125;
     
 }
 
@@ -156,7 +158,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 5;
+    return 0.1;
 }
 
 - (void)changeState:(NSIndexPath *)indexPath tag:(NSInteger)tag type:(NSString *)type{

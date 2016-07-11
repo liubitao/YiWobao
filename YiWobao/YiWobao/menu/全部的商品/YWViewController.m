@@ -11,6 +11,9 @@
 #import "YWSorts.h"
 #import "YWBuyViewController.h"
 #import "YWGoodsViewController.h"
+#import "YWUserTool.h"
+#import "YWLoginViewController.h"
+#import "YWnaviViewController.h"
 
 
 @interface YWViewController ()<UITableViewDelegate,UITableViewDataSource,YWgoodsCellDelegate>{
@@ -48,22 +51,26 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 90;
+    return 100;
     
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
-    YWSorts *sorts = _dataArray[indexPath.section];
-    goodsVC.Goods = sorts.Goods[indexPath.row];
+    goodsVC.Goods = _dataArray[indexPath.row];
     [self.navigationController pushViewController:goodsVC animated:YES];
+    
 }
 
 - (void)coverDidClick:(NSIndexPath *)indexPath{
+    if (![YWUserTool account]) {
+        YWnaviViewController *loginVC = [[YWnaviViewController alloc]initWithRootViewController:[[YWLoginViewController alloc]init]];
+        [self presentViewController:loginVC animated:YES completion:nil];
+        return;
+    }
     YWBuyViewController *buyVC = [[YWBuyViewController alloc]init];
-    YWSorts *sorts = _dataArray[indexPath.section];
-    buyVC.goods = sorts.Goods[indexPath.row];
+    buyVC.goods = _dataArray[indexPath.row];
     [self.navigationController pushViewController:buyVC animated:YES];
 }
 

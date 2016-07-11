@@ -50,5 +50,6 @@
 
 @property (nonatomic,strong) NSString *gid;
 
+
 + (instancetype)yw_objectWithKeyValues:(NSDictionary*)dict;
 @end

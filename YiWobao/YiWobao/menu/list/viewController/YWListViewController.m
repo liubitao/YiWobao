@@ -52,12 +52,12 @@
 
 - (void)request{
     label.hidden = YES;
-    [MBProgressHUD showMessage:@"正在获取数据"];
+    [MBProgressHUD showMessage:@"正在获取数据" toView:self.tableView];
     YWUser *user = [YWUserTool account];
     NSMutableDictionary *paramter = [Utils paramter:Trlist ID:user.ID];
     paramter[@"tkd"] = [[_type dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWTrlist parameters:paramter success:^(id responseObject) {
-        YWLog(@"%@",responseObject);
+        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {
             NSArray *array = responseObject[@"result"];
@@ -69,14 +69,12 @@
                     [_dataArray addObject:model4];
                 }
                 [self.tableView reloadData];
-               
             }
-             [MBProgressHUD hideHUDForView:nil];
         }else{
              [MBProgressHUD showError:@"获取失败"];
         }
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
         [MBProgressHUD showError:@"请检查网络"];
     }];
 }
@@ -84,9 +82,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
-
 
 #pragma mark - Table view data source
 
@@ -107,15 +102,15 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
+    return 87;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
+    return 0.1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 5;
+    return 10;
 }
 
 @end

@@ -62,13 +62,15 @@
     _line = line;
     
     //创建默认按钮
-    UIButton *default_btn = [[UIButton alloc]initWithFrame:CGRectZero];
+    UIButton *default_btn = [UIButton buttonWithType:UIButtonTypeCustom];
     default_btn.tag = 1;
     default_btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [default_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [default_btn setTitle:@"默认地址" forState:UIControlStateNormal];
-    [default_btn setImage:[UIImage imageNamed:@"0"] forState:UIControlStateNormal];
+    default_btn.titleLabel.textAlignment = NSTextAlignmentRight;
+    [default_btn setImage:[UIImage imageNamed:@"4"] forState:UIControlStateNormal];
     [default_btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
+    default_btn.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
     [self.contentView addSubview:default_btn];
     _defaultButoon = default_btn;
     
@@ -78,7 +80,7 @@
     editor_btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [editor_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [editor_btn setTitle:@"编辑" forState:UIControlStateNormal];
-    [editor_btn setImage:[UIImage imageNamed:@"ic_mode_edit"] forState:UIControlStateNormal];
+    [editor_btn setTitleColor:KthemeColor  forState:UIControlStateHighlighted];
     [editor_btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:editor_btn];
     _editorButton = editor_btn;
@@ -88,8 +90,8 @@
     delete_btn.tag = 3;
     delete_btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [delete_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [delete_btn setTitleColor:KthemeColor  forState:UIControlStateHighlighted];
     [delete_btn setTitle:@"删除" forState:UIControlStateNormal];
-    [delete_btn setImage:[UIImage imageNamed:@"ic_delete"] forState:UIControlStateNormal];
     [delete_btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:delete_btn];
     _deleteButton = delete_btn;
@@ -118,7 +120,8 @@
     
     _defaultButoon.frame = addressFrame.defalutFrame;
     if ([model.isselect isEqualToString:@"1"]) {
-        [_defaultButoon setImage:[UIImage imageNamed:@"tabbar_profile"] forState:UIControlStateNormal];
+        [_defaultButoon setImage:[UIImage imageNamed:@"3"] forState:UIControlStateNormal];
+        [_defaultButoon setTitleColor:KthemeColor forState:UIControlStateNormal];
     }
     
     _editorButton.frame = addressFrame.editorFrame;

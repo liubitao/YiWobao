@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *cardMan;
 @property (weak, nonatomic) IBOutlet UILabel *cardAccount;
 @property (weak, nonatomic) IBOutlet UITextField *number;
+@property (weak, nonatomic) IBOutlet UIButton *inCome;
 
 @end
 
@@ -30,6 +31,10 @@
     [super viewDidLoad];
     self.title = @"提现";
     self.view.backgroundColor = KviewColor;
+    
+    _inCome.layer.masksToBounds = YES;
+    _inCome.layer.cornerRadius = 5;
+    
     //获取数据
     [self getData];
     

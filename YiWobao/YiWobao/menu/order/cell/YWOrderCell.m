@@ -10,6 +10,8 @@
 #import "YWOrderModel.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "YWGoods.h"
+#import "Utils.h"
+
 @interface YWOrderCell ()
 
 @property (nonatomic,weak) UILabel *time_label;
@@ -22,6 +24,7 @@
 @property (nonatomic,weak) UIButton *pay;
 @property (nonatomic,weak) UILabel *number;
 @property (nonatomic,weak) UIButton *share_btn;
+@property (nonatomic,weak) UILabel *total;
 
 @property (nonatomic,assign) BOOL change;
 
@@ -41,75 +44,92 @@
 
 - (void)_initSubViews{
     //时间
-    UILabel *time_label = [[UILabel alloc]initWithFrame:CGRectMake(10,10, 200, 20)];
-    time_label.font = [UIFont systemFontOfSize:14];
+    UILabel *time_label = [[UILabel alloc]initWithFrame:CGRectMake(20,5, 200, 15)];
+    time_label.font = [UIFont systemFontOfSize:13];
+    time_label.textColor = [UIColor colorWithHexString:@"221814"];
     [self.contentView addSubview:time_label];
     _time_label = time_label;
     
     //支付状态
-    UILabel *paystatus_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-110, 10, 100, 20)];
-    paystatus_label.textColor = [UIColor orangeColor];
+    UILabel *paystatus_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-120, 5, 100, 15)];
     paystatus_label.textAlignment = NSTextAlignmentRight;
     paystatus_label.font = [UIFont systemFontOfSize:14];
+    paystatus_label.textColor = [UIColor colorWithHexString:@"221814"];
     [self.contentView addSubview:paystatus_label];
     _paystatus = paystatus_label;
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 30, kScreenWidth, 60)];
-    view.backgroundColor = KviewColor;
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 25, kScreenWidth, 70)];
+    view.backgroundColor = [UIColor colorWithHexString:@"F7F7F7"];
     [self.contentView addSubview:view];
     
     //商品图片
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 70, 60)];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 5, 66, 60)];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
     [view addSubview:imageView];
     _picView = imageView;
     
     //商品名称
-    UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(90, 0, 150, 60)];
+    UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(97, 9, 150, 55)];
     title_label.scrollEnabled = NO;
     title_label.editable = NO;
     title_label.backgroundColor = [UIColor clearColor];
-    title_label.font = [UIFont systemFontOfSize:15];
+    title_label.font = [UIFont systemFontOfSize:13];
+    title_label.textColor = [UIColor colorWithHexString:@"221814"];
     [view addSubview:title_label];
     _title = title_label;
     
     //原始价格
-    UILabel *price_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-100, 0, 80, 30)];
+    UILabel *price_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-105, 33, 85, 15)];
     price_label.textAlignment = NSTextAlignmentRight;
-    price_label.font = [UIFont systemFontOfSize:20];
     [view addSubview:price_label];
     _price = price_label;
     
     //折后价格
-    UILabel *selprice_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-100, 30, 80, 30)];
+    UILabel *selprice_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-105, 12, 85, 15)];
     selprice_label.textAlignment = NSTextAlignmentRight;
+    price_label.font = [UIFont systemFontOfSize:13];
     [view addSubview:selprice_label];
     _selprice = selprice_label;
     
-    //数量及总价
-    UILabel *number_label = [[UILabel alloc]initWithFrame:CGRectMake(0, 90, kScreenWidth-20, 20)];
+    //数量
+    UILabel *number_label = [[UILabel alloc]initWithFrame:CGRectZero];
     number_label.textAlignment = NSTextAlignmentRight;
-    number_label.font = [UIFont systemFontOfSize:14];
+    number_label.font = [UIFont systemFontOfSize:13];
     [self.contentView addSubview:number_label];
     _number = number_label;
+    
+    //总价
+    UILabel *total_label = [[UILabel alloc]initWithFrame:CGRectZero];
+    total_label.textAlignment = NSTextAlignmentRight;
+    total_label.font = [UIFont systemFontOfSize:13];
+    [self.contentView addSubview:total_label];
+    _total = total_label;
+    
+    UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(0, 26, kScreenWidth, 1)];
+    line1.backgroundColor = [UIColor colorWithHexString:@"717071" withAlpha:0.5];
+    [self.contentView addSubview:line1];
+    
+    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, 95, kScreenWidth, 1)];
+    line2.backgroundColor = [UIColor colorWithHexString:@"717071" withAlpha:0.5];
+    [self.contentView addSubview:line2];
     
     if ([self.reuseIdentifier isEqualToString:@"orderCell1"]) {
         [self createTilte1:@"取消订单" title2:@"分享代付码"];
     }else if ([self.reuseIdentifier isEqualToString:@"orderCell3"]){
         [self createTilte1:@"拒绝代付" title2:@"确认代付"];
     }
-    
+
 }
 
 - (void)createTilte1:(NSString *)str1 title2:(NSString *)str2{
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 115, kScreenWidth, 1)];
-    line.backgroundColor = KviewColor;
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 127, kScreenWidth, 1)];
+    line.backgroundColor = [UIColor colorWithHexString:@"717071" withAlpha:0.5];
     [self.contentView addSubview:line];
     //取消
-    UIButton *cancel_button = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-200, 120,80, 20)];
-    cancel_button.titleLabel.font = [UIFont systemFontOfSize:15];
-    [cancel_button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    cancel_button.layer.borderColor = [[UIColor redColor]CGColor];
+    UIButton *cancel_button = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-172, 135,60, 20)];
+    cancel_button.titleLabel.font = [UIFont systemFontOfSize:13];
+    [cancel_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    cancel_button.layer.borderColor = [[UIColor blackColor]CGColor];
     cancel_button.layer.borderWidth = 1;
     cancel_button.layer.cornerRadius = 5;
     cancel_button.layer.masksToBounds = YES;
@@ -121,10 +141,10 @@
     _cancel = cancel_button;
     
     //分享代付码
-    UIButton *share_button = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-100, 120, 80, 20)];
-    share_button.titleLabel.font = [UIFont systemFontOfSize:15];
-    [share_button setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
-    share_button.layer.borderColor = [[UIColor greenColor]CGColor];
+    UIButton *share_button = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-90, 135, 70, 20)];
+    share_button.titleLabel.font = [UIFont systemFontOfSize:13];
+    [share_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    share_button.layer.borderColor = [[UIColor blackColor]CGColor];
     share_button.layer.borderWidth = 1;
     share_button.layer.cornerRadius = 5;
     share_button.layer.masksToBounds = YES;
@@ -150,7 +170,7 @@
     //实例化一个NSDateFormatter对象
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     _time_label.text =[dateFormatter stringFromDate: detaildate];
     
     switch ([model.paystatus intValue]) {
@@ -173,31 +193,26 @@
     NSString *pic_str = [NSString stringWithFormat:@"%@%@",YWpic,model.goods.pic];
     [_picView sd_setImageWithURL:[NSURL URLWithString:pic_str] placeholderImage:[UIImage imageNamed:@"default－portrait"]];
     _title.text = model.goods.title;
-    _price.text = model.goods.price;
+    _selprice.text = [NSString stringWithFormat:@"%@米",model.goods.selprice];
     NSAttributedString *attrStr =
-    [[NSAttributedString alloc]initWithString:model.goods.selprice
+    [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@米",model.goods.price]
                                    attributes:
-     @{NSFontAttributeName:[UIFont systemFontOfSize:18.f],
-       NSForegroundColorAttributeName:[UIColor blackColor],
+     @{NSFontAttributeName:[UIFont systemFontOfSize:13.f],
+       NSForegroundColorAttributeName:[UIColor colorWithHexString:@"717071"],
        NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle|NSUnderlinePatternSolid),
-       NSStrikethroughColorAttributeName:[UIColor redColor]}];
-    _selprice.attributedText = attrStr;
-    NSString *str1 = [NSString stringWithFormat:@"数量：%@   总价：%@",model.num,model.pmoney];
-    NSRange range1 = [str1 rangeOfString:@"数量："];
-    NSRange range2 = [str1 rangeOfString:@"总价："];
+       NSStrikethroughColorAttributeName:[UIColor colorWithHexString:@"717071"]}];
+    _price.attributedText = attrStr;
     
-    NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:str1 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.f],
-                                                                                                            NSForegroundColorAttributeName:[UIColor redColor]}];
-    [string1 addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range1];
-    [string1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:range1];
-    [string1 addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range2];
-    [string1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:range2];
     
-    _number.attributedText = string1;
+    NSString *str1 = [NSString stringWithFormat:@"数量：%@",model.num];
+    NSString *str2 = [NSString stringWithFormat:@"总价：%@米",model.pmoney];
+    CGFloat width = [Utils labelWidth:str2 font:13];
+    _total.frame = CGRectMake(kScreenWidth-width-20, 107, width, 15);
+    _number.frame = CGRectMake(0, 107, kScreenWidth-_total.width-35-20, 15);
+    _number.text = str1;
+    _total.text = str2;
     
 }
-
-
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -11,6 +11,7 @@
 #import <UMSocial.h>
 #import <UMSocialWechatHandler.h>
 
+
 @interface AppDelegate ()
 
 @end
@@ -24,9 +25,10 @@
     self.window.rootViewController = mainViewController;
     [self.window makeKeyAndVisible];
     
-    NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor]};
+    NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     [UINavigationBar appearance].titleTextAttributes = navbarTitleTextAttributes;
-     [UINavigationBar appearance].tintColor = [UIColor orangeColor];
+    [UINavigationBar appearance].tintColor = [UIColor whiteColor];
+    [UINavigationBar appearance].barTintColor = KthemeColor;
     //友盟appkey
     [UMSocialData setAppKey:@"574cf23967e58e27de0001da"];
     
@@ -37,6 +39,9 @@
     
     [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession]];
     
+   
+    
+
     return YES;
 }
 

@@ -30,8 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"设置";
-    self.tableView.backgroundColor = [UIColor grayColor];
-    self.tableView.backgroundColor = KviewColor;
+    self.view.backgroundColor = KviewColor;
+    self.tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 15)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.bounces = NO;
     _settingTitles = @[@"个人信息修改",@"管理收货地址",@"支付密码修改",@"登录密码修改",@"清除缓存"];
@@ -39,10 +39,12 @@
     _settingClass = @[[YWInformationController class],[YWAddressController class],[RegisterController class],[RegisterController class]];
 
     //添加退出按钮
-    UIButton *exitButton = [[UIButton alloc]initWithFrame:CGRectMake(0, KscreenHeight-114, kScreenWidth, 50)];
-    exitButton.backgroundColor = [UIColor redColor];
+    UIButton *exitButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 310-54, kScreenWidth, 40)];
+    exitButton.backgroundColor = [UIColor whiteColor];
+    exitButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [exitButton setTitle:@"退出登录" forState:UIControlStateNormal];
-    [exitButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [exitButton setTitleColor:[UIColor colorWithHexString:@"3E3A39"] forState:UIControlStateNormal];
+     [exitButton setTitleColor:[UIColor colorWithHexString:@"3E3A39" withAlpha:0.5] forState:UIControlStateHighlighted];
    
     [exitButton addTarget:self action:@selector(exit:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:exitButton];
@@ -60,6 +62,7 @@
         YWmainViewController *mainVC = [[YWmainViewController alloc]init];
         [self presentViewController:mainVC animated:YES completion:nil];
     }];
+    [action1 setValue:[UIColor redColor] forKey:@"_titleTextColor"];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     [alertController addAction:action1];
     [alertController addAction:cancelAction];
@@ -86,13 +89,14 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingCell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"settingCell"];
-        cell.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor whiteColor];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     cell.imageView.image = [UIImage imageNamed:_settingImages[indexPath.row]];
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.text = _settingTitles[indexPath.row];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"3E3A39"];
     
     //设置cell上图片和文字的大小
     CGSize itemSize = CGSizeMake(30,30);

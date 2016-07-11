@@ -28,10 +28,10 @@
     //实例化一个NSDateFormatter对象
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     _time.text =[dateFormatter stringFromDate: detaildate];
     
-    NSString *str1 = [NSString stringWithFormat:@"金额：%@",model.cgmoney];
+    NSString *str1 = [NSString stringWithFormat:@"金额：%@米",model.cgmoney];
     NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:str1 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.f],
                                                                                                             NSForegroundColorAttributeName:[UIColor redColor]}];
     [string1 addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];

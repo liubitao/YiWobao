@@ -28,6 +28,11 @@
     YWCover *cover = [[YWCover alloc]initWithFrame:[UIScreen mainScreen].bounds];
     cover.backgroundColor = [UIColor clearColor];
     [YWKeyWindow addSubview:cover];
+    cover.alpha = 0;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         cover.alpha = 0.5;
+                     }];
     return cover;
 }
 

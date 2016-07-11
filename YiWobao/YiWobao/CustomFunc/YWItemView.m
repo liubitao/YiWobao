@@ -34,7 +34,7 @@
         
         //设置标题
         _itemLabel = [[UILabel alloc]initWithFrame:CGRectMake(itemWidth/2-15, 10, itemWidth/2, itemHeight-18)];
-        _itemLabel.textColor = [UIColor grayColor];
+        _itemLabel.textColor = [UIColor whiteColor];
         _itemLabel.font = [UIFont systemFontOfSize:19];
         _itemLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_itemLabel];

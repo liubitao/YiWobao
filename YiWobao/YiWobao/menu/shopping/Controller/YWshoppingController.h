@@ -10,4 +10,5 @@
 
 @interface YWshoppingController : UIViewController
 
+- (void)request;
 @end

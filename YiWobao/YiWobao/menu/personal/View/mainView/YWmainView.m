@@ -32,19 +32,20 @@
         NSString *imageStr = model.imageString;
         [button setImage:[UIImage imageNamed:imageStr] forState:UIControlStateNormal];
         [button setTitle:model.title forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont fontWithName:@"FZLanTingHei-L-GBK" size:15];
+        [button setTitleColor:KtitlwColor forState:UIControlStateNormal];
         
         if ((idx+1)%4 != 0) {
             
             UIView *separatar = [[UIView alloc] initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:buttonWidth-0.5 Y:0 width:0.5 height:buttonHeight]];
-            separatar.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.8];
+            separatar.backgroundColor = [UIColor grayColor];
             [button addSubview:separatar];
         }
       
-        if (4 > 1 && idx/4 < (4-1)) {
+        if (4 > 1 && idx/4 < (4-1)){
             
             UIView *separatar = [[UIView alloc] initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:buttonHeight-0.5 width:buttonWidth height:0.5]];
-            separatar.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.8];
+            separatar.backgroundColor = [UIColor grayColor];
             [button addSubview:separatar];
         }
     }];

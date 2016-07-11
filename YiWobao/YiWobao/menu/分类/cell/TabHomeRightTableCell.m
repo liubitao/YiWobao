@@ -28,7 +28,7 @@
 
 + (CGFloat)height
 {
-    return 85;
+    return 80;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -38,48 +38,37 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    NSInteger cellWidth = kScreenWidth-90-10;
     _productImage = [UIImageView new];
     _productImage.layer.cornerRadius = 3;
-    [self addSubview:_productImage];
-    [_productImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).with.offset(8);
-        make.centerY.equalTo(self);
-        make.width.mas_equalTo(50);
-        make.height.mas_equalTo(50);
-    }];
-    
-    _nameLabel = [UILabel new];
-    _nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-    [self addSubview:_nameLabel];
-    [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_productImage.mas_right).with.offset(10);
-        make.top.equalTo(self).with.offset(10);
-    }];
+    [self.contentView addSubview:_productImage];
+    _productImage.frame = CGRectMake(5, 5, 76, 69);
     
     _curPriceLabel = [UILabel new];
-    _curPriceLabel.font = [UIFont systemFontOfSize:18];
+    _curPriceLabel.font = [UIFont systemFontOfSize:15];
     _curPriceLabel.textColor = [UIColor blackColor];
-    [self addSubview:_curPriceLabel];
-    [_curPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_nameLabel);
-        make.top.equalTo(_nameLabel.mas_bottom).with.offset(3);
-    }];
-    
+    _curPriceLabel.textAlignment = NSTextAlignmentRight;
+    [self.contentView addSubview:_curPriceLabel];
+    _curPriceLabel.frame = CGRectMake(cellWidth-90, 15, 85, 20);
+  
+    _nameLabel = [UILabel new];
+    _nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    _nameLabel.numberOfLines = 2;
+    [self.contentView addSubview:_nameLabel];
+    _nameLabel.font = [UIFont systemFontOfSize:14];
+    _nameLabel.frame = CGRectMake(86,10, cellWidth-76 - 90, 40);
+ 
     _oriPriceLabel = [UILabel new];
-    [self addSubview:_oriPriceLabel];
-    [_oriPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_curPriceLabel.mas_right).with.offset(20);
-        make.bottom.equalTo(_curPriceLabel);
-    }];
+    [self.contentView addSubview:_oriPriceLabel];
+    _oriPriceLabel.textAlignment = NSTextAlignmentRight;
+    _oriPriceLabel.frame = CGRectMake(cellWidth-90,35, 85, 20);
     
     _reducePriceLabel = [UILabel new];
-    _reducePriceLabel.font = [UIFont systemFontOfSize:14];
+    _reducePriceLabel.font = [UIFont systemFontOfSize:13];
     _reducePriceLabel.textColor = [UIColor blackColor];
     [self addSubview:_reducePriceLabel];
-    [_reducePriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_nameLabel);
-        make.top.equalTo(_curPriceLabel.mas_bottom).with.offset(3);
-    }];
+    _reducePriceLabel.frame = CGRectMake(86,60, 200, 20);
+ 
     
     return self;
 }
@@ -89,16 +78,17 @@
     _nameLabel.text = goods.title;
     NSString *picStr = [NSString stringWithFormat:@"%@%@",YWpic,goods.pic];
     [_productImage sd_setImageWithURL:[NSURL URLWithString:picStr] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    _curPriceLabel.text = goods.selprice;
-    _reducePriceLabel.text = [NSString stringWithFormat:@"已出售：%@",goods.selnum];
+    _curPriceLabel.text = [NSString stringWithFormat:@"%@米",goods.selprice];
+    _curPriceLabel.textColor = KthemeColor;
+    _reducePriceLabel.text = [NSString stringWithFormat:@"已出售：%@ 件",goods.selnum];
         //划线居中
     NSAttributedString *attrStr =
-    [[NSAttributedString alloc]initWithString:goods.price
+    [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@米",goods.price]
     attributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:15.f],
        NSForegroundColorAttributeName:[UIColor blackColor],
        NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle|NSUnderlinePatternSolid),
-       NSStrikethroughColorAttributeName:[UIColor redColor]}];
+       NSStrikethroughColorAttributeName:[UIColor grayColor]}];
     _oriPriceLabel.attributedText = attrStr;
 }
 

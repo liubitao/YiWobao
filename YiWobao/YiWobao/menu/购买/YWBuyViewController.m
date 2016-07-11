@@ -49,7 +49,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"购买详情";
-    self.view.backgroundColor = KviewColor;
+    self.view.backgroundColor = [UIColor colorWithHexString:@""];
     
     //添加手势，点击屏幕其他区域关闭键盘的操作
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidenKeyboard)];
@@ -65,36 +65,37 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        
+        _tableView.layoutMargins = UIEdgeInsetsZero;
+    }
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        
+        _tableView.separatorInset = UIEdgeInsetsZero;
+    }
+    
     //下面的选项
     _buttomView =[UIView new];
-    _buttomView.backgroundColor= [UIColor colorWithWhite:0 alpha:0.8];
+    _buttomView.backgroundColor= KviewColor;
     [self.view addSubview:_buttomView];
     [_buttomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 60));
+        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 50));
         make.bottom.mas_equalTo(self.view.mas_bottom);
     }];
     
-    _price=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 170, 60)];
-    _price.textColor=[UIColor whiteColor];
-    _price.font=[UIFont systemFontOfSize:18];
-    _price.text=[NSString stringWithFormat:@"实付款：%@",_goods.selprice];
+    _price=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth-110, 50)];
+    _price.font=[UIFont systemFontOfSize:15];
+    _price.text=[NSString stringWithFormat:@"共计1件商品 合计：%@米",_goods.selprice];
+    _price.textAlignment = NSTextAlignmentCenter;
     [_buttomView addSubview:_price];
     
-    UIButton *addCart = [[UIButton alloc]initWithFrame:CGRectMake(self.view.width-140, 0, 140, 60)];
+    UIButton *addCart = [[UIButton alloc]initWithFrame:CGRectMake(self.view.width-110, 0, 110, 50)];
+    addCart.backgroundColor = KthemeColor;
     [addCart setTitle:@"提交订单" forState:UIControlStateNormal];
     [addCart addTarget:self action:@selector(submitClick) forControlEvents:UIControlEventTouchUpInside];
-    [addCart.titleLabel setFont:[UIFont systemFontOfSize:20]];
+    [addCart.titleLabel setFont:[UIFont systemFontOfSize:18]];
     [addCart setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addCart setBackgroundColor:[UIColor colorWithRed:255/255.0 green:100/255.0 blue:98/255.0 alpha:1]];
     [_buttomView addSubview:addCart];
-
-    /** 注册取消按钮点击的通知 */
-    [CYNotificationCenter addObserver:self selector:@selector(cancel) name:CYPasswordViewCancleButtonClickNotification object:nil];
-    [CYNotificationCenter addObserver:self selector:@selector(forgetPWD) name:CYPasswordViewForgetPWDButtonClickNotification object:nil];
-}
-
-- (void)cancel{
-     [MBProgressHUD showSuccess:@"关闭密码框"];
 }
 
 - (void)forgetPWD{
@@ -116,50 +117,51 @@
         [self presentViewController:alertController animated:YES completion:nil];
         return;
     }
-    __weak YWBuyViewController *weakSelf = self;
-    self.passwordView = [[CYPasswordView alloc] init];
-    self.passwordView.title = @"输入交易密码";
-    self.passwordView.loadingText = @"提交中...";
-    [self.passwordView showInView:self.view.window];
-    self.passwordView.finish = ^(NSString *password) {
-        [weakSelf.passwordView hideKeyboard];
-        [weakSelf.passwordView startLoading];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kRequestTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            YWUser *user = [YWUserTool account];
-            NSMutableDictionary *paramters = [Utils paramter:Goods_order ID:user.ID];
-            NSMutableDictionary *buyarr = [NSMutableDictionary dictionary];
-            buyarr[@"gid"] = weakSelf.goods.ID;
-            buyarr[@"gnum"] = weakSelf.num.text;
-            buyarr[@"aid"] = weakSelf.addressModel.ID;
-            buyarr[@"onum"] = weakSelf.buyGoods.buyGoodsON;
-            buyarr[@"pkd"] = [NSString stringWithFormat:@"%ld",weakSelf.last_btn.tag];
-            buyarr[@"pwd"] = [password MD5Digest];
-            buyarr[@"omeno"] = weakSelf.remarks_text.text;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:buyarr options:NSJSONWritingPrettyPrinted error:nil];
-            NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            paramters[@"buyarr"] = str;
-            [YWHttptool Post:YWGoodsOrder parameters:paramters success:^(id responseObject) {
-                NSInteger isError = [responseObject[@"isError"] integerValue];
-                if (!isError) {
-                    [MBProgressHUD showSuccess:@"支付成功"];
-                    [weakSelf.passwordView requestComplete:YES message:@"支付成功"];
-                    [weakSelf.passwordView stopLoading];
-                   
-                        [weakSelf.passwordView hide];
-                   
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
-                }
-                else{
-                    [MBProgressHUD showError:responseObject[@"errorMessage"]];
-                    [weakSelf.passwordView requestComplete:NO message:responseObject[@"errorMessage"]];
-                    [weakSelf.passwordView stopLoading];
-                        [weakSelf.passwordView hide];
-                }
-            } failure:^(NSError *error) {
-                
-            }];
-        });
-    };
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    //增加确定按钮；
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [MBProgressHUD showMessage:@"正在支付" toView:self.view];
+        YWUser *user = [YWUserTool account];
+                    NSMutableDictionary *paramters = [Utils paramter:Goods_order ID:user.ID];
+                    NSMutableDictionary *buyarr = [NSMutableDictionary dictionary];
+                    buyarr[@"gid"] = self.goods.ID;
+                    buyarr[@"gnum"] = self.num.text;
+                    buyarr[@"aid"] = self.addressModel.ID;
+                    buyarr[@"onum"] = self.buyGoods.buyGoodsON;
+                    buyarr[@"pkd"] = [NSString stringWithFormat:@"%ld",self.last_btn.tag];
+                    buyarr[@"pwd"] = [alertController.textFields[0].text MD5Digest];
+                    buyarr[@"omeno"] = self.remarks_text.text;
+                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:buyarr options:NSJSONWritingPrettyPrinted error:nil];
+                    NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                    paramters[@"buyarr"] = str;
+                    [YWHttptool Post:YWGoodsOrder parameters:paramters success:^(id responseObject) {
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        NSInteger isError = [responseObject[@"isError"] integerValue];
+                        if (!isError) {
+                            [MBProgressHUD showSuccess:@"支付成功"];
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }
+                        else{
+                            [MBProgressHUD showError:responseObject[@"errorMessage"]];
+                        }
+                    } failure:^(NSError *error) {
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [MBProgressHUD showError:@"请检查网络"];
+                    }];
+
+    }]];
+    //增加取消按钮；
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    //定义第一个输入框；
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入支付密码";
+        textField.secureTextEntry = YES;
+        textField.font = [UIFont systemFontOfSize:20];
+        textField.borderStyle = UITextBorderStyleNone;
+    }];
+    [self presentViewController:alertController animated:true completion:nil];
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -170,7 +172,19 @@
     if (section == 0) {
         return 1;
     }else{
-        return 4;
+        return 3;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        
+        cell.layoutMargins = UIEdgeInsetsZero;
+    }
+    
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        cell.separatorInset = UIEdgeInsetsZero;
     }
 }
 
@@ -251,10 +265,10 @@
         paystatus_label.text = [NSString stringWithFormat:@"商品编号:%@",_buyGoods.buyGoodsBH];
         [cell.contentView addSubview:paystatus_label];
         
-        UIImageView *picView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20, 60, 60)];
+        UIImageView *picView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 25, 60, 60)];
         NSString *picStr = [NSString stringWithFormat:@"%@%@",YWpic,_goods.pic];
         [picView sd_setImageWithURL:[NSURL URLWithString:picStr] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-        picView.contentMode = UIViewContentModeScaleAspectFit;
+        picView.contentMode = UIViewContentModeScaleToFill;
         [cell.contentView addSubview:picView];
         
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 19, kScreenWidth, 1)];
@@ -262,7 +276,7 @@
         [cell.contentView addSubview:view];
         
         //商品名称
-        UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(80, 20, 150, 60)];
+        UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(80, 25, 150, 60)];
         title_label.scrollEnabled = NO;
         title_label.editable = NO;
         title_label.backgroundColor = [UIColor clearColor];
@@ -271,15 +285,15 @@
         title_label.text = _goods.title;
         
         //原始价格
-        UILabel *price_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-100, 20, 80, 30)];
+        UILabel *price_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-100, 25, 80, 30)];
         price_label.textAlignment = NSTextAlignmentRight;
-        price_label.font = [UIFont systemFontOfSize:20];
+        price_label.font = [UIFont systemFontOfSize:18];
         [cell.contentView addSubview:price_label];
         price_label.text = _goods.selprice;
         
         
         //折后价格
-        UILabel *selprice_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-100, 50, 80, 30)];
+        UILabel *selprice_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-100, 55, 80, 30)];
         selprice_label.textAlignment = NSTextAlignmentRight;
         [cell.contentView addSubview:selprice_label];
         NSAttributedString *attrStr =
@@ -292,63 +306,58 @@
         selprice_label.attributedText = attrStr;
     }else if (indexPath.section == 1 && indexPath.row == 1){
         cell.textLabel.text = @"购买数量";
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth - 120,7.5, 90, 25)];
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth - 90,7.5, 70, 25)];
         view.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:view];
         
-        UIButton *subtract_btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-        [subtract_btn setBackgroundImage:[UIImage imageNamed:@"syncart_less_btn_enable"] forState:UIControlStateNormal];
+        UIButton *subtract_btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 5, 15, 15)];
+        [subtract_btn setBackgroundImage:[UIImage imageNamed:@"1"] forState:UIControlStateNormal];
         [subtract_btn addTarget:self action:@selector(change:) forControlEvents:UIControlEventTouchUpInside];
         subtract_btn.tag = 1;
         [view addSubview:subtract_btn];
         
-        _num = [[UITextField alloc]initWithFrame:CGRectMake(25, 0, 40, 25)];
+        _num = [[UITextField alloc]initWithFrame:CGRectMake(20, 0, 30, 25)];
         _num.borderStyle = UITextBorderStyleNone;
-        _num.background = [UIImage imageNamed:@"syncart_middle_btn_enable"];
         _num.text = @"1";
+        _num.font = [UIFont systemFontOfSize:20];
         _num.keyboardType = UIKeyboardTypeNumberPad;
         _num.delegate = self;
         _num.textAlignment = NSTextAlignmentCenter;
+        [_num addTarget:self action:@selector(change:) forControlEvents:UIControlEventEditingChanged];
         [view addSubview:_num];
         
-        UIButton *add_btn = [[UIButton alloc]initWithFrame:CGRectMake(65, 0, 25, 25)];
-        [add_btn setBackgroundImage:[UIImage imageNamed:@"syncart_more_btn_enable"] forState:UIControlStateNormal];
+        UIButton *add_btn = [[UIButton alloc]initWithFrame:CGRectMake(55, 5, 15, 15)];
+        [add_btn setBackgroundImage:[UIImage imageNamed:@"2"] forState:UIControlStateNormal];
         add_btn.tag = 2;
         [add_btn addTarget:self action:@selector(change:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:add_btn];
         [cell.contentView addSubview:view];
         
     }else if (indexPath.section ==1 && indexPath.row == 2){
-        cell.textLabel.text = @"备注";
-        _remarks_text = [[UITextField alloc]initWithFrame:CGRectMake(100, 5, kScreenWidth-120, 30)];
-        _remarks_text.placeholder = @"选填：对本次交易的说明以及对卖家的留言。";
-        _remarks_text.textColor = [UIColor redColor];
-        _remarks_text.borderStyle = UITextBorderStyleNone;
-        _remarks_text.textAlignment = NSTextAlignmentRight;
-        [cell.contentView addSubview:_remarks_text];
-    }else if (indexPath.section ==1 && indexPath.row == 3){
         cell.textLabel.text = @"支付方式";
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
         
-        UIButton *pay_btn1 = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-200, 5, 80, 30)];
-        UIButton *pay_btn2 = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-100, 5, 80, 30)];
-
-        [pay_btn1 setTitle:@"蚁米支付" forState:UIControlStateNormal];
+        UIButton *pay_btn1 = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-230, 5, 100, 30)];
+        UIButton *pay_btn2 = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-120, 5, 100, 30)];
+        [pay_btn1 setImage:[UIImage imageNamed:@"4"] forState:UIControlStateNormal];
+        [pay_btn1 setImage:[UIImage imageNamed:@"3"] forState:UIControlStateSelected];
+        [pay_btn2 setImage:[UIImage imageNamed:@"4"] forState:UIControlStateNormal];
+        [pay_btn2 setImage:[UIImage imageNamed:@"3"] forState:UIControlStateSelected];
+        [pay_btn1 setTitle:@"余额支付" forState:UIControlStateNormal];
         [pay_btn2 setTitle:@"推荐人代付" forState:UIControlStateNormal];
         [pay_btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        pay_btn1.titleLabel.font = [UIFont systemFontOfSize:16];
+        pay_btn1.titleLabel.font = [UIFont systemFontOfSize:14];
         [pay_btn1 setBackgroundImage:[UIImage imageWithColor:KviewColor] forState:UIControlStateHighlighted];
         [pay_btn2 setBackgroundImage:[UIImage imageWithColor:KviewColor] forState:UIControlStateHighlighted]; 
         
         [pay_btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        pay_btn2.titleLabel.font = [UIFont systemFontOfSize:16];
+        pay_btn2.titleLabel.font = [UIFont systemFontOfSize:14];
         pay_btn1.tag = 0;
         pay_btn2.tag = 2;
-        pay_btn1.layer.borderWidth = 1;
-        pay_btn1.layer.borderColor = [[UIColor redColor]CGColor];
-        pay_btn2.layer.borderWidth = 1;
-        pay_btn2.layer.borderColor = [[UIColor blackColor]CGColor];
         [pay_btn1 addTarget:self action:@selector(payWay:) forControlEvents:UIControlEventTouchUpInside];
         [pay_btn2 addTarget:self action:@selector(payWay:) forControlEvents:UIControlEventTouchUpInside];
+        pay_btn1.selected = YES;
         _last_btn = pay_btn1;
         [cell.contentView addSubview:pay_btn1];
         [cell.contentView addSubview:pay_btn2];
@@ -365,7 +374,7 @@
         return 100;
     }
     else if (indexPath.section ==1 && indexPath.row == 0){
-        return 80;
+        return 90;
     }
     return 40;
 }
@@ -388,15 +397,15 @@
         _num.text = [NSString stringWithFormat:@"%d",[_num.text intValue]+1];
     }
     int number = [_num.text intValue];
-    _price.text = [NSString stringWithFormat:@"实付款：%.2f",[_goods.selprice floatValue]*number];
+    _price.text = [NSString stringWithFormat:@"共计%@件商品 合计：%.1f米",_num.text,[_goods.selprice floatValue]*number];
 }
 
 - (void)payWay:(UIButton *)sender{
     if (_last_btn.tag == sender.tag) {
         return;
     }
-    sender.layer.borderColor = [[UIColor redColor]CGColor];
-    _last_btn.layer.borderColor = [[UIColor blackColor]CGColor];
+    sender.selected = YES;
+    _last_btn.selected = NO;
     _last_btn = sender;
 }
 
@@ -419,11 +428,7 @@
     [_remarks_text resignFirstResponder];
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    int number = [_num.text intValue];
-    _price.text = [NSString stringWithFormat:@"实付款：%.2f",[_goods.selprice floatValue]*number];
-    return YES;
-}
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -431,6 +436,7 @@
     NSMutableDictionary *parameters = [Utils paramter:Goods_buy ID:user.ID];
     parameters[@"gid"] = [[_goods.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     parameters[@"gnum"] = [[@"1" dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+
     [YWHttptool Post:YWGoodBuy parameters:parameters success:^(id responseObject) {
         if (![Utils isNull:responseObject[@"result"]]) {
             _buyGoods = [YWBuyGoods yw_objectWithKeyValues:responseObject[@"result"]];
