@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"登陆";
-    self.view.backgroundColor = KviewColor;
+    self.view.backgroundColor = [UIColor colorWithHexString:@"F7F7F7"];
     
     [self createLeftButton];
     
@@ -47,16 +47,20 @@
 }
 
 - (void)createLeftButton{
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self  action:@selector(dismissViewController)];
-    self.navigationItem.leftBarButtonItem = item;
-    
+    UIButton *left_btn = [[UIButton alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:20 Y:40 width:70 height:14]];
+    left_btn.titleLabel.text = @"蚁窝宝";
+    [left_btn setTitle:@"蚁窝宝" forState:UIControlStateNormal];
+    [left_btn setTitleColor:[UIColor colorWithHexString:@"C9C9CA"] forState:UIControlStateNormal];
+    [left_btn addTarget:self  action:@selector(dismissViewController) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:left_btn];
 }
+
 -(void)dismissViewController{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)createButton{
-    UIButton *landBtn=[self createButtonFrame:CGRectMake(10, 190, self.view.frame.size.width-20, 37) backImageName:nil title:@"登录" titleColor:[UIColor whiteColor]  font:[UIFont systemFontOfSize:19] target:self action:@selector(landClick)];
-    landBtn.backgroundColor = [UIColor colorWithRed:23/255.0 green:122/255.0 blue:33/255.0 alpha:1];
+    UIButton *landBtn=[self createButtonFrame:[FrameAutoScaleLFL CGLFLMakeX:20 Y:290 width:335 height:32] backImageName:nil title:@"登录" titleColor:[UIColor whiteColor]  target:self action:@selector(landClick)];
+    landBtn.backgroundColor = KthemeColor;
     landBtn.layer.cornerRadius = 5.0f;
     
     [self.view addSubview:landBtn];
@@ -64,32 +68,46 @@
 }
 
 -(void)createTextFields{
-    CGRect frame=[UIScreen mainScreen].bounds;
-    bgView=[[UIView alloc]initWithFrame:CGRectMake(10, 75, frame.size.width-20, 100)];
-    bgView.layer.cornerRadius=3.0;
-    bgView.alpha=0.7;
-    bgView.backgroundColor=[UIColor whiteColor];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:142 Y:81 width:77 height:77]];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.image = [UIImage imageNamed:@"icon"];
+    [self.view addSubview:imageView];
+    
+    bgView=[[UIView alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:177 width:375 height:84]];
+    bgView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bgView];
     
-    _phone=[self createTextFielfFrame:CGRectMake(60, 10, 271, 30) font:14 placeholder:@"请输入编号"];
+    UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.5)];
+    line1.backgroundColor = [UIColor colorWithHexString:@"717071" withAlpha:0.5];
+    [bgView addSubview:line1];
+    
+    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, bgView.height-0.5, kScreenWidth, 0.5)];
+    line2.backgroundColor = [UIColor colorWithHexString:@"717071" withAlpha:0.5];
+    [bgView addSubview:line2];
+    
+    UIView *line3 = [[UIView alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:18 Y:41 width:375-36 height:0.5]];
+    line3.backgroundColor = [UIColor colorWithHexString:@"717071" withAlpha:0.5];
+    [bgView addSubview:line3];
+    
+    
+    _phone=[self createTextFielfFrame:[FrameAutoScaleLFL CGLFLMakeX:65 Y:10 width:375-65-18 height:20] placeholder:@"请输入您的编号"];
     _phone.keyboardType = UIKeyboardTypeNumberPad;
     _phone.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    _passWord =[self createTextFielfFrame:CGRectMake(60, 60, 271, 30) font:14  placeholder:@"密码" ];
+    _passWord =[self createTextFielfFrame:[FrameAutoScaleLFL CGLFLMakeX:65 Y:50 width:375-65-18 height:20]  placeholder:@"请输入密码" ];
     _passWord.clearButtonMode = UITextFieldViewModeWhileEditing;
     //密文样式
     _passWord.secureTextEntry=YES;
     
-    UIImageView *userImageView=[self createImageViewFrame:CGRectMake(20, 10, 25, 25) imageName:@"ic_landing_nickname" color:nil];
-    UIImageView *pwdImageView=[self createImageViewFrame:CGRectMake(20, 60, 25, 25) imageName:@"mm_normal" color:nil];
-    UIImageView *line1=[self createImageViewFrame:CGRectMake(20, 50, bgView.frame.size.width-40, 1) imageName:nil color:[UIColor colorWithRed:180/255.0f green:180/255.0f blue:180/255.0f alpha:.5]];
+    UIImageView *userImageView=[self createImageViewFrame:[FrameAutoScaleLFL CGLFLMakeX:25 Y:10 width:20 height:20] imageName:@"ic_landing_nickname" color:nil];
+    UIImageView *pwdImageView=[self createImageViewFrame:[FrameAutoScaleLFL CGLFLMakeX:25 Y:50 width:20 height:20] imageName:@"mm_normal" color:nil];
+
     
     [bgView addSubview:_phone];
     [bgView addSubview:_passWord];
     
     [bgView addSubview:userImageView];
     [bgView addSubview:pwdImageView];
-    [bgView addSubview:line1];
 }
 
 //登录
@@ -120,15 +138,15 @@
 }
 
 
--(UITextField *)createTextFielfFrame:(CGRect)frame font:(CGFloat )font placeholder:(NSString *)placeholder
+-(UITextField *)createTextFielfFrame:(CGRect)frame  placeholder:(NSString *)placeholder
 {
     UITextField *textField=[[UITextField alloc]initWithFrame:frame];
-   
-    textField.font = [UIFont boldSystemFontOfSize:font];
     
     textField.textColor = [UIColor grayColor];
     
     textField.borderStyle = UITextBorderStyleNone;
+    
+    textField.font = [UIFont systemFontOfSize:textField.height-5];
     
     textField.placeholder = placeholder;
     
@@ -151,7 +169,7 @@
     return imageView;
 }
 
--(UIButton *)createButtonFrame:(CGRect)frame backImageName:(NSString *)imageName title:(NSString *)title titleColor:(UIColor *)color font:(UIFont *)font target:(id)target action:(SEL)action
+-(UIButton *)createButtonFrame:(CGRect)frame backImageName:(NSString *)imageName title:(NSString *)title titleColor:(UIColor *)color target:(id)target action:(SEL)action
 {
     UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame=frame;
@@ -159,12 +177,6 @@
     {
         [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
-    
-    if (font)
-    {
-        btn.titleLabel.font=font;
-    }
-    
     if (title)
     {
         [btn setTitle:title forState:UIControlStateNormal];

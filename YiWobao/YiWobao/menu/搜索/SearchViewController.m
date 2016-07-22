@@ -23,6 +23,7 @@
     UITableView *_tableView;
     UISearchBar *_searchView;
     NSMutableArray *_dataArray;
+    BOOL _wasKeyboardManagerEnabled;
 }
 
 @end
@@ -121,7 +122,7 @@
     YWgoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"goodsCell" forIndexPath:indexPath];
     [cell setCellModel:_dataArray[indexPath.row]];
     cell.delegate = self;
-    
+    cell.indexPath = indexPath;
     return cell;
     
 }
@@ -145,11 +146,28 @@
         return;
     }
     YWBuyViewController *buyVC = [[YWBuyViewController alloc]init];
-    YWSorts *sorts = _dataArray[indexPath.section];
-    buyVC.goods = sorts.Goods[indexPath.row];
+    buyVC.goods = _dataArray[indexPath.row];
     [self.navigationController pushViewController:buyVC animated:YES];
     
 }
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
+    [[IQKeyboardManager sharedManager] setEnable:NO];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if ([_searchView isFirstResponder]) {
+        [_searchView resignFirstResponder];
+    }
+    [super viewWillDisappear:animated];
+    [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -16,7 +16,6 @@
 #import "Utils.h"
 #import "YWAddressModel.h"
 #import "YWBuyGoods.h"
-#import "CYPasswordView.h"
 #import "MBProgressHUD+MJ.h"
 #import "RegisterController.h"
 
@@ -24,11 +23,12 @@
 #define kRequestTime 3.0f
 #define kDelay 1.0f
 
-@interface YWBuyViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIGestureRecognizerDelegate>
+@interface YWBuyViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_tableView;
     UIView *_buttomView;
     UILabel *_price;
+    CGRect _detailSize;
 }
 
 
@@ -40,7 +40,6 @@
 
 @property (nonatomic,strong) YWAddressModel *addressModel;
 
-@property (nonatomic, strong) CYPasswordView *passwordView;
 
 @end
 
@@ -49,18 +48,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"购买详情";
-    self.view.backgroundColor = [UIColor colorWithHexString:@""];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"E5E6E6"];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
-    //添加手势，点击屏幕其他区域关闭键盘的操作
-    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidenKeyboard)];
-    gesture.numberOfTapsRequired = 1;
-    gesture.delegate = self;
-    self.view.userInteractionEnabled = YES;
-    [self.view addGestureRecognizer:gesture];
     
-    _tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, KscreenHeight-64-50) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor whiteColor];
-    
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -76,7 +70,7 @@
     
     //下面的选项
     _buttomView =[UIView new];
-    _buttomView.backgroundColor= KviewColor;
+    _buttomView.backgroundColor= [UIColor colorWithHexString:@"E5E6E6"];
     [self.view addSubview:_buttomView];
     [_buttomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 50));
@@ -97,16 +91,6 @@
     [addCart setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttomView addSubview:addCart];
 }
-
-- (void)forgetPWD{
-    [MBProgressHUD showSuccess:@"忘记密码"];
-    [self.passwordView hide];
-    RegisterController *VC = [[RegisterController alloc]init];
-    VC.title = @"修改支付密码";
-    VC.type_r = @"3";
-    [self.navigationController pushViewController:VC animated:YES];
-}
-
 
 //提交订单
 - (void)submitClick{
@@ -139,7 +123,6 @@
                         NSInteger isError = [responseObject[@"isError"] integerValue];
                         if (!isError) {
                             [MBProgressHUD showSuccess:@"支付成功"];
-                            [self.navigationController popViewControllerAnimated:YES];
                         }
                         else{
                             [MBProgressHUD showError:responseObject[@"errorMessage"]];
@@ -160,6 +143,8 @@
         textField.font = [UIFont systemFontOfSize:20];
         textField.borderStyle = UITextBorderStyleNone;
     }];
+    [alertController.actions[0] setValue:[UIColor redColor] forKeyPath:@"_titleTextColor"];
+    
     [self presentViewController:alertController animated:true completion:nil];
 
 }
@@ -196,9 +181,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"buyCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
     if (indexPath.section == 0) {
-        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         if ([Utils isNull:_addressModel]) {
             UIImageView * addressBg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
             addressBg.image=[UIImage imageNamed:@"address_info_bg"];
@@ -215,42 +200,39 @@
             [cell.contentView addSubview:moreImg];
             
         }else{
-        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, 100)];
-        UIImageView * addressBg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headerView.width, headerView.height)];
-        addressBg.image=[UIImage imageNamed:@"address_info_bg"];
+        NSString *text = [NSString stringWithFormat:@"%@%@%@%@",_addressModel.addr1,_addressModel.addr2,_addressModel.addr3,_addressModel.addr4];
+        NSString *text2 = [NSString stringWithFormat:@"%@   %@",text,_addressModel.pickphone];
+        _detailSize = [text2 boundingRectWithSize:CGSizeMake(self.view.width-100, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}context:nil];
+        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(15, 0, self.view.width-30,130+_detailSize.size.height)];
+        UIImageView * addressBg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 20, headerView.width, 50+_detailSize.size.height)];
+        addressBg.image=[UIImage imageNamed:@"ic_choose_address_bg"];
         [headerView addSubview:addressBg];
         
-        UIImageView * nameImg=[[UIImageView alloc]initWithFrame:CGRectMake(5, 20, 20, 20)];
-        nameImg.contentMode =  UIViewContentModeCenter;
-        nameImg.image=[UIImage imageNamed:@"address_name_icon"];
-        [addressBg addSubview:nameImg];
-        
-        UILabel * name =[[UILabel alloc]initWithFrame:CGRectMake(30, 20, 100, 20)];
+        UILabel * name =[[UILabel alloc]initWithFrame:CGRectMake(35, 15, 200, 15)];
         name.text = _addressModel.pickname;
+            name.textColor = [UIColor colorWithHexString:@"595757"];
+        name.font = [UIFont systemFontOfSize:15];
         [addressBg addSubview:name];
         
-        UIImageView * phoneImg=[[UIImageView alloc]initWithFrame:CGRectMake(kScreenWidth-150, 20, 20, 20)];
-        phoneImg.contentMode =  UIViewContentModeCenter;
-        phoneImg.image=[UIImage imageNamed:@"address_phone_icon"];
-        [addressBg addSubview:phoneImg];
-        
-        UILabel * phone =[[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-125, 20, 120, 20)];
-        phone.text = _addressModel.pickphone;
-        [addressBg addSubview:phone];
-        
-        UILabel * address = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, headerView.width-30, 40)];
-        address.font=[UIFont systemFontOfSize:14];
-        address.textColor=[UIColor darkGrayColor];
-        address.numberOfLines =2;
-        address.text = [NSString stringWithFormat:@"%@%@%@%@",_addressModel.addr1,_addressModel.addr2,_addressModel.addr3,_addressModel.addr4];
+        UILabel * address = [[UILabel alloc]initWithFrame:CGRectMake(35, 35, kScreenWidth-100, _detailSize.size.height)];
+        address.numberOfLines = 0;
+        address.textColor = [UIColor colorWithHexString:@"595757"];
+            address.font = [UIFont systemFontOfSize:15];
+        address.text = text2;
         [addressBg addSubview:address];
-        
-        UIImageView * moreImg =[[UIImageView alloc]initWithFrame:CGRectMake(headerView.width-30, 0, 30, headerView.height)];
-        moreImg.contentMode =  UIViewContentModeCenter;
-        moreImg.image=[UIImage imageNamed:@"address_more_icon"];
-        [addressBg addSubview:moreImg];
-        
-            [cell.contentView addSubview:headerView];}
+            
+        UIButton *add = [[UIButton alloc]initWithFrame:CGRectMake(20, headerView.height-45, 85, 23)];
+        add.layer.cornerRadius = 5;
+        add.layer.masksToBounds = YES;
+        add.layer.borderWidth = 1;
+        add.layer.borderColor = [UIColor blackColor].CGColor;
+        [add setTitle:@"使用新地址" forState:UIControlStateNormal];
+            [add setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            add.titleLabel.font = [UIFont systemFontOfSize:14];
+        [add addTarget:self action:@selector(addAddress:) forControlEvents:UIControlEventTouchDragInside];
+            
+        [cell.contentView addSubview:add];
+        [cell.contentView addSubview:headerView];}
     }else if (indexPath.section == 1 && indexPath.row == 0){
         //订单号
         UILabel *time_label = [[UILabel alloc]initWithFrame:CGRectMake(10,0, 220, 20)];
@@ -259,7 +241,7 @@
         [cell.contentView addSubview:time_label];
         
         //商品编号
-        UILabel *paystatus_label = [[UILabel alloc]initWithFrame:CGRectMake(230, 0, kScreenWidth-250, 20)];
+        UILabel *paystatus_label = [[UILabel alloc]initWithFrame:CGRectMake(180, 0, kScreenWidth-180, 20)];
         paystatus_label.textAlignment = NSTextAlignmentRight;
         paystatus_label.font = [UIFont systemFontOfSize:12];
         paystatus_label.text = [NSString stringWithFormat:@"商品编号:%@",_buyGoods.buyGoodsBH];
@@ -305,6 +287,10 @@
            NSStrikethroughColorAttributeName:[UIColor redColor]}];
         selprice_label.attributedText = attrStr;
     }else if (indexPath.section == 1 && indexPath.row == 1){
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 1)];
+        line.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+        [cell.contentView addSubview:line];
+        
         cell.textLabel.text = @"购买数量";
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth - 90,7.5, 70, 25)];
@@ -321,10 +307,9 @@
         _num.borderStyle = UITextBorderStyleNone;
         _num.text = @"1";
         _num.font = [UIFont systemFontOfSize:20];
-        _num.keyboardType = UIKeyboardTypeNumberPad;
-        _num.delegate = self;
+        _num.enabled = NO;
+        _num.selected = NO;
         _num.textAlignment = NSTextAlignmentCenter;
-        [_num addTarget:self action:@selector(change:) forControlEvents:UIControlEventEditingChanged];
         [view addSubview:_num];
         
         UIButton *add_btn = [[UIButton alloc]initWithFrame:CGRectMake(55, 5, 15, 15)];
@@ -335,6 +320,10 @@
         [cell.contentView addSubview:view];
         
     }else if (indexPath.section ==1 && indexPath.row == 2){
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 1)];
+        line.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+        [cell.contentView addSubview:line];
+        
         cell.textLabel.text = @"支付方式";
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         
@@ -371,7 +360,7 @@
         if ([Utils isNull:_addressModel]) {
             return 50;
         }
-        return 100;
+        return 120+_detailSize.size.height;
     }
     else if (indexPath.section ==1 && indexPath.row == 0){
         return 90;
@@ -385,6 +374,11 @@
         YWAddressController *addressVC = [[YWAddressController alloc]init];
         [self.navigationController pushViewController:addressVC  animated:YES];
     }
+}
+
+- (void)addAddress:(UIButton*)sender{
+    YWAddressController *addressVC = [[YWAddressController alloc]init];
+    [self.navigationController pushViewController:addressVC  animated:YES];
 }
 
 - (void)change:(UIButton *)sender{
@@ -409,24 +403,20 @@
     _last_btn = sender;
 }
 
-
-
-//确定这个手势是否可以实现
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-{
-    //判断这个账号和密码控件中是否都是第一响应者
-    if (![_num isFirstResponder]&&![_remarks_text isFirstResponder]) {
-        //都不是第一响应者的时候
-        return NO;
-    }
-    return YES;
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 10;
 }
-//隐藏键盘栏
-- (void)hidenKeyboard
-{
-    [_num resignFirstResponder];
-    [_remarks_text resignFirstResponder];
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.1;
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 10)];
+    view.backgroundColor = [UIColor colorWithHexString:@"E5E6E6"];
+    return view;
+}
+
 
 
 

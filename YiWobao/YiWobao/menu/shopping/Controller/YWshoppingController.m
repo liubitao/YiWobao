@@ -27,12 +27,14 @@
 #import "YWLoginViewController.h"
 #import "YWnaviViewController.h"
 #import "YWfunctionButton.h"
+#import "YWGuideViewController.h"
 
 
 @interface YWshoppingController ()<SDCycleScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,YWgoodsCellDelegate,UMSocialUIDelegate>{
     UISearchBar *searchBar;
     UITableView *_tableView;
     NSMutableArray *_dataArray;
+    int inter;
 }
 
 @end
@@ -41,6 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    inter=0;
     self.title = @"商城";
     self.view.backgroundColor = [UIColor whiteColor];
     _dataArray = [NSMutableArray array];
@@ -95,7 +98,12 @@
 - (void)creatItemize{
     
     CGFloat itemWidth = (kScreenWidth-60-40)/3;
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(25, 64, kScreenWidth-30, 51)];
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(30, 64, kScreenWidth-60, 51)];
+    if (kScreenWidth == 320) {
+        itemWidth = (kScreenWidth -40)/3;
+        view.frame = CGRectMake(10, 64, kScreenWidth-10, 51);
+    }
     [self.view addSubview:view];
     
     NSArray *titles = @[@"所有商品",@"商品分类",@"创业指导"];
@@ -105,6 +113,9 @@
     
     for (int i = 0; i<3; i++) {
         YWfunctionButton *button = [[YWfunctionButton alloc]initWithFrame:CGRectMake(i*(itemWidth+20), 0, itemWidth, 51)];
+        if (kScreenWidth == 320) {
+            button.frame = CGRectMake(i*(itemWidth+10), 0, itemWidth, 51);
+        }
         button.tag = i;
         [button setTitle:titles[i] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:images[i]] forState:UIControlStateNormal];
@@ -203,7 +214,8 @@
     [view addSubview:button];
     button.titleLabel.font = [UIFont fontWithName:@"FZLanTingHei-L-GBK" size:16];
     [button setTitleColor:[UIColor colorWithHexString:@"3E3A39"] forState:UIControlStateNormal];
-    UIButton *more_btn = [[UIButton alloc]initWithFrame:CGRectMake(325.865, 20, 35, 14)];
+    
+    UIButton *more_btn = [[UIButton alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:330 Y:20 width:35 height:14]];
     [more_btn setImage:[UIImage imageNamed:@"ic_mall_fragment_more"] forState:UIControlStateNormal];
     [more_btn addTarget:self action:@selector(jumpMore:) forControlEvents:UIControlEventTouchUpInside];
     more_btn.tag = section;
@@ -241,7 +253,7 @@
 
 - (void)coverDidClick:(NSIndexPath *)indexPath{
     if (![YWUserTool account]) {
-        YWnaviViewController *loginVC = [[YWnaviViewController alloc]initWithRootViewController:[[YWLoginViewController alloc]init]];
+        YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
         [self presentViewController:loginVC animated:YES completion:nil];
         return;
     }
@@ -252,8 +264,10 @@
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-    SearchViewController *searchVC = [[SearchViewController alloc]init];
-    [self.navigationController pushViewController:searchVC animated:YES];
+    if ((inter++)%2 == 0) {
+        SearchViewController *searchVC = [[SearchViewController alloc]init];
+        [self.navigationController pushViewController:searchVC animated:YES];
+    }
     return YES;
 }
 
@@ -280,7 +294,8 @@
         }
             break;
         case 2:
-        {
+        {    YWGuideViewController *VC = [[YWGuideViewController alloc]init];
+            [self.navigationController pushViewController:VC animated:YES];
                    }
             break;
         default:
@@ -297,7 +312,7 @@
     }
     NSMutableDictionary *parameters = [Utils paramter:Share ID:user.ID];
     [YWHttptool   GET:YWShare parameters:parameters success:^(id responseObject) {
-        UIImage *image = [UIImage imageNamed:@"weixin_icon_xxh"];
+        UIImage *image = [UIImage imageNamed:@"app"];
         NSString *str = responseObject[@"result"][@"saddr"];
         [UMSocialData defaultData].extConfig.wechatSessionData.url = str;
         [UMSocialData defaultData].extConfig.wechatTimelineData.url = str;

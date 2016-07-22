@@ -102,7 +102,7 @@
     
     //判断登录没有，没有登录就跳转到登录的页面，登录了就正常跳
         if ([YWUserTool account] == nil ) {
-            YWnaviViewController *loginVC = [[YWnaviViewController alloc]initWithRootViewController:[[YWLoginViewController alloc]init]];
+            YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
             [self presentViewController:loginVC animated:YES completion:nil];
         }
         else{

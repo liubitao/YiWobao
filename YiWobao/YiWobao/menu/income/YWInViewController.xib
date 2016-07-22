@@ -121,15 +121,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0iz-PA-ooV">
                     <rect key="frame" x="0.0" y="354" width="375" height="91"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提现金额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQj-4M-47g">
-                            <rect key="frame" x="20" y="15" width="78" height="22"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="22" id="akR-0v-Rb5"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <color key="textColor" red="0.24313725490196078" green="0.22745098039215686" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥ " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZd-DR-QGR">
                             <rect key="frame" x="20" y="42" width="32" height="36"/>
                             <constraints>
@@ -140,22 +131,31 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0.00" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zJv-Xq-IxP">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0.00" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zJv-Xq-IxP">
                             <rect key="frame" x="57" y="42" width="204" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="36" id="7E1-Ge-XTe"/>
                                 <constraint firstAttribute="width" constant="204" id="wVO-ri-9Ed"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                         </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提现金额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQj-4M-47g">
+                            <rect key="frame" x="20" y="15" width="255" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="akR-0v-Rb5"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.24313725490196078" green="0.22745098039215686" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="zJv-Xq-IxP" firstAttribute="leading" secondItem="hZd-DR-QGR" secondAttribute="trailing" constant="5" id="8zK-q0-U19"/>
                         <constraint firstItem="lQj-4M-47g" firstAttribute="leading" secondItem="0iz-PA-ooV" secondAttribute="leading" constant="20" id="Dky-DZ-22s"/>
                         <constraint firstItem="lQj-4M-47g" firstAttribute="top" secondItem="0iz-PA-ooV" secondAttribute="top" constant="15" id="NKk-Zd-Gm3"/>
-                        <constraint firstAttribute="trailing" secondItem="lQj-4M-47g" secondAttribute="trailing" constant="277" id="RHN-Hl-xRl"/>
+                        <constraint firstAttribute="trailing" secondItem="lQj-4M-47g" secondAttribute="trailing" constant="100" id="RHN-Hl-xRl"/>
                         <constraint firstItem="hZd-DR-QGR" firstAttribute="leading" secondItem="0iz-PA-ooV" secondAttribute="leading" constant="20" id="VYC-vN-b1G"/>
                         <constraint firstItem="zJv-Xq-IxP" firstAttribute="top" secondItem="lQj-4M-47g" secondAttribute="bottom" constant="5" id="d7V-Rh-CCc"/>
                         <constraint firstItem="hZd-DR-QGR" firstAttribute="top" secondItem="lQj-4M-47g" secondAttribute="bottom" constant="5" id="jHO-OW-JJN"/>
@@ -208,7 +208,7 @@
                 <constraint firstItem="obe-Tz-cQg" firstAttribute="top" secondItem="sYC-AX-rDg" secondAttribute="bottom" id="zIo-Mq-sEr"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="15.5" y="74.5"/>
+            <point key="canvasLocation" x="-44.5" y="-74.5"/>
         </view>
     </objects>
 </document>

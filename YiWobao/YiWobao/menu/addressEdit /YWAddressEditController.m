@@ -18,7 +18,7 @@
 @interface YWAddressEditController ()<UIGestureRecognizerDelegate,CityPickViewDelegate,UITextViewDelegate>{
     UITextField *name_text;
     UITextField *phone_text;
-    UIButton *address_btn;
+    UILabel *address;
     MBProgressHUD *_hudView;
     
 }
@@ -104,12 +104,20 @@
     address_label.text = @"所在地区";
     [self.view addSubview:address_label];
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 174, kScreenWidth-200, 30)];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:15];
-    [button addTarget:self action:@selector(pickAddress) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-    address_btn = button;
+    
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(150, 174, kScreenWidth-170, 30)];
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont systemFontOfSize:15];
+    label.textAlignment = NSTextAlignmentRight;
+    [self.view addSubview:label];
+    address = label;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pickAddress)];
+    tap.numberOfTapsRequired = 1;
+    address.userInteractionEnabled = YES;
+    [address addGestureRecognizer:tap];
+    
     
     //联系地址
     UILabel *address2_label = [[UILabel alloc]initWithFrame:CGRectMake(10, 214, 80, 30)];
@@ -123,7 +131,7 @@
     if (_addressModel) {
         name_text.text = _addressModel.pickname;
         phone_text.text = _addressModel.pickphone;
-        [address_btn setTitle:[NSString stringWithFormat:@"%@%@%@",_addressModel.addr1,_addressModel.addr2,_addressModel.addr3] forState:UIControlStateNormal];
+        [address setText:[NSString stringWithFormat:@"%@%@%@",_addressModel.addr1,_addressModel.addr2,_addressModel.addr3]];
         _feedbackTextView.text = _addressModel.addr4;
     }else{
         _feedbackTextView.text = @"请填写详细地址，不少于5个字";
@@ -149,12 +157,12 @@
 }
 
 - (void)selectCity:(NSString *)city{
-    [address_btn setTitle:city forState:UIControlStateNormal];
+    address.text = city;
     _pickView.hidden = YES;
 }
 
 - (void)save{
-    if (![Utils checkTelNumber:phone_text.text]||[Utils isNull:name_text.text]) {
+    if (![Utils checkTelNumber:phone_text.text]||[Utils isNull:name_text.text]||[Utils isNull:address.text]||[Utils isNull:_feedbackTextView.text]||[@"请填写详细地址，不少于5个字" isEqualToString:_feedbackTextView.text]) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提醒" message:@"填写的资料有误，请重新填写" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"知道了" style:(UIAlertActionStyleCancel) handler:nil];
         [alertController addAction:cancelAction];

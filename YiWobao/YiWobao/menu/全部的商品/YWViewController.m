@@ -65,7 +65,7 @@
 
 - (void)coverDidClick:(NSIndexPath *)indexPath{
     if (![YWUserTool account]) {
-        YWnaviViewController *loginVC = [[YWnaviViewController alloc]initWithRootViewController:[[YWLoginViewController alloc]init]];
+        YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
         [self presentViewController:loginVC animated:YES completion:nil];
         return;
     }

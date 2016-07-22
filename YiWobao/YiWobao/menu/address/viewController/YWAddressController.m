@@ -34,7 +34,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = KviewColor;
     self.title = @"地址管理";
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, KscreenHeight-50-64) style:UITableViewStyleGrouped];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, KscreenHeight-50-64) style:UITableViewStyleGrouped];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -124,7 +125,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 10;
+    return 17;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

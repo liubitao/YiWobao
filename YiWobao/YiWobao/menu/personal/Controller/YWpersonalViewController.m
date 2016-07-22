@@ -139,14 +139,14 @@
     leftbutton.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
     [leftbutton setTitle:@"推荐人" forState:UIControlStateNormal];
     [leftbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    leftbutton.titleLabel.font = [UIFont systemFontOfSize:15];
+    leftbutton.titleLabel.font = [UIFont systemFontOfSize:leftbutton.height];
     //高亮的时候不用变化图片
     [leftbutton addTarget:self  action:@selector(leftClick:) forControlEvents:UIControlEventTouchUpInside];
     
     //右边的按钮
     UIButton *rightButton = [[UIButton alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:323 Y:57 width:30 height:15]];
     [rightButton setTitle:@"设置" forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:rightButton.height];
     [rightButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     rightButton.titleLabel.textColor = [UIColor whiteColor];
     [rightButton addTarget:self action:@selector(clickSetting) forControlEvents:UIControlEventTouchUpInside];
@@ -161,13 +161,13 @@
     
     //实业董事
     UILabel *work_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:150 Y:152 width:53 height:12]];
-    work_label.font = [UIFont systemFontOfSize:12];
+    work_label.font = [UIFont systemFontOfSize:work_label.height];
     work_label.textColor = [UIColor whiteColor];
     [headView addSubview:work_label];
     
     //昵称
     name_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:150 Y:122 width:140 height:18]];
-    name_label.font = [UIFont systemFontOfSize:18];
+    name_label.font = [UIFont systemFontOfSize:name_label.height];
     name_label.textAlignment = NSTextAlignmentLeft;
     name_label.textColor = [UIColor whiteColor];
     [headView addSubview:name_label];
@@ -175,7 +175,7 @@
     //编号
     UILabel *number_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:221    Y:152   width:75 height:12]];
     number_label.textAlignment = NSTextAlignmentRight;
-    number_label.font = [UIFont systemFontOfSize:12];
+    number_label.font = [UIFont systemFontOfSize:number_label.height];
     number_label.textColor = [UIColor whiteColor];
     [headView addSubview:number_label];
     
@@ -238,7 +238,7 @@
     [self.view addSubview:headView];
     
     //七日收益
-    UILabel *day_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:45 Y:17 width:60 height:15]];
+    UILabel *day_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:45 Y:17 width:80 height:15]];
     day_label.font = [UIFont systemFontOfSize:13];
     day_label.text = @"七日收益";
     day_label.textColor  = KtitlwColor;
@@ -255,7 +255,7 @@
     [headView addSubview:day_number];
     
     //累计收益
-    UILabel *all_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:190 Y:17 width:60 height:15]];
+    UILabel *all_label = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:190 Y:17 width:80 height:15]];
     all_label.font = [UIFont systemFontOfSize:13];
     all_label.text = @"累计收益";
     all_label.textColor = KtitlwColor;
@@ -268,12 +268,12 @@
     [headView addSubview:all_number];
     
     if ([Utils isNull:user.sr_0]) {
-        day_number.text = @"+0";
+        all_number.text = @"+0";
     }else{
         all_number.text = [NSString stringWithFormat:@"+%@",user.sr_0];
     }
     if ([Utils isNull:user.sr_7]) {
-        all_number.text = @"+0";
+        day_number.text = @"+0";
     }
     else{
         day_number.text = [NSString stringWithFormat:@"+%@",user.sr_7];
@@ -397,23 +397,11 @@
     [cover removeFromSuperview];
     [self coverDidClickCover:cover];
 
-    YWUser *user = [YWUserTool account];
-    NSMutableDictionary *paramter = [Utils paramter:List ID:user.ID];
-    NSString *str = [NSString stringWithFormat:@"%ld",indexPath.row];
-    paramter[@"zkd"] = [[str dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-    [YWHttptool GET:YWList parameters:paramter success:^(id responseObject) {
-        NSMutableArray *dataArray = [NSMutableArray array];
-        if (![Utils isNull:responseObject[@"result"]]) {
-            dataArray = [YWNextPerson yw_objectWithKeyValuesArray:responseObject[@"result"]];
-        }
-        YWNextViewController *VC = [[YWNextViewController alloc]init];
-        NSArray *array = @[@"总裁",@"总监",@"经理"];
-        VC.title = array[indexPath.row];
-        VC.dataArray = dataArray;
-        [self.navigationController pushViewController:VC animated:YES];
-        
-    } failure:^(NSError *error) {
-    }];
+    YWNextViewController *VC = [[YWNextViewController alloc]init];
+    NSArray *array = @[@"总裁",@"总监",@"经理"];
+    VC.title = array[indexPath.row];
+    VC.style = indexPath.row+1;
+    [self.navigationController pushViewController:VC animated:YES];
 }
 
 

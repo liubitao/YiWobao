@@ -8,6 +8,8 @@
 
 #import "YWCell3.h"
 #import "YWModel4.h"
+#import "Utils.h"
+
 @interface YWCell3 ()
 
 @property (weak, nonatomic) IBOutlet UILabel *time;
@@ -23,13 +25,8 @@
     // Initialization code
 }
 - (void)setModel:(YWModel4 *)model{
-    NSTimeInterval time=[model.logtm doubleValue]+28800;//因为时差问题要加8小时 == 28800 sec
-    NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
-    //实例化一个NSDateFormatter对象
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    _time.text =[dateFormatter stringFromDate: detaildate];
+  
+    _time.text =[Utils timeWith:model.logtm];
     
     NSString *str1 = [NSString stringWithFormat:@"金额：%@米",model.cgmoney];
     NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:str1 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.f],

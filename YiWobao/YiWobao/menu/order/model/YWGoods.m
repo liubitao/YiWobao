@@ -8,6 +8,7 @@
 
 #import "YWGoods.h"
 #import <MJExtension.h>
+#import "Utils.h"
 @implementation YWGoods
 
 // 底层便利当前的类的所有属性，一个一个归档和接档
@@ -25,6 +26,9 @@ MJCodingImplementation
 
 + (NSMutableArray*)yw_objectWithKeyValuesArray:(NSArray *)array{
     NSMutableArray *result = [NSMutableArray array];
+    if ( [Utils isNull:array]) {
+        return result;
+    }
     for (NSDictionary *dict in array) {
         YWGoods *model = [self yw_objectWithKeyValues:dict];
         [result addObject:model];

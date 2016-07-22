@@ -28,4 +28,6 @@
 +(NSMutableDictionary *)paramter:(NSString *)act ID:(NSString *)ID;
 
 + (CGFloat)labelWidth:(NSString *)text font:(NSInteger)font;
+
++ (NSString*)timeWith:(NSString*)time;
 @end

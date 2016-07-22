@@ -15,7 +15,7 @@
     if (self = [super initWithFrame:frame]) {
         [self setTitleColor:[UIColor colorWithHexString:@"8f8f8f"] forState:UIControlStateNormal];
         self.titleLabel.font = [UIFont fontWithName:@"FZLanTingHei-L-GBK" size:15];
-        self.titleLabel.textAlignment = NSTextAlignmentRight;
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return self;
 }

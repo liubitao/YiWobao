@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface YWNextViewController : UIViewController
-@property (nonatomic,strong) NSMutableArray *dataArray;
+@property (nonatomic,assign) NSInteger style ;
 @end

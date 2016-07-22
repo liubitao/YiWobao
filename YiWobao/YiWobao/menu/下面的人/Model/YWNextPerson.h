@@ -20,6 +20,8 @@
 
 @property (nonatomic,copy) NSString *phone;
 
+@property (nonatomic,copy) NSString *regtime;
+
 + (instancetype)yw_objectWithKeyValues:(NSDictionary*)dict;
 
 + (NSMutableArray*)yw_objectWithKeyValuesArray:(NSArray *)array;

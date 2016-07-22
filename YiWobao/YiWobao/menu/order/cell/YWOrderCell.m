@@ -69,7 +69,7 @@
     _picView = imageView;
     
     //商品名称
-    UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(97, 9, 150, 55)];
+    UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(97, 9, kScreenWidth-100-110, 55)];
     title_label.scrollEnabled = NO;
     title_label.editable = NO;
     title_label.backgroundColor = [UIColor clearColor];
@@ -81,13 +81,14 @@
     //原始价格
     UILabel *price_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-105, 33, 85, 15)];
     price_label.textAlignment = NSTextAlignmentRight;
+    price_label.font = [UIFont systemFontOfSize:13];
     [view addSubview:price_label];
     _price = price_label;
     
     //折后价格
     UILabel *selprice_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-105, 12, 85, 15)];
     selprice_label.textAlignment = NSTextAlignmentRight;
-    price_label.font = [UIFont systemFontOfSize:13];
+    selprice_label.font = [UIFont systemFontOfSize:13];
     [view addSubview:selprice_label];
     _selprice = selprice_label;
     
@@ -197,7 +198,7 @@
     NSAttributedString *attrStr =
     [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@米",model.goods.price]
                                    attributes:
-     @{NSFontAttributeName:[UIFont systemFontOfSize:13.f],
+     @{NSFontAttributeName:[UIFont systemFontOfSize:13],
        NSForegroundColorAttributeName:[UIColor colorWithHexString:@"717071"],
        NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle|NSUnderlinePatternSolid),
        NSStrikethroughColorAttributeName:[UIColor colorWithHexString:@"717071"]}];

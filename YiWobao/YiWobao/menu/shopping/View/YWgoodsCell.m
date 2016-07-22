@@ -15,8 +15,12 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *picView;
 @property (weak, nonatomic) IBOutlet UILabel *title;
-@property (strong, nonatomic) UILabel *Price;
-@property (strong, nonatomic)  UILabel *oldPrice;
+@property (weak, nonatomic) IBOutlet UILabel *price;
+
+@property (weak, nonatomic) IBOutlet UILabel *oldPrice;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *width;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *width2;
 @property (weak, nonatomic) IBOutlet UILabel *sale;
 @property (weak, nonatomic) IBOutlet UIButton *buy_btn;
 
@@ -24,6 +28,8 @@
 @end
 
 @implementation YWgoodsCell
+
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -41,12 +47,8 @@
     
     
     
-    _Price = [[UILabel alloc]initWithFrame:CGRectMake(129, 60, [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.selprice] font:16], 20)];
-    _oldPrice = [[UILabel alloc]initWithFrame:CGRectMake(129+_Price.width+10 , 60, [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.price] font:14], 20)];
-    _Price.textColor = KthemeColor;
-    _Price.font = [UIFont systemFontOfSize:16];
-    [self.contentView addSubview:_Price];
-    [self.contentView addSubview:_oldPrice];
+    _width.constant = [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.selprice] font:17];
+    _width2.constant = [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.price] font:15];
     
     NSAttributedString *attrStr =
     [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@米",model.price]
@@ -57,7 +59,7 @@
        NSStrikethroughColorAttributeName:[UIColor colorWithHexString:@"9F9FA0"]}];
     _oldPrice.attributedText = attrStr;
     
-    _Price.text = [NSString stringWithFormat:@"%@米",model.selprice];
+    _price.text = [NSString stringWithFormat:@"%@米",model.selprice];
     
     _sale.text = [NSString stringWithFormat:@"已出售：%@",model.selnum];
     _buy_btn.backgroundColor = KthemeColor;

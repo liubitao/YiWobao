@@ -34,10 +34,12 @@
     self.title = @"商品详情";
     
     _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KscreenHeight-50)];
+    _webView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:_webView];
     _webView.scrollView.showsVerticalScrollIndicator = NO;
     
-    _webView.scrollView.contentInset = UIEdgeInsetsMake(425*kScreenWidth/375, 0, 0, 0);
+    
+    _webView.scrollView.contentInset = UIEdgeInsetsMake(425.0*kScreenWidth/375, 0, 0, 0);
     _webView.backgroundColor = KviewColor;
     _webView.opaque = NO;
     
@@ -114,7 +116,7 @@
 
 - (void)clickBuy:(UIButton *)sender{
     if (![YWUserTool account]) {
-        YWnaviViewController *loginVC = [[YWnaviViewController alloc]initWithRootViewController:[[YWLoginViewController alloc]init]];
+        YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
         [self presentViewController:loginVC animated:YES completion:nil];
         return;
     }

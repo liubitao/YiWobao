@@ -135,7 +135,7 @@
             cell.textLabel.center = cell.center;
             
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(79.5, 0, 0.5, 43.5)];
-            view.backgroundColor = [UIColor colorWithHexString:@"B4B5B5"];
+            view.backgroundColor = [UIColor colorWithHexString:@"B4B5B5" withAlpha:0.5];
             view.tag = 1;
             [cell.contentView addSubview:view];
             
@@ -182,23 +182,7 @@
     }
     return height;
 }
-//- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-//    if (tableView == _leftTable) {
-//        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 0.5)];
-//        view.backgroundColor = [UIColor colorWithHexString:@"B4B5B5"];
-//        return view;
-//    }
-//    return nil;
-//}
-//
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-//    if (tableView == _leftTable) {
-//        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 0.5)];
-//        view.backgroundColor = [UIColor colorWithHexString:@"B4B5B5"];
-//        return view;
-//    }
-//    return nil;
-//}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
