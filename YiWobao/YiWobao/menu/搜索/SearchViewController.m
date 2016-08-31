@@ -16,16 +16,17 @@
 #import "YWSorts.h"
 #import "YWLoginViewController.h"
 #import "YWUserTool.h"
+#import "UIViewController+SFTrainsitionExtension.h"
+#import "SFTrainsitionAnimate.h"
 
-
-@interface SearchViewController ()<UIGestureRecognizerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,YWgoodsCellDelegate>
+@interface SearchViewController ()<UIGestureRecognizerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,YWgoodsCellDelegate,UINavigationControllerDelegate>
 {
     UITableView *_tableView;
     UISearchBar *_searchView;
     NSMutableArray *_dataArray;
     BOOL _wasKeyboardManagerEnabled;
 }
-
+@property (strong, nonatomic) SFTrainsitionAnimate    *animate;
 @end
 
 @implementation SearchViewController
@@ -69,6 +70,32 @@
     [_tableView registerNib:[UINib nibWithNibName:@"YWgoodsCell" bundle:nil] forCellReuseIdentifier:@"goodsCell"];
     
 }
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.navigationController.delegate = self;
+    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
+    [[IQKeyboardManager sharedManager] setEnable:NO];
+}
+
+
+- (SFTrainsitionAnimate *)animate{
+    if (!_animate) {
+        return [[SFTrainsitionAnimate alloc]init];
+    }
+    return _animate;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
+    if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[YWGoodsViewController class]]) {
+        self.navigationController.navigationBarHidden = YES;
+        return self.animate;
+    }else{
+        return nil;
+    }
+    
+}
+
 //隐藏键盘栏
 - (void)hidenKeyboard
 {
@@ -96,19 +123,19 @@
 }
 
 -(void)requestWith:(NSString *)poi{
-    [MBProgressHUD showMessage:@"正在加载"];
+    [MBProgressHUD showMessage:@"正在加载" toView:_tableView];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[Search MD5Digest],sKey]MD5Digest];
     parameters[@"gsearch"] = [[poi dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWSearch parameters:parameters success:^(id responseObject) {
         NSInteger isError = [responseObject[@"isError"] integerValue];
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD hideHUDForView:_tableView];
         if (!isError) {
             _dataArray = [YWGoods yw_objectWithKeyValuesArray:responseObject[@"result"]];
             [_tableView reloadData];
         }
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD hideHUDForView:_tableView];
         [MBProgressHUD showError:@"请检查网络"];
     }];
 }
@@ -134,6 +161,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    YWgoodsCell *cell = (YWgoodsCell *)[tableView cellForRowAtIndexPath:indexPath];
+    self.sf_targetView = cell.picView;
+    
     YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
     goodsVC.Goods = _dataArray[indexPath.row];
     [self.navigationController pushViewController:goodsVC animated:YES]; 
@@ -152,12 +182,7 @@
 }
 
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
-    [[IQKeyboardManager sharedManager] setEnable:NO];
-}
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {

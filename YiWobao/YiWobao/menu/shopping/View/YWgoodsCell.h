@@ -18,6 +18,7 @@
 
 @interface YWgoodsCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *picView;
 @property (nonatomic,assign) id <YWgoodsCellDelegate> delegate;
 
 @property (nonatomic,strong) NSIndexPath *indexPath;

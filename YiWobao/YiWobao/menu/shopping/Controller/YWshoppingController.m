@@ -28,14 +28,16 @@
 #import "YWnaviViewController.h"
 #import "YWfunctionButton.h"
 #import "YWGuideViewController.h"
+#import "UIViewController+SFTrainsitionExtension.h"
+#import "SFTrainsitionAnimate.h"
 
-
-@interface YWshoppingController ()<SDCycleScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,YWgoodsCellDelegate,UMSocialUIDelegate>{
+@interface YWshoppingController ()<SDCycleScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,YWgoodsCellDelegate,UMSocialUIDelegate,UINavigationControllerDelegate>{
     UISearchBar *searchBar;
     UITableView *_tableView;
     NSMutableArray *_dataArray;
     int inter;
 }
+@property (strong, nonatomic) SFTrainsitionAnimate    *animate;
 
 @end
 
@@ -93,6 +95,28 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.navigationController.delegate = self;
+}
+
+
+- (SFTrainsitionAnimate *)animate{
+    if (!_animate) {
+        return [[SFTrainsitionAnimate alloc]init];
+    }
+    return _animate;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
+    if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[YWGoodsViewController class]]) {
+        self.navigationController.navigationBarHidden = YES;
+        return self.animate;
+    }else{
+        return nil;
+    }
+    
+}
 
 //创建分类
 - (void)creatItemize{
@@ -106,7 +130,7 @@
     }
     [self.view addSubview:view];
     
-    NSArray *titles = @[@"所有商品",@"商品分类",@"创业指导"];
+    NSArray *titles = @[@"所有商品",@"商品分类",@"福利认领"];
     NSArray *images = @[@"ic_mall_fragment_all_goods.png",
                         @"ic_mall_fragment_goods_category",
                         @"ic_mall_fragment_syb"];
@@ -245,6 +269,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    YWgoodsCell *cell = (YWgoodsCell *)[tableView cellForRowAtIndexPath:indexPath];
+    self.sf_targetView = cell.picView;
+    
     YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
     YWSorts *sorts = _dataArray[indexPath.section];
     goodsVC.Goods = sorts.Goods[indexPath.row];

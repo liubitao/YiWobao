@@ -12,6 +12,7 @@
 
 @interface Utils : NSObject
 
+
 + (MBProgressHUD *)createHUD;
 
 //检查手机号
@@ -22,12 +23,13 @@
 
 //倒计时
 +(void)timeDecrease:(UIButton *)button;
-
+//判断对象是不是空的
 +(BOOL)isNull:(id)object;
 
 +(NSMutableDictionary *)paramter:(NSString *)act ID:(NSString *)ID;
-
+//计算字符串的长度
 + (CGFloat)labelWidth:(NSString *)text font:(NSInteger)font;
-
+//时间戳转化为时间
 + (NSString*)timeWith:(NSString*)time;
+
 @end

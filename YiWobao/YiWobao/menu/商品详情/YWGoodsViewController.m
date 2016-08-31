@@ -16,11 +16,18 @@
 #import "YWHttptool.h"
 #import "YWLoginViewController.h"
 #import "YWnaviViewController.h"
+#import "SFTrainsitionAnimate.h"
+#import "UIViewController+SFTrainsitionExtension.h"
 
-@interface YWGoodsViewController ()<UIScrollViewDelegate>
+#define NAVBAR_CHANGE_POINT -300
+
+@interface YWGoodsViewController ()<UIScrollViewDelegate,UINavigationControllerDelegate>
 {
     UIWebView *_webView;
 }
+
+@property (strong, nonatomic) SFTrainsitionAnimate    *animate;
+
 @end
 
 @implementation YWGoodsViewController
@@ -29,15 +36,14 @@
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
    
-    self.navigationController.navigationBar.alpha = 0;
- 
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+    
     self.title = @"商品详情";
     
     _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KscreenHeight-50)];
     _webView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:_webView];
     _webView.scrollView.showsVerticalScrollIndicator = NO;
-    
     
     _webView.scrollView.contentInset = UIEdgeInsetsMake(425.0*kScreenWidth/375, 0, 0, 0);
     _webView.backgroundColor = KviewColor;
@@ -52,6 +58,7 @@
     NSString *pic_str = [NSString stringWithFormat:@"%@%@",YWpic,_Goods.pic];
     [pic_view sd_setImageWithURL:[NSURL URLWithString:pic_str] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     [view addSubview:pic_view];
+    self.sf_targetView = pic_view;
     
     UIView *view2 = [[UIView alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:287 width:375 height:90]];
     view2.backgroundColor = [UIColor whiteColor];
@@ -97,12 +104,61 @@
     UIView *line = [[UIView alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:0 Y:424 width:375 height:1]];
     line.backgroundColor = [UIColor colorWithHexString:@"717071"];
     [view addSubview:line];
- 
-    
-    [_webView loadHTMLString:_Goods.descrition baseURL:nil];
-    
+
+    [_webView loadHTMLString:_Goods.descrition baseURL:[NSURL URLWithString:YWpic]];
+
     //创建购买按钮
     [self create];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.delegate = self;
+}
+
+- (SFTrainsitionAnimate *)animate{
+    if (!_animate) {
+       return [[SFTrainsitionAnimate alloc] initWithAnimateType:animate_pop andDuration:1.5];;
+    }
+    return _animate;
+}
+
+#pragma mark -- navigation delegate
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
+    if (operation == UINavigationControllerOperationPop ) {
+        if ([toVC isKindOfClass:NSClassFromString(@"YWDetailsViewController")]) {
+            return nil;
+        }
+        return self.animate;
+    }else{
+        return nil;
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    UIColor * color = KthemeColor;
+    CGFloat offsetY = scrollView.contentOffset.y;
+    if (offsetY > NAVBAR_CHANGE_POINT) {
+        CGFloat alpha = MIN(1, 1 - ((NAVBAR_CHANGE_POINT + 64 - offsetY) / 64));
+        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
+    } else {
+        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self scrollViewDidScroll:_webView.scrollView] ;
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar lt_reset];
 }
 
 - (void)create{
@@ -126,16 +182,9 @@
     
 }
 
-//scrollView代理
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    self.navigationController.navigationBar.alpha = (offsetY+435.0/375*kScreenWidth)/425.0/375*kScreenWidth;
-}
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.alpha = 1;
-}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

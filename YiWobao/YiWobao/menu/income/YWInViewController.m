@@ -32,7 +32,7 @@
     [super viewDidLoad];
     self.title = @"提现";
     self.view.backgroundColor = KviewColor;
-    
+
     _inCome.layer.masksToBounds = YES;
     _inCome.layer.cornerRadius = 5;
     
@@ -92,9 +92,9 @@
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                     NSInteger isError = [responseObject[@"isError"] integerValue];
                     if (!isError) {
-                        [MBProgressHUD showSuccess:@"提现成功"];
+                        [UIAlertController showAlertViewWithTitle:nil Message:@"提现成功" BtnTitles:@[@"知道了"] ClickBtn:nil];
                     }else{
-                        [MBProgressHUD showError:@"提现失败"];
+                       [UIAlertController showAlertViewWithTitle:nil Message:@"提现失败" BtnTitles:@[@"知道了"] ClickBtn:nil];
                     }
                 } failure:^(NSError *error) {
                     [MBProgressHUD hideHUDForView:self.view animated:YES];

@@ -16,6 +16,8 @@
 #import <Masonry.h>
 #import "UIColor+YWcolor.h"
 #import "IQKeyboardManager.h"
+#import "UIAlertController+BTAdd.h"
+#import "UINavigationBar+BTsome.h"
 
 // ...表示宏定义的可变参数
 // __VA_ARGS__:表示函数里面的可变参数
@@ -110,6 +112,10 @@
 #define YWGood             @"http://api.yiwob.com/shop/ywbapp.php/Goods/goodsList"
 #define Good               @"goods_list"
 
+//商品详情列表
+#define YWgoodsDetail      @"http://api.yiwob.com/shop/ywbapp.php/Goods/goodsDetail"
+#define goodsDetails       @"goods_detail"
+
 //直接购买、跳转到购买界面
 #define YWGoodBuy          @"http://api.yiwob.com/shop/ywbapp.php/Member/goodsBuy"
 #define Goods_buy          @"goods_buy"
@@ -134,6 +140,24 @@
 #define YWShare            @"http://api.yiwob.com/shop/ywbapp.php/Member/shareMe"
 #define Share              @"share_me"
 
+//福利认购
+#define YWzcproj           @"http://api.yiwob.com/shop/ywbapp.php/Goods/zcprojList"
+#define zcproj             @"zcproj_list"
 
+//福利详情
+#define YWdetail           @"http://api.yiwob.com/shop/ywbapp.php/Member/zcprojDetail"
+#define detail             @"zcproj_detail"
+
+//我的福利列表
+#define YWmyProj           @"http://api.yiwob.com/shop/ywbapp.php/Member/myProj"
+#define myProj             @"my_proj"
+
+//我要认领支付接口
+#define YWbuyProj          @"http://api.yiwob.com/shop/ywbapp.php/Member/buyProj"
+#define buyProj            @"buy_proj"
+
+//申请回购
+#define YWgetBack           @"http://api.yiwob.com/shop/ywbapp.php/Member/getBack"
+#define getBack             @"buy_proj"
 
 #endif /* WiWobao_pch */

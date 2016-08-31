@@ -122,7 +122,7 @@
                         [MBProgressHUD hideHUDForView:self.view animated:YES];
                         NSInteger isError = [responseObject[@"isError"] integerValue];
                         if (!isError) {
-                            [MBProgressHUD showSuccess:@"支付成功"];
+                            [UIAlertController showAlertViewWithTitle:nil Message:@"支付成功" BtnTitles:@[@"知道了"] ClickBtn:nil];
                         }
                         else{
                             [MBProgressHUD showError:responseObject[@"errorMessage"]];

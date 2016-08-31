@@ -14,12 +14,13 @@
 #import "YWUserTool.h"
 #import "YWLoginViewController.h"
 #import "YWnaviViewController.h"
+#import "UIViewController+SFTrainsitionExtension.h"
+#import "SFTrainsitionAnimate.h"
 
-
-@interface YWViewController ()<UITableViewDelegate,UITableViewDataSource,YWgoodsCellDelegate>{
+@interface YWViewController ()<UITableViewDelegate,UITableViewDataSource,YWgoodsCellDelegate,UINavigationControllerDelegate>{
     UITableView *_tableView;
 }
-
+@property (strong, nonatomic) SFTrainsitionAnimate    *animate;
 @end
 
 @implementation YWViewController
@@ -37,7 +38,28 @@
     [_tableView registerNib:[UINib nibWithNibName:@"YWgoodsCell" bundle:nil] forCellReuseIdentifier:@"goodsCell"];
     
 }
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.navigationController.delegate = self;
+}
 
+
+- (SFTrainsitionAnimate *)animate{
+    if (!_animate) {
+        return [[SFTrainsitionAnimate alloc]init];
+    }
+    return _animate;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
+    if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[YWGoodsViewController class]]) {
+        self.navigationController.navigationBarHidden = YES;
+        return self.animate;
+    }else{
+        return nil;
+    }
+    
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
 }
@@ -57,6 +79,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    YWgoodsCell *cell = (YWgoodsCell *)[tableView cellForRowAtIndexPath:indexPath];
+    self.sf_targetView = cell.picView;
     YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
     goodsVC.Goods = _dataArray[indexPath.row];
     [self.navigationController pushViewController:goodsVC animated:YES];

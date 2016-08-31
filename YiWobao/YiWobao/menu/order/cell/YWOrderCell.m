@@ -64,7 +64,7 @@
     
     //商品图片
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 5, 66, 60)];
-    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.contentMode = UIViewContentModeScaleToFill;
     [view addSubview:imageView];
     _picView = imageView;
     

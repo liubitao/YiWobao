@@ -13,7 +13,7 @@
 
 @interface YWgoodsCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *picView;
+
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UILabel *price;
 
@@ -44,9 +44,7 @@
     [_picView sd_setImageWithURL:[NSURL URLWithString:picStr] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     _title.text = model.title;
-    
-    
-    
+
     _width.constant = [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.selprice] font:17];
     _width2.constant = [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.price] font:15];
     

@@ -149,4 +149,46 @@
     return image;
     
 }
+
+// 给图片， 设置图片的 圆角半径 边框颜色 边框宽度，剪裁，保存图片
++(UIImage *)roundImageWithImageName:(NSString *)imageName
+                       cornerRadius:(CGFloat)cornerRadius
+                        borderWidth:(CGFloat)borderWidth
+                        borderColor:(UIColor *)borderColor {
+    
+    UIImage *originalImage = [UIImage imageNamed:imageName];
+    
+    // 1.开启 位图的 图形上下文
+    UIGraphicsBeginImageContext(originalImage.size);
+    
+    // 2.把图片画在位图上下文中
+    // 1> 构造图层
+    CALayer *layer = [CALayer layer];
+    
+    // 2> 设置图层的大小
+    layer.bounds = CGRectMake(0, 0, originalImage.size.width, originalImage.size.height);
+    
+    // 3> 设置内容
+    layer.contents = (id)originalImage.CGImage;
+    
+    // 4> 设置边框
+    layer.cornerRadius = cornerRadius;
+    layer.borderWidth = borderWidth;
+    layer.borderColor = borderColor.CGColor;
+    // 5> 剪裁边框
+    layer.masksToBounds = YES;
+    
+    //  将图层 画到当前的上下文中
+    [layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    // 3，从上下文中 获取图片
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // 4.结束位图上下文
+    UIGraphicsEndImageContext();
+    
+    
+    return image;
+    
+}
 @end

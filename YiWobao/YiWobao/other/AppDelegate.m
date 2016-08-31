@@ -29,6 +29,7 @@
     [UINavigationBar appearance].titleTextAttributes = navbarTitleTextAttributes;
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     [UINavigationBar appearance].barTintColor = KthemeColor;
+    
     //友盟appkey
     [UMSocialData setAppKey:@"574cf23967e58e27de0001da"];
     
