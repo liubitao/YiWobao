@@ -18,6 +18,8 @@
 #import "YWBuyGoods.h"
 #import "MBProgressHUD+MJ.h"
 #import "RegisterController.h"
+#import "YWPayViewController.h"
+#import "YWCodeViewController.h"
 
 
 #define kRequestTime 3.0f
@@ -29,6 +31,7 @@
     UIView *_buttomView;
     UILabel *_price;
     CGRect _detailSize;
+    NSString *_total_money;
 }
 
 
@@ -50,7 +53,7 @@
     self.title = @"购买详情";
     self.view.backgroundColor = [UIColor colorWithHexString:@"E5E6E6"];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+    _total_money = _goods.selprice;
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, KscreenHeight-64-50) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor whiteColor];
@@ -101,51 +104,29 @@
         [self presentViewController:alertController animated:YES completion:nil];
         return;
     }
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    //增加确定按钮；
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [MBProgressHUD showMessage:@"正在支付" toView:self.view];
-        YWUser *user = [YWUserTool account];
-                    NSMutableDictionary *paramters = [Utils paramter:Goods_order ID:user.ID];
-                    NSMutableDictionary *buyarr = [NSMutableDictionary dictionary];
-                    buyarr[@"gid"] = self.goods.ID;
-                    buyarr[@"gnum"] = self.num.text;
-                    buyarr[@"aid"] = self.addressModel.ID;
-                    buyarr[@"onum"] = self.buyGoods.buyGoodsON;
-                    buyarr[@"pkd"] = [NSString stringWithFormat:@"%ld",self.last_btn.tag];
-                    buyarr[@"pwd"] = [alertController.textFields[0].text MD5Digest];
-                    buyarr[@"omeno"] = self.remarks_text.text;
-                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:buyarr options:NSJSONWritingPrettyPrinted error:nil];
-                    NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                    paramters[@"buyarr"] = str;
-                    [YWHttptool Post:YWGoodsOrder parameters:paramters success:^(id responseObject) {
-                        [MBProgressHUD hideHUDForView:self.view animated:YES];
-                        NSInteger isError = [responseObject[@"isError"] integerValue];
-                        if (!isError) {
-                            [UIAlertController showAlertViewWithTitle:nil Message:@"支付成功" BtnTitles:@[@"知道了"] ClickBtn:nil];
-                        }
-                        else{
-                            [MBProgressHUD showError:responseObject[@"errorMessage"]];
-                        }
-                    } failure:^(NSError *error) {
-                        [MBProgressHUD hideHUDForView:self.view animated:YES];
-                        [MBProgressHUD showError:@"请检查网络"];
-                    }];
+    NSMutableDictionary *buyarr = [NSMutableDictionary dictionary];
+    buyarr[@"gid"] = self.goods.ID;
+    buyarr[@"gnum"] = self.num.text;
+    buyarr[@"aid"] = self.addressModel.ID;
+    buyarr[@"onum"] = self.buyGoods.buyGoodsON;
+    buyarr[@"pkd"] = [NSString stringWithFormat:@"%d",self.last_btn.tag];
+    if (self.last_btn.tag == 0) {
+        YWPayViewController *payVC = [[YWPayViewController alloc]init];
+        payVC.buyArr = buyarr;
+        payVC.total = _total_money;
+        if ([_goods.ybkind isEqualToString:@"0"]) {
+            payVC.yb_can = YES;
+        }else {
+            payVC.yb_can = NO;
+        }
+        [self presentViewController:payVC animated:YES completion:nil];
+    }else{
+        YWCodeViewController *codeVC = [[YWCodeViewController alloc]init];
+        buyarr[@"g_c"] = @"1";
+        codeVC.buyDic = buyarr;
+        [self presentViewController:codeVC animated:YES completion:nil];
+    }
 
-    }]];
-    //增加取消按钮；
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
-    //定义第一个输入框；
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"请输入支付密码";
-        textField.secureTextEntry = YES;
-        textField.font = [UIFont systemFontOfSize:20];
-        textField.borderStyle = UITextBorderStyleNone;
-    }];
-    [alertController.actions[0] setValue:[UIColor redColor] forKeyPath:@"_titleTextColor"];
-    
-    [self presentViewController:alertController animated:true completion:nil];
 
 }
 
@@ -391,6 +372,7 @@
         _num.text = [NSString stringWithFormat:@"%d",[_num.text intValue]+1];
     }
     int number = [_num.text intValue];
+    _total_money = [NSString stringWithFormat:@"%.2f",[_goods.selprice floatValue]*number];
     _price.text = [NSString stringWithFormat:@"共计%@件商品 合计：%.1f米",_num.text,[_goods.selprice floatValue]*number];
 }
 
@@ -437,8 +419,11 @@
             }
             [_tableView reloadData];
         }
-    } failure:^(NSError *error) {
-        
+        else{
+            [MBProgressHUD showError:responseObject[@"errorMessage"]];
+
+        }
+    } failure:^(NSError *error) {     
     }];
 }
 

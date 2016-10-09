@@ -14,10 +14,11 @@
 #import "YWUser.h"
 #import "YWUserTool.h"
 #import "MBProgressHUD+MJ.h"
-#import "CYPasswordView.h"
 #import <NSString+MD5.h>
 #import <UMSocial.h>
 #import "YWGoods.h"
+#import "YWPayViewController.h"
+
 
 #define kRequestTime 3.0f
 #define kDelay 1.0f
@@ -27,7 +28,6 @@
     UILabel *label;
     
 }
-@property (nonatomic, strong) CYPasswordView *passwordView;
 @property (nonatomic,strong) NSMutableArray *dataArray;
 
 @end
@@ -163,68 +163,53 @@
 
 - (void)changeState:(NSIndexPath *)indexPath tag:(NSInteger)tag type:(NSString *)type{
     if (tag == 1) {
-        NSString *str = [type isEqualToString:@"1"]?  @"正在取消订单":@"正在拒绝代付";
-        NSString *str2 = [type isEqualToString:@"1"]?  @"已取消":@"已拒绝";
-        [MBProgressHUD showMessage:str];
-        YWOrderModel *orederModel = _dataArray[indexPath.section];
-        YWUser *user = [YWUserTool account];
-        NSMutableDictionary *parameters = [Utils paramter:Del_order ID:user.ID];
-        parameters[@"doid"] = [[orederModel.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-        parameters[@"dkd"] = [[type dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-        [YWHttptool Post:YWDelOrder parameters:parameters success:^(id responseObject) {
-            NSInteger isError = [responseObject[@"isError"] integerValue];
-            [MBProgressHUD hideHUD];
-            if (!isError) { 
-                [self request];
-                [MBProgressHUD showSuccess:str2];
-            }
-        } failure:^(NSError *error) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showError:@"请检查网络"];
+        //设置提醒框
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[type isEqualToString:@"1"]?  @"确认取消该订单":@"确认拒绝该代付" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSString *str = [type isEqualToString:@"1"]?  @"正在取消订单":@"正在拒绝代付";
+            NSString *str2 = [type isEqualToString:@"1"]?  @"已取消":@"已拒绝";
+            [MBProgressHUD showMessage:str];
+            YWOrderModel *orederModel = _dataArray[indexPath.section];
+            YWUser *user = [YWUserTool account];
+            NSMutableDictionary *parameters = [Utils paramter:Del_order ID:user.ID];
+            parameters[@"doid"] = [[orederModel.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+            parameters[@"dkd"] = [[type dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+            [YWHttptool Post:YWDelOrder parameters:parameters success:^(id responseObject) {
+                NSInteger isError = [responseObject[@"isError"] integerValue];
+                [MBProgressHUD hideHUD];
+                if (!isError) {
+                    [self request];
+                    [MBProgressHUD showSuccess:str2];
+                }
+            } failure:^(NSError *error) {
+                [MBProgressHUD hideHUD];
+                [MBProgressHUD showError:@"请检查网络"];
+            }];
         }];
+        [action1 setValue:[UIColor redColor] forKey:@"_titleTextColor"];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+        [alertController addAction:action1];
+        [alertController addAction:cancelAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     }else{
         if ([type isEqualToString:@"2"]) {
-            __weak YWOrderViewController *weakSelf = self;
-            self.passwordView = [[CYPasswordView alloc] init];
-            self.passwordView.title = @"输入交易密码";
-            self.passwordView.loadingText = @"提交中...";
-            [self.passwordView showInView:self.view.window];
-            self.passwordView.finish = ^(NSString *password) {
-                [weakSelf.passwordView hideKeyboard];
-                [weakSelf.passwordView startLoading];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kRequestTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    YWUser *user = [YWUserTool account];
-                    NSMutableDictionary *paramters = [Utils paramter:do_order ID:user.ID];
-                    NSMutableDictionary *payarr = [NSMutableDictionary dictionary];
-                    YWOrderModel *orederModel = weakSelf.dataArray[indexPath.section];
-                    payarr[@"oid"] = orederModel.ID;
-                    payarr[@"pkd"] = @"0";
-                    payarr[@"pwd"] = [password MD5Digest];
-                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payarr options:NSJSONWritingPrettyPrinted error:nil];
-                    NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                    paramters[@"payarr"] = str;
-                    [YWHttptool Post:YWDoOrder parameters:paramters success:^(id responseObject) {
-                        NSInteger isError = [responseObject[@"isError"] integerValue];
-                        if (!isError) {
-                            [MBProgressHUD showSuccess:@"支付成功"];
-                            [weakSelf.passwordView requestComplete:YES message:@"支付成功"];
-                            [weakSelf.passwordView stopLoading];
-                            [weakSelf.passwordView hide];
-                            [weakSelf request];
-                        }
-                        else{
-                            [MBProgressHUD showError:responseObject[@"errorMessage"]];
-                            [weakSelf.passwordView requestComplete:NO message:responseObject[@"errorMessage"]];
-                            [weakSelf.passwordView stopLoading];
-                            [weakSelf.passwordView hide];
-                        }
-                    } failure:^(NSError *error) {
-                        
-                    }];
-                    
-                });
+            YWOrderModel *orederModel = _dataArray[indexPath.section];
+            YWGoods *goods = orederModel.goods;
+            
+            NSMutableDictionary *buyarr = [NSMutableDictionary dictionary];
+            buyarr[@"oid"] = orederModel.ID;
+            
+            YWPayViewController *payVC = [[YWPayViewController alloc]init];
+            payVC.buyArr = buyarr;
+            payVC.total = orederModel.pmoney;
+            if ([goods.ybkind isEqualToString:@"0"]) {
+                payVC.yb_can = YES;
+            }else {
+                payVC.yb_can = NO;
+            }
+            [self presentViewController:payVC animated:YES completion:nil];
 
-        };
         }
         else{
             YWOrderModel *orederModel = _dataArray[indexPath.section];

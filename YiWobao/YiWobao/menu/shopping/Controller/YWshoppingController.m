@@ -22,18 +22,23 @@
 #import "YWClassViewController.h"
 #import "YWUser.h"
 #import "YWUserTool.h"
-#import <UMSocial.h>
 #import "YWViewController.h"
 #import "YWLoginViewController.h"
 #import "YWnaviViewController.h"
-#import "YWfunctionButton.h"
 #import "YWGuideViewController.h"
 #import "UIViewController+SFTrainsitionExtension.h"
 #import "SFTrainsitionAnimate.h"
+#import "YWScanViewController.h"
+#import "YWmainItemButton.h"
+#import "YWfunctionButton.h"
+#import "YWFederalViewController.h"
 
-@interface YWshoppingController ()<SDCycleScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,YWgoodsCellDelegate,UMSocialUIDelegate,UINavigationControllerDelegate>{
+
+
+@interface YWshoppingController ()<SDCycleScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,YWgoodsCellDelegate,UINavigationControllerDelegate>{
     UISearchBar *searchBar;
     UITableView *_tableView;
+    NSMutableArray *_dataArray1;
     NSMutableArray *_dataArray;
     int inter;
 }
@@ -49,31 +54,10 @@
     self.title = @"商城";
     self.view.backgroundColor = [UIColor whiteColor];
     _dataArray = [NSMutableArray array];
-    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth, 35)];
-    searchBar.placeholder = @"大家都在搜";
-    searchBar.returnKeyType = UIReturnKeyGo;
-    searchBar.delegate = self;
-    searchBar.layer.cornerRadius = 10;
-    searchBar.layer.masksToBounds = YES;
-    for (UIView *view in searchBar.subviews) {
-        if ([view isKindOfClass:NSClassFromString(@"UIView")] && view.subviews.count > 0) {
-            [[view.subviews objectAtIndex:0] removeFromSuperview];
-            break;
-        }
-    }
-    //设置为导航栏的标题视图
-    self.navigationItem.titleView = searchBar;
     
-    UIButton *right_btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-    [right_btn setImage:[UIImage imageNamed:@"ic_mall_share_72(1)"] forState:UIControlStateNormal];
-    [right_btn addTarget:self action:@selector(shared) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc]initWithCustomView:right_btn];
-    shareItem.imageInsets = UIEdgeInsetsMake(0, 30, 0, 0);
-    self.navigationItem.rightBarButtonItem = shareItem;
+    [self initNavi];
     
-    UIButton *left_btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-    UIBarButtonItem *leftBrt = [[UIBarButtonItem alloc]initWithCustomView:left_btn];
-    self.navigationItem.leftBarButtonItem = leftBrt;
+
     
     
     //创建分类
@@ -82,17 +66,27 @@
     //创建商品列表
     [self createTable];
     
-    //添加手势，点击屏幕其他区域关闭键盘的操作
-    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidenKeyboard)];
-    gesture.numberOfTapsRequired = 1;
-    gesture.delegate = self;
-    self.view.userInteractionEnabled = YES;
-    [self.view addGestureRecognizer:gesture];
-    
     
     // 注册单元格
     [_tableView registerNib:[UINib nibWithNibName:@"YWgoodsCell" bundle:nil] forCellReuseIdentifier:@"goodsCell"];
     
+}
+
+- (void)initNavi{
+    [super initNavi];
+    
+    UIButton *left_btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+    [left_btn setImage:[UIImage imageNamed:@"scan"] forState:UIControlStateNormal];
+    [left_btn addTarget:self action:@selector(scan) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftBrt = [[UIBarButtonItem alloc]initWithCustomView:left_btn];
+    self.navigationItem.leftBarButtonItem = leftBrt;
+    
+}
+
+//二维码扫描
+- (void)scan{
+    YWScanViewController *scanVC = [[YWScanViewController alloc]init];
+    [self.navigationController pushViewController:scanVC animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -107,7 +101,7 @@
     }
     return _animate;
 }
-
+//商品图片动画
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
     if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[YWGoodsViewController class]]) {
         self.navigationController.navigationBarHidden = YES;
@@ -121,25 +115,19 @@
 //创建分类
 - (void)creatItemize{
     
-    CGFloat itemWidth = (kScreenWidth-60-40)/3;
+    CGFloat itemWidth = kScreenWidth/4;
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(30, 64, kScreenWidth-60, 51)];
-    if (kScreenWidth == 320) {
-        itemWidth = (kScreenWidth -40)/3;
-        view.frame = CGRectMake(10, 64, kScreenWidth-10, 51);
-    }
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, 80)];
     [self.view addSubview:view];
     
-    NSArray *titles = @[@"所有商品",@"商品分类",@"福利认领"];
+    NSArray *titles = @[@"所有商品",@"商品分类",@"联盟商家",@"福利认领"];
     NSArray *images = @[@"ic_mall_fragment_all_goods.png",
                         @"ic_mall_fragment_goods_category",
+                        @"federate",
                         @"ic_mall_fragment_syb"];
     
-    for (int i = 0; i<3; i++) {
-        YWfunctionButton *button = [[YWfunctionButton alloc]initWithFrame:CGRectMake(i*(itemWidth+20), 0, itemWidth, 51)];
-        if (kScreenWidth == 320) {
-            button.frame = CGRectMake(i*(itemWidth+10), 0, itemWidth, 51);
-        }
+    for (int i = 0; i<4; i++) {
+        YWmainItemButton *button = [[YWmainItemButton alloc]initWithFrame:CGRectMake(i*itemWidth, 0, itemWidth, 80)];
         button.tag = i;
         [button setTitle:titles[i] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:images[i]] forState:UIControlStateNormal];
@@ -151,7 +139,7 @@
 
 //创建商品列表
 - (void)createTable{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 115, kScreenWidth, KscreenHeight-115-49) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 145, kScreenWidth, KscreenHeight-145-49) style:UITableViewStyleGrouped];
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -194,6 +182,23 @@
                     [_dataArray addObject:sorts];
                 }
             }
+            _dataArray1 = [NSMutableArray arrayWithArray:_dataArray];
+            NSMutableArray *isfree_array = [NSMutableArray array];
+            for (YWSorts *sort in _dataArray) {
+                for (YWGoods *goods in sort.Goods) {
+                    if ([goods.isfree isEqualToString:@"1"]) {
+                        [isfree_array addObject:goods];
+                    }
+                }
+            }
+            
+            YWSorts *sort = [[YWSorts alloc]init];
+            if (![Utils isNull:isfree_array]) {
+                sort.Goods = isfree_array;
+                sort.title = @"免费";
+                [_dataArray insertObject:sort atIndex:0];
+            }
+            
             [_tableView reloadData];
         }
     } failure:^(NSError *error) {
@@ -290,13 +295,7 @@
         [self.navigationController pushViewController:buyVC animated:YES];
 }
 
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-    if ((inter++)%2 == 0) {
-        SearchViewController *searchVC = [[SearchViewController alloc]init];
-        [self.navigationController pushViewController:searchVC animated:YES];
-    }
-    return YES;
-}
+
 
 //点击分类
 - (void)clickBtn:(UIButton *)sender{
@@ -304,7 +303,7 @@
         case 0:{
             YWViewController *classVC = [[YWViewController alloc]init];
             NSMutableArray *dataArray = [NSMutableArray array];
-            for (YWSorts *sorts in _dataArray) {
+            for (YWSorts *sorts in _dataArray1) {
                 for (YWGoods *goods in sorts.Goods) {
                     [dataArray addObject:goods];
                 }
@@ -320,8 +319,19 @@
             [self.navigationController pushViewController:classVC animated:YES];
         }
             break;
-        case 2:
-        {    YWGuideViewController *VC = [[YWGuideViewController alloc]init];
+        case 2:{
+            YWFederalViewController *FederalVC = [[YWFederalViewController alloc]init];
+            [self.navigationController pushViewController:FederalVC animated:YES];
+        }
+            break;
+        case 3:
+        {
+            if (![YWUserTool account]) {
+                YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
+                [self presentViewController:loginVC animated:YES completion:nil];
+                return;
+            }
+            YWGuideViewController *VC = [[YWGuideViewController alloc]init];
             [self.navigationController pushViewController:VC animated:YES];
                    }
             break;
@@ -330,42 +340,7 @@
     }
 }
 
-- (void)shared{
-    YWUser *user = [YWUserTool account];
-    if ([Utils isNull:user]) {
-        YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
-        [self.navigationController pushViewController:loginVC animated:YES];
-        return;
-    }
-    NSMutableDictionary *parameters = [Utils paramter:Share ID:user.ID];
-    [YWHttptool   GET:YWShare parameters:parameters success:^(id responseObject) {
-        UIImage *image = [UIImage imageNamed:@"app"];
-        NSString *str = responseObject[@"result"][@"saddr"];
-        [UMSocialData defaultData].extConfig.wechatSessionData.url = str;
-        [UMSocialData defaultData].extConfig.wechatTimelineData.url = str;
-        //调用快速分享接口
-        [UMSocialSnsService presentSnsIconSheetView:self
-                                             appKey:@"574cf23967e58e27de0001da"
-                                          shareText:@"蚁窝宝希望您的参与。"                                                                     shareImage:image
-                                    shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,nil]
-                                           delegate:self];
-    } failure:^(NSError *error) {
-        
-    }];
 
-}
-
--(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
-
-    //根据`responseCode`得到发送结果,如果分享成功
-    if(response.responseCode == UMSResponseCodeSuccess)
-    {
-        [MBProgressHUD showSuccess:@"分享成功"];
-    }
-    else{
-        [MBProgressHUD showError:@"分享失败"];
-    }
-}
 
 
 - (void)didReceiveMemoryWarning {
@@ -373,22 +348,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-//确定这个手势是否可以实现
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-{
-    //判断这个账号和密码控件中是否都是第一响应者
-    if (![searchBar isFirstResponder] ) {
-        //都不是第一响应者的时候
-        return NO;
-    }
-    return YES;
-}
 
-//隐藏键盘栏
-- (void)hidenKeyboard
-{
-    [searchBar resignFirstResponder];
-}
+
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

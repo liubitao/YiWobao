@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YWBaseViewController.h"
 
-@interface YWshoppingController : UIViewController
+@interface YWshoppingController : YWBaseViewController
 
 - (void)request;
 @end

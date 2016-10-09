@@ -58,7 +58,6 @@
         [YWHttptool Post:YWgetBack parameters:parameter success:^(id responseObject) {
             NSInteger isError = [responseObject[@"isError"] integerValue];
             [MBProgressHUD hideHUDForView:weakSelf.view];
-            NSLog(@"%@",responseObject);
             if (!isError) {
               [MBProgressHUD showSuccess:responseObject[@"errorMessage"] toView:weakSelf.view];
                 return ;

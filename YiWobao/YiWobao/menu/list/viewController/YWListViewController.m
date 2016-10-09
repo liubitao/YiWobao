@@ -102,7 +102,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 87;
+    YWModel4 *model = _dataArray[indexPath.section];
+    CGRect detailSize = [model.memo boundingRectWithSize:CGSizeMake(kScreenWidth-30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16]}context:nil];
+    if (detailSize.size.height<=33) {
+        detailSize.size.height = 33;
+    }
+    return detailSize.size.height-33+87;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

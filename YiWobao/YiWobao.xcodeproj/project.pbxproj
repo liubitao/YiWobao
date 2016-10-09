@@ -10,6 +10,11 @@
 		0C006B101CEEE6F80014B0F2 /* YWGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C006B0F1CEEE6F80014B0F2 /* YWGoodsViewController.m */; };
 		0C006B171CEEF69F0014B0F2 /* YWBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C006B151CEEF69F0014B0F2 /* YWBuyViewController.m */; };
 		0C05101C1D49D1BA00EE9F04 /* UIAlertController+BTAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C05101B1D49D1BA00EE9F04 /* UIAlertController+BTAdd.m */; };
+		0C0708551DA89AEE0035ABB9 /* JZMTBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0708541DA89AEE0035ABB9 /* JZMTBtnView.m */; };
+		0C0708581DA89B190035ABB9 /* HomeMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0708571DA89B190035ABB9 /* HomeMenuCell.m */; };
+		0C07085C1DA8D5830035ABB9 /* YwFederalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C07085A1DA8D5830035ABB9 /* YwFederalCell.m */; };
+		0C07085D1DA8D5830035ABB9 /* YwFederalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C07085B1DA8D5830035ABB9 /* YwFederalCell.xib */; };
+		0C0708611DA8E8DC0035ABB9 /* YWShopClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0708601DA8E8DC0035ABB9 /* YWShopClassViewController.m */; };
 		0C0E16361D2E47A60029C1F3 /* YWPopuepController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C0E16351D2E47A60029C1F3 /* YWPopuepController.xib */; };
 		0C0E163C1D2E4D8F0029C1F3 /* YWPopuepController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E163B1D2E4D8F0029C1F3 /* YWPopuepController.m */; };
 		0C130B441CE1E3B800ABCEF8 /* YWAddressEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C130B431CE1E3B800ABCEF8 /* YWAddressEditController.m */; };
@@ -34,6 +39,8 @@
 		0C388A2F1D0541F700DB6927 /* TabHomeRightTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A2B1D0541F700DB6927 /* TabHomeRightTableCell.m */; };
 		0C388A301D0541F700DB6927 /* YWClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A2E1D0541F700DB6927 /* YWClassViewController.m */; };
 		0C388A341D05423E00DB6927 /* YWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A331D05423E00DB6927 /* YWViewController.m */; };
+		0C4A73D91D86418800FE0084 /* YWCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4A73D71D86418800FE0084 /* YWCodeViewController.m */; };
+		0C4A73DA1D86418800FE0084 /* YWCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C4A73D81D86418800FE0084 /* YWCodeViewController.xib */; };
 		0C5EB4F41CEB110100870E06 /* YWModel4.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5EB4F31CEB110100870E06 /* YWModel4.m */; };
 		0C5EB90A1CD0A59E00E4431A /* YWSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5EB9091CD0A59E00E4431A /* YWSearchBar.m */; };
 		0C5EEB1F1CE30BF400F585C3 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5EEB1C1CE30BF400F585C3 /* RegisterController.m */; };
@@ -50,6 +57,11 @@
 		0C679C981CEC4742004F8FF7 /* YWtransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C679C971CEC4742004F8FF7 /* YWtransferViewController.m */; };
 		0C679C9C1CEC6349004F8FF7 /* YWTurnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C679C9A1CEC6349004F8FF7 /* YWTurnViewController.m */; };
 		0C679C9D1CEC6349004F8FF7 /* YWTurnViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C679C9B1CEC6349004F8FF7 /* YWTurnViewController.xib */; };
+		0C6955A11D854F5D0031B68E /* YWPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C69559F1D854F5D0031B68E /* YWPayViewController.m */; };
+		0C6955A21D854F5D0031B68E /* YWPayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6955A01D854F5D0031B68E /* YWPayViewController.xib */; };
+		0C6955A51D8559E20031B68E /* XWPresentOneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6955A41D8559E20031B68E /* XWPresentOneTransition.m */; };
+		0C6A1EFD1D962F2A00E2C5E3 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C6A1EFC1D962F2A00E2C5E3 /* pick_bg@2x.png */; };
+		0C6A1F001D96345E00E2C5E3 /* XYLScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6A1EFF1D96345E00E2C5E3 /* XYLScanView.m */; };
 		0C6AA3211D66E5EF008AD68C /* YWTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6AA31F1D66E5EF008AD68C /* YWTableViewCell.m */; };
 		0C6AA3221D66E5EF008AD68C /* YWTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6AA3201D66E5EF008AD68C /* YWTableViewCell.xib */; };
 		0C74C74D1D70108B009BC8EE /* YWClaim.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C74C74C1D70108B009BC8EE /* YWClaim.m */; };
@@ -60,6 +72,10 @@
 		0C7EF01C1CCF566000BFC1A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C7EF01B1CCF566000BFC1A6 /* Assets.xcassets */; };
 		0C7EF02A1CCF566000BFC1A6 /* YiWobaoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7EF0291CCF566000BFC1A6 /* YiWobaoTests.m */; };
 		0C7EF0351CCF566000BFC1A6 /* YiWobaoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7EF0341CCF566000BFC1A6 /* YiWobaoUITests.m */; };
+		0C8309801D9CF8670070FFB1 /* YWFederalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C83097F1D9CF8670070FFB1 /* YWFederalViewController.m */; };
+		0C8309831D9CF87D0070FFB1 /* YWFederal.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8309821D9CF87D0070FFB1 /* YWFederal.m */; };
+		0C8309861D9D013C0070FFB1 /* YWBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8309851D9D013C0070FFB1 /* YWBaseViewController.m */; };
+		0C83098C1D9D12F60070FFB1 /* YWFederalShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C83098B1D9D12F60070FFB1 /* YWFederalShop.m */; };
 		0C84B2811CE5B4C200A0B4BE /* YWListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C84B2801CE5B4C100A0B4BE /* YWListViewController.m */; };
 		0C84B2931CE5D33200A0B4BE /* YWInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C84B2911CE5D33200A0B4BE /* YWInViewController.m */; };
 		0C84B2941CE5D33200A0B4BE /* YWInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C84B2921CE5D33200A0B4BE /* YWInViewController.xib */; };
@@ -95,6 +111,17 @@
 		0CAA80671CDC35F9000126CA /* YWUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA80661CDC35F9000126CA /* YWUser.m */; };
 		0CAA806D1CDC3649000126CA /* YWHttptool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA806C1CDC3649000126CA /* YWHttptool.m */; };
 		0CAA80701CDC3CC7000126CA /* YWUserTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA806F1CDC3CC7000126CA /* YWUserTool.m */; };
+		0CB128B01DA9DA22005A0A4D /* RatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB128AF1DA9DA22005A0A4D /* RatingView.m */; };
+		0CBC3D971D94CAC000F2729F /* YWScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC3D961D94CAC000F2729F /* YWScanViewController.m */; };
+		0CBC3DA11D94D3CA00F2729F /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CBC3D9E1D94D3CA00F2729F /* line.png */; };
+		0CBC3DA21D94D3CA00F2729F /* scan.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0CBC3D9F1D94D3CA00F2729F /* scan.wav */; };
+		0CBC3DAB1D94ED4900F2729F /* YWShoplistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC3DAA1D94ED4900F2729F /* YWShoplistViewController.m */; };
+		0CBC3DAE1D94F5CD00F2729F /* YWShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC3DAD1D94F5CD00F2729F /* YWShop.m */; };
+		0CBC3DB11D94F5FC00F2729F /* YWMoneyList.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC3DB01D94F5FC00F2729F /* YWMoneyList.m */; };
+		0CBC3DB31D94FB0700F2729F /* YWheaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CBC3DB21D94FB0700F2729F /* YWheaderView.xib */; };
+		0CBC3DB61D94FC4800F2729F /* YWheaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC3DB51D94FC4800F2729F /* YWheaderView.m */; };
+		0CBC3DCA1D95209D00F2729F /* YWShopPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC3DC81D95209D00F2729F /* YWShopPayViewController.m */; };
+		0CBC3DCB1D95209D00F2729F /* YWShopPayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CBC3DC91D95209D00F2729F /* YWShopPayViewController.xib */; };
 		0CBF664C1D508206002C0A51 /* UINavigationBar+BTsome.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF664B1D508206002C0A51 /* UINavigationBar+BTsome.m */; };
 		0CBF66601D508B45002C0A51 /* SFTrainsitionAnimate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF665D1D508B45002C0A51 /* SFTrainsitionAnimate.m */; };
 		0CBF66611D508B45002C0A51 /* UIViewController+SFTrainsitionExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF665F1D508B45002C0A51 /* UIViewController+SFTrainsitionExtension.m */; };
@@ -150,6 +177,15 @@
 		0C006B151CEEF69F0014B0F2 /* YWBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWBuyViewController.m; sourceTree = "<group>"; };
 		0C05101A1D49D1BA00EE9F04 /* UIAlertController+BTAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+BTAdd.h"; sourceTree = "<group>"; };
 		0C05101B1D49D1BA00EE9F04 /* UIAlertController+BTAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+BTAdd.m"; sourceTree = "<group>"; };
+		0C0708531DA89AEE0035ABB9 /* JZMTBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JZMTBtnView.h; sourceTree = "<group>"; };
+		0C0708541DA89AEE0035ABB9 /* JZMTBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JZMTBtnView.m; sourceTree = "<group>"; };
+		0C0708561DA89B190035ABB9 /* HomeMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeMenuCell.h; sourceTree = "<group>"; };
+		0C0708571DA89B190035ABB9 /* HomeMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeMenuCell.m; sourceTree = "<group>"; };
+		0C0708591DA8D5830035ABB9 /* YwFederalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YwFederalCell.h; sourceTree = "<group>"; };
+		0C07085A1DA8D5830035ABB9 /* YwFederalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YwFederalCell.m; sourceTree = "<group>"; };
+		0C07085B1DA8D5830035ABB9 /* YwFederalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YwFederalCell.xib; sourceTree = "<group>"; };
+		0C07085F1DA8E8DC0035ABB9 /* YWShopClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWShopClassViewController.h; sourceTree = "<group>"; };
+		0C0708601DA8E8DC0035ABB9 /* YWShopClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWShopClassViewController.m; sourceTree = "<group>"; };
 		0C0E16351D2E47A60029C1F3 /* YWPopuepController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWPopuepController.xib; sourceTree = "<group>"; };
 		0C0E163A1D2E4D8F0029C1F3 /* YWPopuepController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWPopuepController.h; sourceTree = "<group>"; };
 		0C0E163B1D2E4D8F0029C1F3 /* YWPopuepController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWPopuepController.m; sourceTree = "<group>"; };
@@ -197,6 +233,9 @@
 		0C388A2E1D0541F700DB6927 /* YWClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWClassViewController.m; sourceTree = "<group>"; };
 		0C388A321D05423E00DB6927 /* YWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWViewController.h; sourceTree = "<group>"; };
 		0C388A331D05423E00DB6927 /* YWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWViewController.m; sourceTree = "<group>"; };
+		0C4A73D61D86418800FE0084 /* YWCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCodeViewController.h; sourceTree = "<group>"; };
+		0C4A73D71D86418800FE0084 /* YWCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCodeViewController.m; sourceTree = "<group>"; };
+		0C4A73D81D86418800FE0084 /* YWCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCodeViewController.xib; sourceTree = "<group>"; };
 		0C5EB4F21CEB110100870E06 /* YWModel4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWModel4.h; sourceTree = "<group>"; };
 		0C5EB4F31CEB110100870E06 /* YWModel4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWModel4.m; sourceTree = "<group>"; };
 		0C5EB9081CD0A59E00E4431A /* YWSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWSearchBar.h; sourceTree = "<group>"; };
@@ -225,6 +264,14 @@
 		0C679C991CEC6349004F8FF7 /* YWTurnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWTurnViewController.h; sourceTree = "<group>"; };
 		0C679C9A1CEC6349004F8FF7 /* YWTurnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWTurnViewController.m; sourceTree = "<group>"; };
 		0C679C9B1CEC6349004F8FF7 /* YWTurnViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWTurnViewController.xib; sourceTree = "<group>"; };
+		0C69559E1D854F5D0031B68E /* YWPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWPayViewController.h; sourceTree = "<group>"; };
+		0C69559F1D854F5D0031B68E /* YWPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWPayViewController.m; sourceTree = "<group>"; };
+		0C6955A01D854F5D0031B68E /* YWPayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWPayViewController.xib; sourceTree = "<group>"; };
+		0C6955A31D8559E20031B68E /* XWPresentOneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWPresentOneTransition.h; sourceTree = "<group>"; };
+		0C6955A41D8559E20031B68E /* XWPresentOneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWPresentOneTransition.m; sourceTree = "<group>"; };
+		0C6A1EFC1D962F2A00E2C5E3 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
+		0C6A1EFE1D96345E00E2C5E3 /* XYLScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYLScanView.h; sourceTree = "<group>"; };
+		0C6A1EFF1D96345E00E2C5E3 /* XYLScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYLScanView.m; sourceTree = "<group>"; };
 		0C6AA31E1D66E5EF008AD68C /* YWTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWTableViewCell.h; sourceTree = "<group>"; };
 		0C6AA31F1D66E5EF008AD68C /* YWTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWTableViewCell.m; sourceTree = "<group>"; };
 		0C6AA3201D66E5EF008AD68C /* YWTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWTableViewCell.xib; sourceTree = "<group>"; };
@@ -245,6 +292,14 @@
 		0C7EF0301CCF566000BFC1A6 /* YiWobaoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YiWobaoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C7EF0341CCF566000BFC1A6 /* YiWobaoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YiWobaoUITests.m; sourceTree = "<group>"; };
 		0C7EF0361CCF566000BFC1A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0C83097E1D9CF8670070FFB1 /* YWFederalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWFederalViewController.h; sourceTree = "<group>"; };
+		0C83097F1D9CF8670070FFB1 /* YWFederalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFederalViewController.m; sourceTree = "<group>"; };
+		0C8309811D9CF87D0070FFB1 /* YWFederal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWFederal.h; sourceTree = "<group>"; };
+		0C8309821D9CF87D0070FFB1 /* YWFederal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFederal.m; sourceTree = "<group>"; };
+		0C8309841D9D013C0070FFB1 /* YWBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWBaseViewController.h; sourceTree = "<group>"; };
+		0C8309851D9D013C0070FFB1 /* YWBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWBaseViewController.m; sourceTree = "<group>"; };
+		0C83098A1D9D12F60070FFB1 /* YWFederalShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWFederalShop.h; sourceTree = "<group>"; };
+		0C83098B1D9D12F60070FFB1 /* YWFederalShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFederalShop.m; sourceTree = "<group>"; };
 		0C84B27F1CE5B4C100A0B4BE /* YWListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWListViewController.h; sourceTree = "<group>"; };
 		0C84B2801CE5B4C100A0B4BE /* YWListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWListViewController.m; sourceTree = "<group>"; };
 		0C84B2901CE5D33200A0B4BE /* YWInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWInViewController.h; sourceTree = "<group>"; };
@@ -315,6 +370,25 @@
 		0CAA806C1CDC3649000126CA /* YWHttptool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWHttptool.m; sourceTree = "<group>"; };
 		0CAA806E1CDC3CC7000126CA /* YWUserTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWUserTool.h; sourceTree = "<group>"; };
 		0CAA806F1CDC3CC7000126CA /* YWUserTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWUserTool.m; sourceTree = "<group>"; };
+		0CB128AE1DA9DA22005A0A4D /* RatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingView.h; sourceTree = "<group>"; };
+		0CB128AF1DA9DA22005A0A4D /* RatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingView.m; sourceTree = "<group>"; };
+		0CBC3D951D94CAC000F2729F /* YWScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWScanViewController.h; sourceTree = "<group>"; };
+		0CBC3D961D94CAC000F2729F /* YWScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWScanViewController.m; sourceTree = "<group>"; };
+		0CBC3D9E1D94D3CA00F2729F /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
+		0CBC3D9F1D94D3CA00F2729F /* scan.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = scan.wav; sourceTree = "<group>"; };
+		0CBC3DA41D94D6A300F2729F /* YWport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWport.h; sourceTree = "<group>"; };
+		0CBC3DA91D94ED4900F2729F /* YWShoplistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWShoplistViewController.h; sourceTree = "<group>"; };
+		0CBC3DAA1D94ED4900F2729F /* YWShoplistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWShoplistViewController.m; sourceTree = "<group>"; };
+		0CBC3DAC1D94F5CD00F2729F /* YWShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWShop.h; sourceTree = "<group>"; };
+		0CBC3DAD1D94F5CD00F2729F /* YWShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWShop.m; sourceTree = "<group>"; };
+		0CBC3DAF1D94F5FC00F2729F /* YWMoneyList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWMoneyList.h; sourceTree = "<group>"; };
+		0CBC3DB01D94F5FC00F2729F /* YWMoneyList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWMoneyList.m; sourceTree = "<group>"; };
+		0CBC3DB21D94FB0700F2729F /* YWheaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWheaderView.xib; sourceTree = "<group>"; };
+		0CBC3DB41D94FC4800F2729F /* YWheaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWheaderView.h; sourceTree = "<group>"; };
+		0CBC3DB51D94FC4800F2729F /* YWheaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWheaderView.m; sourceTree = "<group>"; };
+		0CBC3DC71D95209D00F2729F /* YWShopPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWShopPayViewController.h; sourceTree = "<group>"; };
+		0CBC3DC81D95209D00F2729F /* YWShopPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWShopPayViewController.m; sourceTree = "<group>"; };
+		0CBC3DC91D95209D00F2729F /* YWShopPayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWShopPayViewController.xib; sourceTree = "<group>"; };
 		0CBF664A1D508206002C0A51 /* UINavigationBar+BTsome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+BTsome.h"; sourceTree = "<group>"; };
 		0CBF664B1D508206002C0A51 /* UINavigationBar+BTsome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+BTsome.m"; sourceTree = "<group>"; };
 		0CBF665C1D508B45002C0A51 /* SFTrainsitionAnimate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTrainsitionAnimate.h; sourceTree = "<group>"; };
@@ -419,6 +493,15 @@
 			path = "购买";
 			sourceTree = "<group>";
 		};
+		0C07085E1DA8E89E0035ABB9 /* 店铺分类 */ = {
+			isa = PBXGroup;
+			children = (
+				0C07085F1DA8E8DC0035ABB9 /* YWShopClassViewController.h */,
+				0C0708601DA8E8DC0035ABB9 /* YWShopClassViewController.m */,
+			);
+			path = "店铺分类";
+			sourceTree = "<group>";
+		};
 		0C0E16311D2E46930029C1F3 /* 充值 */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,6 +526,12 @@
 			children = (
 				0C1A54411CCF62C700216B7F /* YWmainViewController.h */,
 				0C1A54421CCF62C700216B7F /* YWmainViewController.m */,
+				0C07085E1DA8E89E0035ABB9 /* 店铺分类 */,
+				0C83097A1D9CF8430070FFB1 /* 联盟商家 */,
+				0CBC3DC61D95209D00F2729F /* 支付商家 */,
+				0CBC3DA51D94D75800F2729F /* 商家消费详情 */,
+				0CBC3D941D94CA9000F2729F /* 扫描二维码 */,
+				0C69559A1D853B1B0031B68E /* 支付页面 */,
 				0CE66BE51D7575FD00E368D6 /* 福利认领清单 */,
 				0C6151E21D6AFBD300DE1183 /* 福利详情 */,
 				0C732D7E1D376CFE00AD40E5 /* 创业指导 */,
@@ -551,6 +640,7 @@
 			children = (
 				0CA9715D1CD0622000E09656 /* AppDelegate.h */,
 				0CA9715E1CD0622000E09656 /* AppDelegate.m */,
+				0CBC3DA41D94D6A300F2729F /* YWport.h */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -604,6 +694,10 @@
 				0C5EB9091CD0A59E00E4431A /* YWSearchBar.m */,
 				0CD3948B1D13CBA00000C7A7 /* YWfunctionButton.h */,
 				0CD3948C1D13CBA00000C7A7 /* YWfunctionButton.m */,
+				0C0708531DA89AEE0035ABB9 /* JZMTBtnView.h */,
+				0C0708541DA89AEE0035ABB9 /* JZMTBtnView.m */,
+				0CB128AE1DA9DA22005A0A4D /* RatingView.h */,
+				0CB128AF1DA9DA22005A0A4D /* RatingView.m */,
 			);
 			path = CustomFunc;
 			sourceTree = "<group>";
@@ -841,6 +935,21 @@
 			path = transfer;
 			sourceTree = "<group>";
 		};
+		0C69559A1D853B1B0031B68E /* 支付页面 */ = {
+			isa = PBXGroup;
+			children = (
+				0C6955A31D8559E20031B68E /* XWPresentOneTransition.h */,
+				0C6955A41D8559E20031B68E /* XWPresentOneTransition.m */,
+				0C69559E1D854F5D0031B68E /* YWPayViewController.h */,
+				0C69559F1D854F5D0031B68E /* YWPayViewController.m */,
+				0C6955A01D854F5D0031B68E /* YWPayViewController.xib */,
+				0C4A73D61D86418800FE0084 /* YWCodeViewController.h */,
+				0C4A73D71D86418800FE0084 /* YWCodeViewController.m */,
+				0C4A73D81D86418800FE0084 /* YWCodeViewController.xib */,
+			);
+			path = "支付页面";
+			sourceTree = "<group>";
+		};
 		0C732D7E1D376CFE00AD40E5 /* 创业指导 */ = {
 			isa = PBXGroup;
 			children = (
@@ -916,6 +1025,48 @@
 				0C7EF0361CCF566000BFC1A6 /* Info.plist */,
 			);
 			path = YiWobaoUITests;
+			sourceTree = "<group>";
+		};
+		0C83097A1D9CF8430070FFB1 /* 联盟商家 */ = {
+			isa = PBXGroup;
+			children = (
+				0C83097D1D9CF8430070FFB1 /* ViewController */,
+				0C83097B1D9CF8430070FFB1 /* model */,
+				0C83097C1D9CF8430070FFB1 /* view */,
+			);
+			path = "联盟商家";
+			sourceTree = "<group>";
+		};
+		0C83097B1D9CF8430070FFB1 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0C8309811D9CF87D0070FFB1 /* YWFederal.h */,
+				0C8309821D9CF87D0070FFB1 /* YWFederal.m */,
+				0C83098A1D9D12F60070FFB1 /* YWFederalShop.h */,
+				0C83098B1D9D12F60070FFB1 /* YWFederalShop.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		0C83097C1D9CF8430070FFB1 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0C0708561DA89B190035ABB9 /* HomeMenuCell.h */,
+				0C0708571DA89B190035ABB9 /* HomeMenuCell.m */,
+				0C0708591DA8D5830035ABB9 /* YwFederalCell.h */,
+				0C07085A1DA8D5830035ABB9 /* YwFederalCell.m */,
+				0C07085B1DA8D5830035ABB9 /* YwFederalCell.xib */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		0C83097D1D9CF8430070FFB1 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0C83097E1D9CF8670070FFB1 /* YWFederalViewController.h */,
+				0C83097F1D9CF8670070FFB1 /* YWFederalViewController.m */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		0C84B27C1CE5B44900A0B4BE /* Cell */ = {
@@ -1132,6 +1283,8 @@
 			children = (
 				0CA971611CD0625A00E09656 /* YWnaviViewController.h */,
 				0CA971621CD0625A00E09656 /* YWnaviViewController.m */,
+				0C8309841D9D013C0070FFB1 /* YWBaseViewController.h */,
+				0C8309851D9D013C0070FFB1 /* YWBaseViewController.m */,
 			);
 			name = BaseClasses;
 			path = menu/BaseClasses;
@@ -1165,6 +1318,79 @@
 				0CA9F9D41D4B473500F9A8BD /* YWGuideViewController.m */,
 			);
 			path = viewController;
+			sourceTree = "<group>";
+		};
+		0CBC3D941D94CA9000F2729F /* 扫描二维码 */ = {
+			isa = PBXGroup;
+			children = (
+				0CBC3D9C1D94D3CA00F2729F /* Resources */,
+				0CBC3D951D94CAC000F2729F /* YWScanViewController.h */,
+				0CBC3D961D94CAC000F2729F /* YWScanViewController.m */,
+			);
+			path = "扫描二维码";
+			sourceTree = "<group>";
+		};
+		0CBC3D9C1D94D3CA00F2729F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0CBC3D9E1D94D3CA00F2729F /* line.png */,
+				0CBC3D9F1D94D3CA00F2729F /* scan.wav */,
+				0C6A1EFC1D962F2A00E2C5E3 /* pick_bg@2x.png */,
+				0C6A1EFE1D96345E00E2C5E3 /* XYLScanView.h */,
+				0C6A1EFF1D96345E00E2C5E3 /* XYLScanView.m */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0CBC3DA51D94D75800F2729F /* 商家消费详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0CBC3DA81D94D77700F2729F /* ViewController */,
+				0CBC3DA61D94D77700F2729F /* view */,
+				0CBC3DA71D94D77700F2729F /* Model */,
+			);
+			path = "商家消费详情";
+			sourceTree = "<group>";
+		};
+		0CBC3DA61D94D77700F2729F /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0CBC3DB41D94FC4800F2729F /* YWheaderView.h */,
+				0CBC3DB51D94FC4800F2729F /* YWheaderView.m */,
+				0CBC3DB21D94FB0700F2729F /* YWheaderView.xib */,
+			);
+			name = view;
+			path = cell;
+			sourceTree = "<group>";
+		};
+		0CBC3DA71D94D77700F2729F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0CBC3DAC1D94F5CD00F2729F /* YWShop.h */,
+				0CBC3DAD1D94F5CD00F2729F /* YWShop.m */,
+				0CBC3DAF1D94F5FC00F2729F /* YWMoneyList.h */,
+				0CBC3DB01D94F5FC00F2729F /* YWMoneyList.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0CBC3DA81D94D77700F2729F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0CBC3DA91D94ED4900F2729F /* YWShoplistViewController.h */,
+				0CBC3DAA1D94ED4900F2729F /* YWShoplistViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		0CBC3DC61D95209D00F2729F /* 支付商家 */ = {
+			isa = PBXGroup;
+			children = (
+				0CBC3DC71D95209D00F2729F /* YWShopPayViewController.h */,
+				0CBC3DC81D95209D00F2729F /* YWShopPayViewController.m */,
+				0CBC3DC91D95209D00F2729F /* YWShopPayViewController.xib */,
+			);
+			path = "支付商家";
 			sourceTree = "<group>";
 		};
 		0CBF665B1D508B45002C0A51 /* 动画移动 */ = {
@@ -1424,15 +1650,23 @@
 				0C84B2941CE5D33200A0B4BE /* YWInViewController.xib in Resources */,
 				0C8B14A51D3C71C100722A39 /* IQKeyboardManager.bundle in Resources */,
 				0C7EF01C1CCF566000BFC1A6 /* Assets.xcassets in Resources */,
+				0C4A73DA1D86418800FE0084 /* YWCodeViewController.xib in Resources */,
 				0C6AA3221D66E5EF008AD68C /* YWTableViewCell.xib in Resources */,
 				0C679C941CEC08EB004F8FF7 /* YWCell3.xib in Resources */,
 				0CD33BFE1CED60F20094C53D /* CYPasswordView.bundle in Resources */,
+				0C6A1EFD1D962F2A00E2C5E3 /* pick_bg@2x.png in Resources */,
+				0CBC3DA11D94D3CA00F2729F /* line.png in Resources */,
+				0C07085D1DA8D5830035ABB9 /* YwFederalCell.xib in Resources */,
 				0C7825451D6D7A160017C6E5 /* YWdetails.xib in Resources */,
 				0C5EEB201CE30BF400F585C3 /* RegisterController.xib in Resources */,
 				0C0E16361D2E47A60029C1F3 /* YWPopuepController.xib in Resources */,
 				0C6464D71D1283CD001C94C3 /* 兰亭细黑 GBK.TTF in Resources */,
 				0C25DC961CEEB0B70048B1D6 /* YWgoodsCell.xib in Resources */,
 				0CD33C011CED60F20094C53D /* Address.plist in Resources */,
+				0C6955A21D854F5D0031B68E /* YWPayViewController.xib in Resources */,
+				0CBC3DCB1D95209D00F2729F /* YWShopPayViewController.xib in Resources */,
+				0CBC3DB31D94FB0700F2729F /* YWheaderView.xib in Resources */,
+				0CBC3DA21D94D3CA00F2729F /* scan.wav in Resources */,
 				0C679C9D1CEC6349004F8FF7 /* YWTurnViewController.xib in Resources */,
 				0CE66BF01D75764B00E368D6 /* YWClaimListViewCell.xib in Resources */,
 			);
@@ -1508,13 +1742,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CF4E8071CD842A700DDC120 /* YWFunctionCell.m in Sources */,
+				0C6A1F001D96345E00E2C5E3 /* XYLScanView.m in Sources */,
 				0C5EB4F41CEB110100870E06 /* YWModel4.m in Sources */,
+				0C0708611DA8E8DC0035ABB9 /* YWShopClassViewController.m in Sources */,
 				0CAA806D1CDC3649000126CA /* YWHttptool.m in Sources */,
 				0C006B171CEEF69F0014B0F2 /* YWBuyViewController.m in Sources */,
 				0CE66BEB1D75762F00E368D6 /* YWClaimListViewController.m in Sources */,
+				0C0708551DA89AEE0035ABB9 /* JZMTBtnView.m in Sources */,
+				0C8309861D9D013C0070FFB1 /* YWBaseViewController.m in Sources */,
 				0CBF66601D508B45002C0A51 /* SFTrainsitionAnimate.m in Sources */,
 				0C9F28571CD9D99600E76450 /* YWCover.m in Sources */,
 				0CD33C1E1CEDB2AD0094C53D /* TAAbstractDotView.m in Sources */,
+				0C8309831D9CF87D0070FFB1 /* YWFederal.m in Sources */,
+				0CBC3DB11D94F5FC00F2729F /* YWMoneyList.m in Sources */,
 				0C7D43771CE07450001B3FB2 /* YWWriterViewController.m in Sources */,
 				0CD33C281CEDC0160094C53D /* SearchViewController.m in Sources */,
 				0CAA80701CDC3CC7000126CA /* YWUserTool.m in Sources */,
@@ -1529,13 +1769,18 @@
 				0C25DC991CEEB4660048B1D6 /* YWSorts.m in Sources */,
 				0C8B14981D3C71C100722A39 /* IQUIScrollView+Additions.m in Sources */,
 				0CE66BEF1D75764B00E368D6 /* YWClaimListViewCell.m in Sources */,
+				0CBC3DB61D94FC4800F2729F /* YWheaderView.m in Sources */,
+				0C83098C1D9D12F60070FFB1 /* YWFederalShop.m in Sources */,
+				0C07085C1DA8D5830035ABB9 /* YwFederalCell.m in Sources */,
 				0C8E286D1D0D0622008AD485 /* YWNextViewController.m in Sources */,
 				0CAA80671CDC35F9000126CA /* YWUser.m in Sources */,
 				0C22543E1CD086D5006E4461 /* YWItemView.m in Sources */,
 				0C8B149D1D3C71C100722A39 /* IQKeyboardManager.m in Sources */,
 				0C1A54561CCF6B3E00216B7F /* YWpersonalViewController.m in Sources */,
 				0C33868D1CE46650005FBA32 /* YWOrderModel.m in Sources */,
+				0CBC3DAE1D94F5CD00F2729F /* YWShop.m in Sources */,
 				0C006B101CEEE6F80014B0F2 /* YWGoodsViewController.m in Sources */,
+				0CBC3D971D94CAC000F2729F /* YWScanViewController.m in Sources */,
 				0C9573F31CD0BE2000BC8430 /* FrameAutoScaleLFL.m in Sources */,
 				0C7825481D6D7D810017C6E5 /* YWdetails.m in Sources */,
 				0C9573E71CD0AA2900BC8430 /* UIView+Frame.m in Sources */,
@@ -1545,6 +1790,7 @@
 				0CA9F9D81D4B47F500F9A8BD /* YWWelfare.m in Sources */,
 				0CE66BE41D75641600E368D6 /* YWclaimModel.m in Sources */,
 				0C8B14A31D3C71C100722A39 /* IQToolbar.m in Sources */,
+				0C6955A51D8559E20031B68E /* XWPresentOneTransition.m in Sources */,
 				0C27EC671CE1AABE003BBF23 /* YWAddressFrame.m in Sources */,
 				0C27EC5F1CE182E0003BBF23 /* YWAddressModel.m in Sources */,
 				0CCFE2DB1CF7EE0200A71D8D /* YWBuyGoods.m in Sources */,
@@ -1561,6 +1807,7 @@
 				0C33868A1CE464B9005FBA32 /* YWOrderViewController.m in Sources */,
 				0C8B149B1D3C71C100722A39 /* IQUIViewController+Additions.m in Sources */,
 				0C27EC5C1CE182AB003BBF23 /* YWAddressController.m in Sources */,
+				0CBC3DAB1D94ED4900F2729F /* YWShoplistViewController.m in Sources */,
 				0CBF664C1D508206002C0A51 /* UINavigationBar+BTsome.m in Sources */,
 				0C8B14A41D3C71C100722A39 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				0C8B14A21D3C71C100722A39 /* IQTitleBarButtonItem.m in Sources */,
@@ -1571,24 +1818,30 @@
 				0C9F28481CD9D6E300E76450 /* YWFunctionModel.m in Sources */,
 				0C5EB90A1CD0A59E00E4431A /* YWSearchBar.m in Sources */,
 				0C679C981CEC4742004F8FF7 /* YWtransferViewController.m in Sources */,
+				0C0708581DA89B190035ABB9 /* HomeMenuCell.m in Sources */,
 				0C21C88D1CD2F88B00561938 /* UIImage+YWimage.m in Sources */,
 				0C130B441CE1E3B800ABCEF8 /* YWAddressEditController.m in Sources */,
 				0C6151E81D6AFC4200DE1183 /* YWDetailsViewController.m in Sources */,
 				0C388A2F1D0541F700DB6927 /* TabHomeRightTableCell.m in Sources */,
+				0C6955A11D854F5D0031B68E /* YWPayViewController.m in Sources */,
 				0C27EC631CE1831A003BBF23 /* YWAderssCell.m in Sources */,
 				0C21C8991CD3074000561938 /* YWLeftViewController.m in Sources */,
 				0C9F28561CD9D99600E76450 /* YlListButton.m in Sources */,
 				0C3386901CE469D4005FBA32 /* YWGoods.m in Sources */,
+				0CB128B01DA9DA22005A0A4D /* RatingView.m in Sources */,
 				0C0E163C1D2E4D8F0029C1F3 /* YWPopuepController.m in Sources */,
 				0C1A54491CCF66DF00216B7F /* YWshoppingController.m in Sources */,
 				0CD33C231CEDB2AD0094C53D /* SDCycleScrollView.m in Sources */,
 				0C673BF31CDB344F0088CA78 /* YWInformationController.m in Sources */,
 				0C388A301D0541F700DB6927 /* YWClassViewController.m in Sources */,
 				0CD33BFC1CED60F20094C53D /* CYConst.m in Sources */,
+				0C4A73D91D86418800FE0084 /* YWCodeViewController.m in Sources */,
 				0C74C74D1D70108B009BC8EE /* YWClaim.m in Sources */,
 				0C7EF0111CCF566000BFC1A6 /* main.m in Sources */,
 				0CD33C241CEDB2AD0094C53D /* UIView+SDExtension.m in Sources */,
 				0C8B14A11D3C71C100722A39 /* IQPreviousNextView.m in Sources */,
+				0CBC3DCA1D95209D00F2729F /* YWShopPayViewController.m in Sources */,
+				0C8309801D9CF8670070FFB1 /* YWFederalViewController.m in Sources */,
 				0C8B149E1D3C71C100722A39 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				0C673BEF1CDB2C290088CA78 /* YWSettingTableController.m in Sources */,
 				0C8B14A01D3C71C100722A39 /* IQBarButtonItem.m in Sources */,
@@ -1661,7 +1914,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yuanfeng Gou (CSSKG4G9CM)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1683,7 +1936,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4a22e8c-f94a-4ac3-b0ac-09983b057fb0";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1707,7 +1960,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yuanfeng Gou (CSSKG4G9CM)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1722,7 +1975,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4a22e8c-f94a-4ac3-b0ac-09983b057fb0";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1867,7 +2120,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yuanfeng Gou (CSSKG4G9CM)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1882,7 +2135,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4a22e8c-f94a-4ac3-b0ac-09983b057fb0";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

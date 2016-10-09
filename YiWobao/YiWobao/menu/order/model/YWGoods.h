@@ -62,6 +62,12 @@
 
 @property (nonatomic,copy) NSString *descrition;//商品详情
 
+@property (nonatomic,copy) NSString *gstc;//免费
+
+@property (nonatomic,copy) NSString *isfree;//免费商品
+
+@property (nonatomic,copy) NSString *ybkind;//蚁币是否可以购买
+
 
 + (instancetype)yw_objectWithKeyValues:(NSDictionary*)dict;
 

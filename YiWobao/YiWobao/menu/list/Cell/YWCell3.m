@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *time;
 @property (weak, nonatomic) IBOutlet UILabel *money;
 @property (weak, nonatomic) IBOutlet UILabel *mome;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *height;
 
 @end
 
@@ -26,6 +27,13 @@
 }
 - (void)setModel:(YWModel4 *)model{
   
+    // 视图内容布局
+    CGRect detailSize = [model.memo boundingRectWithSize:CGSizeMake(kScreenWidth-30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:16]}context:nil];
+    if (detailSize.size.height<33) {
+        _height.constant = 33;
+    }else{
+        _height.constant = detailSize.size.height;
+    }
     _time.text =[Utils timeWith:model.logtm];
     
     NSString *str1 = [NSString stringWithFormat:@"金额：%@米",model.cgmoney];

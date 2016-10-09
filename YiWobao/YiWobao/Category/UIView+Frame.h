@@ -8,14 +8,30 @@
 
 #import <UIKit/UIKit.h>
 
+
+CGPoint CGRectGetCenter(CGRect rect);
+CGRect  CGRectMoveToCenter(CGRect rect, CGPoint center);
+
 @interface UIView (Frame)
 
+@property CGPoint origin;
+@property CGSize size;
 
-// 分类不能添加成员属性
-// @property如果在分类里面，只会自动生成get,set方法的声明，不会生成成员属性，和方法的实现
-@property (nonatomic, assign) CGFloat x;
-@property (nonatomic, assign) CGFloat y;
-@property (nonatomic, assign) CGFloat width;
-@property (nonatomic, assign) CGFloat height;
+@property (readonly) CGPoint bottomLeft;
+@property (readonly) CGPoint bottomRight;
+@property (readonly) CGPoint topRight;
+
+@property CGFloat height;
+@property CGFloat width;
+
+@property CGFloat top;
+@property CGFloat left;
+
+@property CGFloat bottom;
+@property CGFloat right;
+
+- (void) moveBy: (CGPoint) delta;
+- (void) scaleBy: (CGFloat) scaleFactor;
+- (void) fitInSize: (CGSize) aSize;
 
 @end

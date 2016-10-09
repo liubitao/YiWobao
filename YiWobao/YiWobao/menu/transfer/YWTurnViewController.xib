@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
@@ -7,6 +7,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YWTurnViewController">
             <connections>
                 <outlet property="money_text" destination="Al4-sD-h9d" id="rk0-ah-KDR"/>
+                <outlet property="transfer1" destination="u7I-Ys-j0d" id="rH2-k7-wgg"/>
+                <outlet property="transfer2" destination="fu4-tE-hLe" id="Rbe-Px-ycE"/>
                 <outlet property="userImage" destination="wkd-zM-ARk" id="0tw-ck-aug"/>
                 <outlet property="userName" destination="Ha6-VQ-JR3" id="fCu-QK-uHH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -40,25 +42,6 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7I-Ys-j0d">
-                    <rect key="frame" x="30" y="332" width="315" height="50"/>
-                    <color key="backgroundColor" red="0.92941176470588238" green="0.52941176470588236" blue="0.035294117647058823" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="ndx-Z1-mmx"/>
-                    </constraints>
-                    <state key="normal" title="确认转账">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="10"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="turnMoney:" destination="-1" eventType="touchUpInside" id="vVs-xm-Xjd"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="转账金额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Vl-KF-p6q">
                     <rect key="frame" x="40" y="249" width="100" height="22"/>
                     <constraints>
@@ -88,6 +71,45 @@
                     <fontDescription key="fontDescription" type="system" pointSize="38"/>
                     <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fu4-tE-hLe">
+                    <rect key="frame" x="30" y="402" width="315" height="50"/>
+                    <color key="backgroundColor" red="0.92941176469999998" green="0.52941176469999995" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="svl-JG-xQi"/>
+                    </constraints>
+                    <state key="normal" title="转至蚁米">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="transfer2:" destination="-1" eventType="touchUpInside" id="c31-f6-eME"/>
+                        <action selector="turnMoney:" destination="-1" eventType="touchUpInside" id="ZpM-yJ-dM1"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7I-Ys-j0d">
+                    <rect key="frame" x="30" y="332" width="315" height="50"/>
+                    <color key="backgroundColor" red="0.92941176470588238" green="0.52941176470588236" blue="0.035294117647058823" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="ndx-Z1-mmx"/>
+                    </constraints>
+                    <state key="normal" title="转至蚁币">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="turnMoney:" destination="-1" eventType="touchUpInside" id="vVs-xm-Xjd"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -95,6 +117,7 @@
                 <constraint firstItem="Ha6-VQ-JR3" firstAttribute="top" secondItem="wkd-zM-ARk" secondAttribute="bottom" constant="16" id="3jP-RP-ok7"/>
                 <constraint firstItem="u7I-Ys-j0d" firstAttribute="top" secondItem="Al4-sD-h9d" secondAttribute="bottom" constant="20" id="7OA-mc-yUS"/>
                 <constraint firstItem="Al4-sD-h9d" firstAttribute="leading" secondItem="e9x-f4-qtn" secondAttribute="trailing" constant="5" id="9ta-zn-wVF"/>
+                <constraint firstItem="fu4-tE-hLe" firstAttribute="top" secondItem="u7I-Ys-j0d" secondAttribute="bottom" constant="20" id="FRS-2x-xpA"/>
                 <constraint firstItem="e9x-f4-qtn" firstAttribute="top" secondItem="8Vl-KF-p6q" secondAttribute="bottom" constant="5" id="IH7-tG-JDV"/>
                 <constraint firstAttribute="trailing" secondItem="u7I-Ys-j0d" secondAttribute="trailing" constant="30" id="KDl-e6-MFm"/>
                 <constraint firstItem="u7I-Ys-j0d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="PKH-f4-33K"/>
@@ -102,11 +125,14 @@
                 <constraint firstItem="wkd-zM-ARk" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="RAp-7A-qAN"/>
                 <constraint firstItem="8Vl-KF-p6q" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="ROO-Cx-QP4"/>
                 <constraint firstItem="wkd-zM-ARk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="UQY-cP-5Cv"/>
+                <constraint firstItem="fu4-tE-hLe" firstAttribute="centerX" secondItem="Ha6-VQ-JR3" secondAttribute="centerX" id="Ym0-bf-2tV"/>
                 <constraint firstItem="Al4-sD-h9d" firstAttribute="top" secondItem="8Vl-KF-p6q" secondAttribute="bottom" constant="5" id="Z7T-N3-eie"/>
+                <constraint firstItem="fu4-tE-hLe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="l6t-kq-cvv"/>
                 <constraint firstItem="8Vl-KF-p6q" firstAttribute="top" secondItem="Ha6-VQ-JR3" secondAttribute="bottom" constant="15" id="lOp-bl-hfP"/>
+                <constraint firstAttribute="trailing" secondItem="fu4-tE-hLe" secondAttribute="trailing" constant="30" id="qbe-aq-DbX"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="-86.5" y="-16.5"/>
+            <point key="canvasLocation" x="102.5" y="-30.5"/>
         </view>
     </objects>
 </document>

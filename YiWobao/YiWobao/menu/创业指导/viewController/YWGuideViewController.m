@@ -52,7 +52,6 @@
     [YWHttptool Post:YWzcproj parameters:parameter success:^(id responseObject) {
         NSInteger isError = [responseObject[@"isError"] integerValue];
         [MBProgressHUD hideHUDForView:_tableView];
-        NSLog(@"%@",responseObject);
         if (!isError) {
             _dataArray = [YWWelfare yw_objectWithKeyValuesArray:responseObject[@"result"]];
             [self.tableView reloadData];

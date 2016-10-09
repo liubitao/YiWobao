@@ -91,7 +91,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:leftID];
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.x = 18;
+        cell.textLabel.left = 18;
         [cell setLayoutMargins:UIEdgeInsetsZero];
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }

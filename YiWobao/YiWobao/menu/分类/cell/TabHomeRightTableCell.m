@@ -16,6 +16,7 @@
 @interface TabHomeRightTableCell ()
 {
     UIImageView *_productImage;
+    UIImageView *_isfree;
     UILabel     *_nameLabel;
     UILabel     *_curPriceLabel;
     UILabel     *_oriPriceLabel;
@@ -41,8 +42,16 @@
     NSInteger cellWidth = kScreenWidth-90-10;
     _productImage = [UIImageView new];
     _productImage.layer.cornerRadius = 3;
+    _productImage.layer.masksToBounds = YES;
     [self.contentView addSubview:_productImage];
     _productImage.frame = CGRectMake(5, 5, 76, 69);
+    
+    _isfree = [UIImageView new];
+    _isfree.layer.cornerRadius = 3;
+    _isfree.layer.masksToBounds = YES;
+    [self.contentView addSubview:_isfree];
+    _isfree.image = [UIImage imageNamed:@"free"];
+    _isfree.frame = CGRectMake(5, 5, 30, 30);
     
     _curPriceLabel = [UILabel new];
     _curPriceLabel.font = [UIFont systemFontOfSize:15];
@@ -75,6 +84,14 @@
 
 - (void)fillContentWithProduct:(YWGoods*)goods
 {
+    if ([goods.gstc isEqualToString:@"1"]) {
+        _isfree.hidden = NO;
+    }else if ([goods.isfree isEqualToString:@"1"]){
+        _isfree.hidden = NO;
+    }else{
+        _isfree.hidden = YES;
+    }
+    
     _nameLabel.text = goods.title;
     NSString *picStr = [NSString stringWithFormat:@"%@%@",YWpic,goods.pic];
     [_productImage sd_setImageWithURL:[NSURL URLWithString:picStr] placeholderImage:[UIImage imageNamed:@"placeholder"]];

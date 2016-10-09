@@ -60,7 +60,9 @@
 
 @property (nonatomic,copy) NSString *birthday;//生日
 
-@property (nonatomic,copy) NSString *chmoney;//米币
+@property (nonatomic,copy) NSString *chmoney;//蚁米
+
+@property (nonatomic,copy) NSString *djmoney;//蚁币
 
 @property (nonatomic,copy) NSString *ID;//用户编号
 
@@ -90,6 +92,9 @@
 
 @property (nonatomic,copy) NSString *zc_g3;
 
+@property (nonatomic,copy) NSString *shopkind;//是否显示商店
+
+@property (nonatomic,copy) NSString *transkind;//转账参数
 
 
 + (instancetype)yw_objectWithKeyValues:(NSDictionary*)dict;

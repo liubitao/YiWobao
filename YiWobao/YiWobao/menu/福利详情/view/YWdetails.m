@@ -27,10 +27,6 @@
 @end
 @implementation YWdetails
 
-- (void)dealloc{
-    NSLog(@"销毁了");
-}
-
 
 - (void)setModel:(YWWelfare *)welfare{
     // 视图内容布局

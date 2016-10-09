@@ -20,6 +20,7 @@
 #import "YWCover.h"
 #import "YWPopView.h"
 #import "YWClaimListViewController.h"
+#import "YWCodeViewController.h"
 
 @interface YWDetailsViewController ()<UIWebViewDelegate,YWClaimDelegate,YWCoverDelegate>
 {
@@ -79,10 +80,7 @@
     [submit setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [submit setBackgroundColor:[UIColor redColor]];
     [submit addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    
+
     NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval time=[dat timeIntervalSince1970];
     
@@ -173,10 +171,16 @@
 - (void)submit:(UIButton *)sender{
     switch (sender.tag) {
         case 1://回购
-            
+        {   if ([Utils isNull:self.welfare.claimArray]) {
+                [UIAlertController showAlertViewWithTitle:nil Message:@"您还没有认购过...暂不能回购" BtnTitles:@[@"知道了"] ClickBtn:nil];
+                return;
+            }
+            YWClaimListViewController *claimListVC = [[YWClaimListViewController alloc]init];
+            claimListVC.welfare = self.welfare;
+            [self.navigationController pushViewController:claimListVC animated:YES];
+        }
             break;
         case 2://结束
-            
             break;
         case 3://我要认领
             if ([_welfare.isgd isEqualToString:@"1"]) {
@@ -252,55 +256,18 @@
             [popMenu removeFromSuperview];
         }
     }
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    //增加确定按钮；
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [MBProgressHUD showMessage:@"正在支付" toView:self.view];
-        YWUser *user = [YWUserTool account];
-        NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-        parameter[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[buyProj MD5Digest],sKey]MD5Digest];
-        parameter[@"bhim"] = [[user.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[@"zcxmid"] = _welfare.ID;
-        dict[@"sprice"] = number;
-        dict[@"username"] = name;
-        dict[@"pkd"] = @"0";
-        dict[@"phone"] = phone;
-        dict[@"omeno"] = memo;
-        dict[@"paypwd"] = [alertController.textFields[0].text MD5Digest];
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
-        NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        parameter[@"buyarr"] = str;
-        [YWHttptool Post:YWbuyProj parameters:parameter success:^(id responseObject) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSInteger isError = [responseObject[@"isError"] integerValue];
-            if (!isError) {
-                [UIAlertController showAlertViewWithTitle:nil Message:@"支付成功" BtnTitles:@[@"知道了"] ClickBtn:nil];
-            }
-            else{
-                [MBProgressHUD showError:responseObject[@"errorMessage"]];
-            }
-        } failure:^(NSError *error) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [MBProgressHUD showError:@"请检查网络"];
-        }];
-        
-    }]];
-    //增加取消按钮；
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     
-    //定义第一个输入框；
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"请输入支付密码";
-        textField.secureTextEntry = YES;
-        textField.font = [UIFont systemFontOfSize:20];
-        textField.borderStyle = UITextBorderStyleNone;
-    }];
-    [alertController.actions[0] setValue:[UIColor redColor] forKeyPath:@"_titleTextColor"];
-    
-    [self presentViewController:alertController animated:true completion:nil];
-   
-    
+    YWCodeViewController *codeVC = [[YWCodeViewController alloc]init];
+    codeVC.type = @"buy_proj";
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"zcxmid"] = _welfare.ID;
+    dict[@"sprice"] = number;
+    dict[@"username"] = name;
+    dict[@"pkd"] = @"0";
+    dict[@"phone"] = phone;
+    dict[@"omeno"] = memo;
+    codeVC.buyDic = dict;
+    [self presentViewController:codeVC animated:YES completion:nil];
 
 }
 
@@ -322,36 +289,6 @@
         [MBProgressHUD showError:@"请求失败" toView:_webView];
     }];
 }
-- (void)request{
-//    YWUser *user = [YWUserTool account];
-//    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-//    parameter[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[detail MD5Digest],sKey]MD5Digest];
-//    parameter[@"gid"] = [[_welfare.ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-//    parameter[@"bhim"] = [[user.pid dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-//    [YWHttptool Post:YWdetail parameters:parameter success:^(id responseObject) {
-//        NSInteger isError = [responseObject[@"isError"] integerValue];
-//        NSLog(@"我的福利详情---------------------------------------------------------------------%@",responseObject);
-//        if (!isError) {
-//            return ;
-//        }
-//
-//    } failure:^(NSError *error) {
-//
-//    }];
-    
-//    NSMutableDictionary *parameter3 = [NSMutableDictionary dictionary];
-//    parameter3[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[myProj MD5Digest],sKey]MD5Digest];
-//    parameter3[@"bhim"] = [[user.pid dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
-//    [YWHttptool Post:YWmyProj parameters:parameter3 success:^(id responseObject) {
-//        NSInteger isError = [responseObject[@"isError"] integerValue];
-//        NSLog(@"我的福利列表---------------------------------------------------------%@",responseObject);
-//        if (!isError) {
-//            return ;
-//        }
-//    } failure:^(NSError *error) {
-//    }];
-}
-
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];

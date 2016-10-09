@@ -119,7 +119,6 @@
     parameter[@"mpd"] = [_passWord.text MD5Digest];
 
     [YWHttptool Post:YWLogin parameters:parameter success:^(id responseObject) {
-        NSLog(@"%@",responseObject);
         [MBProgressHUD hideHUD];
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {

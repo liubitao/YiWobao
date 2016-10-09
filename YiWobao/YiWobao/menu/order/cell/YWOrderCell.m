@@ -44,8 +44,8 @@
 
 - (void)_initSubViews{
     //时间
-    UILabel *time_label = [[UILabel alloc]initWithFrame:CGRectMake(20,5, 200, 15)];
-    time_label.font = [UIFont systemFontOfSize:13];
+    UILabel *time_label = [[UILabel alloc]initWithFrame:CGRectMake(10,5, 200, 15)];
+    time_label.font = [UIFont systemFontOfSize:14];
     time_label.textColor = [UIColor colorWithHexString:@"221814"];
     [self.contentView addSubview:time_label];
     _time_label = time_label;
@@ -59,7 +59,7 @@
     _paystatus = paystatus_label;
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 25, kScreenWidth, 70)];
-    view.backgroundColor = [UIColor colorWithHexString:@"F7F7F7"];
+    view.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:view];
     
     //商品图片
@@ -69,11 +69,11 @@
     _picView = imageView;
     
     //商品名称
-    UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(97, 9, kScreenWidth-100-110, 55)];
+    UITextView *title_label = [[UITextView alloc]initWithFrame:CGRectMake(90, 5, kScreenWidth-90-110, 55)];
     title_label.scrollEnabled = NO;
     title_label.editable = NO;
     title_label.backgroundColor = [UIColor clearColor];
-    title_label.font = [UIFont systemFontOfSize:13];
+    title_label.font = [UIFont systemFontOfSize:17];
     title_label.textColor = [UIColor colorWithHexString:@"221814"];
     [view addSubview:title_label];
     _title = title_label;
@@ -81,38 +81,31 @@
     //原始价格
     UILabel *price_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-105, 33, 85, 15)];
     price_label.textAlignment = NSTextAlignmentRight;
-    price_label.font = [UIFont systemFontOfSize:13];
+    price_label.font = [UIFont systemFontOfSize:14];
     [view addSubview:price_label];
     _price = price_label;
     
     //折后价格
-    UILabel *selprice_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-105, 12, 85, 15)];
+    UILabel *selprice_label = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-105, 5, 85, 20)];
+    selprice_label.textColor = KthemeColor;
     selprice_label.textAlignment = NSTextAlignmentRight;
-    selprice_label.font = [UIFont systemFontOfSize:13];
+    selprice_label.font = [UIFont systemFontOfSize:17];
     [view addSubview:selprice_label];
     _selprice = selprice_label;
     
     //数量
     UILabel *number_label = [[UILabel alloc]initWithFrame:CGRectZero];
     number_label.textAlignment = NSTextAlignmentRight;
-    number_label.font = [UIFont systemFontOfSize:13];
+    number_label.font = [UIFont systemFontOfSize:15];
     [self.contentView addSubview:number_label];
     _number = number_label;
     
     //总价
     UILabel *total_label = [[UILabel alloc]initWithFrame:CGRectZero];
     total_label.textAlignment = NSTextAlignmentRight;
-    total_label.font = [UIFont systemFontOfSize:13];
+    total_label.font = [UIFont systemFontOfSize:16];
     [self.contentView addSubview:total_label];
     _total = total_label;
-    
-    UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(0, 26, kScreenWidth, 1)];
-    line1.backgroundColor = [UIColor colorWithHexString:@"717071" withAlpha:0.5];
-    [self.contentView addSubview:line1];
-    
-    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, 95, kScreenWidth, 1)];
-    line2.backgroundColor = [UIColor colorWithHexString:@"717071" withAlpha:0.5];
-    [self.contentView addSubview:line2];
     
     if ([self.reuseIdentifier isEqualToString:@"orderCell1"]) {
         [self createTilte1:@"取消订单" title2:@"分享代付码"];
@@ -207,9 +200,9 @@
     
     NSString *str1 = [NSString stringWithFormat:@"数量：%@",model.num];
     NSString *str2 = [NSString stringWithFormat:@"总价：%@米",model.pmoney];
-    CGFloat width = [Utils labelWidth:str2 font:13];
-    _total.frame = CGRectMake(kScreenWidth-width-20, 107, width, 15);
-    _number.frame = CGRectMake(0, 107, kScreenWidth-_total.width-35-20, 15);
+    CGFloat width = [Utils labelWidth:str2 font:16];
+    _total.frame = CGRectMake(kScreenWidth-width-20, 105, width, 16);
+    _number.frame = CGRectMake(0, 105, kScreenWidth-_total.width-35-20, 16);
     _number.text = str1;
     _total.text = str2;
     

@@ -127,6 +127,7 @@
         if (array.count == 0) {
             return YES;
         }
+        
     }else if ([object isKindOfClass:[NSString class]]){
         NSString *str = (NSString *)object;
         if (str.length == 0) {
@@ -144,7 +145,7 @@
 }
 
 + (NSString*)timeWith:(NSString*)timeStr{
-    NSTimeInterval time=[timeStr doubleValue]+28800;//因为时差问题要加8小时 == 28800 sec
+    NSTimeInterval time=[timeStr doubleValue];//因为时差问题要加8小时 == 28800 sec
     NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
     //实例化一个NSDateFormatter对象
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

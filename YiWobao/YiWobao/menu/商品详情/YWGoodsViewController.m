@@ -75,7 +75,7 @@
     price.width = [Utils labelWidth:[NSString stringWithFormat:@"%@米",_Goods.selprice] font:18];
     
     UILabel *price2 = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:20 Y:45 width:100 height:19]];
-    price2.x = price.width+20+20;
+    price2.left = price.width+20+20;
     NSAttributedString *attrStr =
     [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@米",_Goods.price]
                                    attributes:
@@ -119,17 +119,14 @@
 
 - (SFTrainsitionAnimate *)animate{
     if (!_animate) {
-       return [[SFTrainsitionAnimate alloc] initWithAnimateType:animate_pop andDuration:1.5];;
+       return [[SFTrainsitionAnimate alloc] initWithAnimateType:animate_pop andDuration:0.5];;
     }
     return _animate;
 }
 
 #pragma mark -- navigation delegate
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
-    if (operation == UINavigationControllerOperationPop ) {
-        if ([toVC isKindOfClass:NSClassFromString(@"YWDetailsViewController")]) {
-            return nil;
-        }
+    if (operation == UINavigationControllerOperationPop && [fromVC isKindOfClass:NSClassFromString(@"YWGoodsViewController")]&&![toVC isKindOfClass:NSClassFromString(@"YWClassViewController")]) {
         return self.animate;
     }else{
         return nil;

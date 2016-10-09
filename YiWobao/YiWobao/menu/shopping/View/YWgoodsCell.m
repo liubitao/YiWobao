@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *width2;
 @property (weak, nonatomic) IBOutlet UILabel *sale;
 @property (weak, nonatomic) IBOutlet UIButton *buy_btn;
+@property (weak, nonatomic) IBOutlet UIImageView *free;
 
 
 @end
@@ -39,6 +40,14 @@
 }
 
 - (void)setCellModel:(YWGoods *)model{
+  
+    if ([model.gstc isEqualToString:@"1"]) {
+        _free.hidden = NO;
+    }else if ([model.isfree isEqualToString:@"1"]){
+        _free.hidden = NO;
+    }else{
+        _free.hidden = YES;
+    }
     
     NSString *picStr = [NSString stringWithFormat:@"%@%@",YWpic,model.pic];
     [_picView sd_setImageWithURL:[NSURL URLWithString:picStr] placeholderImage:[UIImage imageNamed:@"placeholder"]];

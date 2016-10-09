@@ -29,10 +29,10 @@
     if (self.currentImage == nil) return;
     
     // title
-    self.titleLabel.x = 0;
+    self.titleLabel.left = 0;
     
     // image
-    self.imageView.x = CGRectGetWidth(self.titleLabel.frame);
+    self.imageView.left = CGRectGetWidth(self.titleLabel.frame);
 }
 
 // 重写setTitle方法，扩展计算尺寸功能

@@ -12,7 +12,7 @@
 #import "YWHttptool.h"
 #import "MBProgressHUD+MJ.h"
 #import "Utils.h"
-#import "CYPasswordView.h"
+#import "YWCodeViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "RegisterController.h"
 
@@ -28,9 +28,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UITextField *money_text;
+@property (weak, nonatomic) IBOutlet UIButton *transfer2;
 
+@property (weak, nonatomic) IBOutlet UIButton *transfer1;
 
-@property (nonatomic, strong) CYPasswordView *passwordView;
 
 @end
 
@@ -47,6 +48,16 @@
         _userName.text = _user.wxname;
     }
     _money_text.delegate = self;
+    
+    YWUser *user = [YWUserTool account];
+    NSLog(@"%@",user.transkind);
+    if ([user.transkind isEqualToString:@"1"]) {
+        _transfer2.hidden = YES;
+    }else if ([user.transkind isEqualToString:@"2"]){
+        _transfer1.hidden = YES;
+    }
+    _transfer1.enabled = NO;
+    _transfer2.enabled = NO;
 }
 
 
@@ -98,56 +109,32 @@
         {
             return NO;
         }
+    if (![Utils isNull:textField.text]) {
+        _transfer1.enabled = YES;
+        _transfer2.enabled = YES;
+    }
     return YES;
+    
 }
 
 
 - (IBAction)turnMoney:(id)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    //增加确定按钮；
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [MBProgressHUD showMessage:@"正在支付" toView:self.view];
-        YWUser *user = [YWUserTool account];
-        NSMutableDictionary *paramters = [Utils paramter:Trans ID:user.ID];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[@"tbh"] = self.user.ID;
-        dict[@"tje"] = self.money_text.text;
-        dict[@"tpaypwd"] = [alertController.textFields[0].text MD5Digest];
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
-        NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        paramters[@"transarr"] = str;
-        [YWHttptool Post:YWTrans parameters:paramters success:^(id responseObject) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSInteger isError = [responseObject[@"isError"] integerValue];
-            if (!isError) {
-                [UIAlertController showAlertViewWithTitle:nil Message:@"转账成功" BtnTitles:@[@"知道了"] ClickBtn:nil];
-            }
-            else{
-                [MBProgressHUD showError:responseObject[@"errorMessage"] toView:self.view];
-            }
-        } failure:^(NSError *error) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [MBProgressHUD showError:@"请检查网络" toView:self.view];
-        }];
-        
-    }]];
-    //增加取消按钮；
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
-    //定义第一个输入框；
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"请输入支付密码";
-        textField.secureTextEntry = YES;
-        textField.font = [UIFont systemFontOfSize:15];
-        textField.borderStyle = UITextBorderStyleNone;
-    }];
-    
-    [alertController.actions[0] setValue:[UIColor redColor] forKeyPath:@"_titleTextColor"];
-    
-    [self presentViewController:alertController animated:true completion:nil];
-    
-    
-    
+    [self transfer:@"0"];
+ 
+}
+- (IBAction)transfer2:(UIButton *)sender {
+    [self transfer:@"1"];
+}
+
+- (void)transfer:(NSString *)kind{
+    YWCodeViewController *codeVC = [[YWCodeViewController alloc]init];
+    codeVC.type = @"transfer";
+    NSMutableDictionary *transDic = [NSMutableDictionary dictionary];
+    transDic[@"tbh"] = self.user.ID;
+    transDic[@"tje"] = self.money_text.text;
+    transDic[@"zzkind"] = kind;
+    codeVC.buyDic = transDic;
+    [self presentViewController:codeVC animated:YES completion:nil];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -160,8 +147,6 @@
     _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
     [[IQKeyboardManager sharedManager] setEnable:NO];
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
