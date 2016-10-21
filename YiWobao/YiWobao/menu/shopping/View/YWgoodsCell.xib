@@ -112,7 +112,7 @@
                 <outlet property="width" destination="q4d-bJ-FPr" id="4Ah-be-tVQ"/>
                 <outlet property="width2" destination="4Dt-tW-9Uf" id="4eZ-rU-DdH"/>
             </connections>
-            <point key="canvasLocation" x="-59.5" y="268"/>
+            <point key="canvasLocation" x="-128.5" y="269"/>
         </tableViewCell>
     </objects>
     <resources>

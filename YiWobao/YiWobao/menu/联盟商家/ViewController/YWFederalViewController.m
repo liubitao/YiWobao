@@ -56,14 +56,17 @@
         [MBProgressHUD hideHUDForView:_tableView];
         if (!isError){
             _menuArray = [YWFederal yw_objectWithKeyValuesArray:responseObject[@"result"]];
-            
+            NSMutableArray *shops = [NSMutableArray array];
             for (YWFederal *federal in _menuArray) {
+                [shops addObject:federal.title];
                 NSArray *array = federal.shops;
                 if (![Utils isNull:array]) {
                     [_dataArray addObjectsFromArray:array];
                 }
             }
-            
+            NSUserDefaults *defait = [NSUserDefaults standardUserDefaults];
+            [defait setObject:shops forKey:@"shops"];
+            [defait synchronize];
             [self.tableView reloadData];
         }
     } failure:^(NSError *error) {
@@ -83,11 +86,11 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 180;
+        return 150;
     }else if(indexPath.section == 1){
-            return 160;
+            return 168;
     }else{
-        return 140;
+        return 125;
     }
 }
 
@@ -136,6 +139,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
+        
         static NSString *cellIndentifier = @"shopcell";
         YwFederalCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier forIndexPath:indexPath];
         YWFederalShop *shop = _dataArray[indexPath.section - 2];
@@ -145,8 +149,6 @@
     }
     
 }
-
-
 
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

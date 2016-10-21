@@ -17,7 +17,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *adress;
 @property (weak, nonatomic) IBOutlet UILabel *phone;
 @property (weak, nonatomic) IBOutlet UILabel *Coupon;
-@property (weak, nonatomic) IBOutlet UIImageView *couponImage;
+
+@property (weak, nonatomic) IBOutlet UILabel *leixing;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leiWidth;
 
 
 @end
@@ -26,6 +28,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    _leixing.layer.borderColor = KthemeColor.CGColor;
+    _leixing.layer.borderWidth = 1;
+    _leixing.layer.cornerRadius = 3;
+    _leixing.layer.masksToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -35,19 +41,23 @@
 }
 
 - (void)setCellModel:(YWFederalShop *)shop;{
-    [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",YWpic,shop.skewm]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    NSUserDefaults *defait = [NSUserDefaults standardUserDefaults];
+    NSArray *array = [defait objectForKey:@"shops"];
+    _leixing.text = array[[shop.shcate integerValue]-1];
+   CGRect detailSize = [_leixing.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 20) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:13]}context:nil];
+    _leiWidth.constant = detailSize.size.width+10;
+    [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",YWpic,shop.logopic]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     _title.text = shop.titlename;
     _rate.rating = 4;
-    [_rate configureTextFont:[UIFont systemFontOfSize:17]];
+    [_rate configureTextFont:[UIFont systemFontOfSize:11]];
     _adress.text = [NSString stringWithFormat:@"地址：%@",shop.address];
     _phone.text = [NSString stringWithFormat:@"电话：%@",shop.phones];
-    
-    _couponImage.image = [UIImage imageNamed:@"ying"];
-    
-    if ([Utils isNull:shop.shnote]) {
+
+    [_leixing sizeToFit];
+    if ([Utils isNull:shop.business]){
         _Coupon.hidden = YES;
     }else{
-        _Coupon.text = shop.shnote;
+        _Coupon.text = shop.business;
     }
     
 }

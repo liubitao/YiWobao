@@ -32,6 +32,7 @@
 #import "YWmainItemButton.h"
 #import "YWfunctionButton.h"
 #import "YWFederalViewController.h"
+#import "YWTestViewController.h"
 
 
 
@@ -301,15 +302,18 @@
 - (void)clickBtn:(UIButton *)sender{
     switch (sender.tag) {
         case 0:{
-            YWViewController *classVC = [[YWViewController alloc]init];
-            NSMutableArray *dataArray = [NSMutableArray array];
-            for (YWSorts *sorts in _dataArray1) {
-                for (YWGoods *goods in sorts.Goods) {
-                    [dataArray addObject:goods];
-                }
-            }
-            classVC.dataArray = dataArray;
-            [self.navigationController pushViewController:classVC animated:YES];
+//            YWViewController *classVC = [[YWViewController alloc]init];
+//            NSMutableArray *dataArray = [NSMutableArray array];
+//            for (YWSorts *sorts in _dataArray1) {
+//                for (YWGoods *goods in sorts.Goods) {
+//                    [dataArray addObject:goods];
+//                }
+//            }
+//            classVC.dataArray = dataArray;
+//            [self.navigationController pushViewController:classVC animated:YES];
+            YWTestViewController *testVC = [[YWTestViewController alloc]init];
+            [self.navigationController pushViewController:testVC animated:YES];
+            
         }
             break;
         case 1:{
@@ -347,9 +351,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 
 
 - (void)viewWillAppear:(BOOL)animated{

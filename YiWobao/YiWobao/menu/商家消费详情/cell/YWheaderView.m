@@ -22,12 +22,6 @@
     _name.text = [NSString stringWithFormat:@"商户名称:%@",shop.titlename];
     _income.text = [NSString stringWithFormat:@"总收入:%@米",shop.totalmoney];
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+
 
 @end
