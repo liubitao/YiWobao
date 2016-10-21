@@ -72,7 +72,7 @@
     UILabel *price = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:20 Y:45 width:375-20 height:19]];
     price.font = [UIFont systemFontOfSize:18];
     price.textColor = KthemeColor;
-    price.width = [Utils labelWidth:[NSString stringWithFormat:@"%@米",_Goods.selprice] font:18];
+    price.width = [Utils labelWidth:[NSString stringWithFormat:@"%@米",_Goods.selprice] font:18 height:100];
     
     UILabel *price2 = [[UILabel alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:20 Y:45 width:100 height:19]];
     price2.left = price.width+20+20;

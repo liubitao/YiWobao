@@ -200,7 +200,7 @@
     
     NSString *str1 = [NSString stringWithFormat:@"数量：%@",model.num];
     NSString *str2 = [NSString stringWithFormat:@"总价：%@米",model.pmoney];
-    CGFloat width = [Utils labelWidth:str2 font:16];
+    CGFloat width = [Utils labelWidth:str2 font:16 height:100];
     _total.frame = CGRectMake(kScreenWidth-width-20, 105, width, 16);
     _number.frame = CGRectMake(0, 105, kScreenWidth-_total.width-35-20, 16);
     _number.text = str1;

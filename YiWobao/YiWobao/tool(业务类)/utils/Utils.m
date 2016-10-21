@@ -137,9 +137,9 @@
     return NO;
 }
 
-+ (CGFloat)labelWidth:(NSString *)text font:(NSInteger)font{
++ (CGFloat)labelWidth:(NSString *)text font:(NSInteger)font height:(CGFloat)height{
     
-    CGRect detailSize = [text boundingRectWithSize:CGSizeMake(MAXFLOAT, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:font]}context:nil];
+    CGRect detailSize = [text boundingRectWithSize:CGSizeMake(MAXFLOAT, height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:font]}context:nil];
     
     return detailSize.size.width;
 }

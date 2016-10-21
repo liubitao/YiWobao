@@ -7,19 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@protocol YWgoodsCellDelegate <NSObject>
 
--(void)coverDidClick:(NSIndexPath *)indexPath;
-
-
-@end
 
 @class YWGoods;
 
 @interface YWgoodsCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *picView;
-@property (nonatomic,assign) id <YWgoodsCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIImageView *sellOut;
 
 @property (nonatomic,strong) NSIndexPath *indexPath;
 

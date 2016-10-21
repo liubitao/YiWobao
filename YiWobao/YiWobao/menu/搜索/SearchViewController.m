@@ -19,7 +19,7 @@
 #import "UIViewController+SFTrainsitionExtension.h"
 #import "SFTrainsitionAnimate.h"
 
-@interface SearchViewController ()<UIGestureRecognizerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,YWgoodsCellDelegate,UINavigationControllerDelegate>
+@interface SearchViewController ()<UIGestureRecognizerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 {
     UITableView *_tableView;
     UISearchBar *_searchView;
@@ -148,7 +148,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     YWgoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"goodsCell" forIndexPath:indexPath];
     [cell setCellModel:_dataArray[indexPath.row]];
-    cell.delegate = self;
     cell.indexPath = indexPath;
     return cell;
     
@@ -169,17 +168,6 @@
     [self.navigationController pushViewController:goodsVC animated:YES]; 
 }
 
-- (void)coverDidClick:(NSIndexPath *)indexPath{
-    if (![YWUserTool account]) {
-        YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
-        [self presentViewController:loginVC animated:YES completion:nil];
-        return;
-    }
-    YWBuyViewController *buyVC = [[YWBuyViewController alloc]init];
-    buyVC.goods = _dataArray[indexPath.row];
-    [self.navigationController pushViewController:buyVC animated:YES];
-    
-}
 
 
 

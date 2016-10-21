@@ -151,6 +151,8 @@
 		0CF2D0011D23AFBD007437E8 /* UIColor+YWcolor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF2D0001D23AFBD007437E8 /* UIColor+YWcolor.m */; };
 		0CF4E8071CD842A700DDC120 /* YWFunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF4E8051CD842A700DDC120 /* YWFunctionCell.m */; };
 		0CFD07C51DB9EBBB009088C1 /* YWTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD07C41DB9EBBB009088C1 /* YWTestViewController.m */; };
+		0CFD07C81DBA0807009088C1 /* YWShopHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD07C71DBA0807009088C1 /* YWShopHeader.m */; };
+		0CFD07CB1DBA1B5D009088C1 /* YWshopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD07CA1DBA1B5D009088C1 /* YWshopButton.m */; };
 		AA330537F6E8F0C6CF82656C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A127D5672F8071D02B8F56 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -445,6 +447,10 @@
 		0CF4E8051CD842A700DDC120 /* YWFunctionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFunctionCell.m; sourceTree = "<group>"; };
 		0CFD07C31DB9EBBB009088C1 /* YWTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWTestViewController.h; sourceTree = "<group>"; };
 		0CFD07C41DB9EBBB009088C1 /* YWTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWTestViewController.m; sourceTree = "<group>"; };
+		0CFD07C61DBA0807009088C1 /* YWShopHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWShopHeader.h; sourceTree = "<group>"; };
+		0CFD07C71DBA0807009088C1 /* YWShopHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWShopHeader.m; sourceTree = "<group>"; };
+		0CFD07C91DBA1B5D009088C1 /* YWshopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWshopButton.h; sourceTree = "<group>"; };
+		0CFD07CA1DBA1B5D009088C1 /* YWshopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWshopButton.m; sourceTree = "<group>"; };
 		5933B00DB78DF7FAAA8CB697 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		93A127D5672F8071D02B8F56 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF2C9E36DEDA68893EE18D5B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -633,6 +639,10 @@
 		0C1A543B1CCF622000216B7F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0CFD07C91DBA1B5D009088C1 /* YWshopButton.h */,
+				0CFD07CA1DBA1B5D009088C1 /* YWshopButton.m */,
+				0CFD07C61DBA0807009088C1 /* YWShopHeader.h */,
+				0CFD07C71DBA0807009088C1 /* YWShopHeader.m */,
 				0C25DC921CEEB0B70048B1D6 /* YWgoodsCell.h */,
 				0C25DC931CEEB0B70048B1D6 /* YWgoodsCell.m */,
 				0C25DC941CEEB0B70048B1D6 /* YWgoodsCell.xib */,
@@ -1785,6 +1795,7 @@
 				0C22543E1CD086D5006E4461 /* YWItemView.m in Sources */,
 				0C1A54561CCF6B3E00216B7F /* YWpersonalViewController.m in Sources */,
 				0C33868D1CE46650005FBA32 /* YWOrderModel.m in Sources */,
+				0CFD07C81DBA0807009088C1 /* YWShopHeader.m in Sources */,
 				0CBD1A4A1DACB766003E8150 /* IQKeyboardManager.m in Sources */,
 				0CBC3DAE1D94F5CD00F2729F /* YWShop.m in Sources */,
 				0CBD1A471DACB766003E8150 /* IQUIView+Hierarchy.m in Sources */,
@@ -1820,6 +1831,7 @@
 				0C8E28701D0D0641008AD485 /* YWNextPerson.m in Sources */,
 				0CFD07C51DB9EBBB009088C1 /* YWTestViewController.m in Sources */,
 				0C679C9C1CEC6349004F8FF7 /* YWTurnViewController.m in Sources */,
+				0CFD07CB1DBA1B5D009088C1 /* YWshopButton.m in Sources */,
 				0C25DC951CEEB0B70048B1D6 /* YWgoodsCell.m in Sources */,
 				0C9F28481CD9D6E300E76450 /* YWFunctionModel.m in Sources */,
 				0C5EB90A1CD0A59E00E4431A /* YWSearchBar.m in Sources */,

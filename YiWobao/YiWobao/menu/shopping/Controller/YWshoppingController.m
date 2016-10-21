@@ -8,8 +8,6 @@
 
 #import "YWshoppingController.h"
 #import "YWSearchBar.h"
-#import "SDCycleScrollView.h"
-#import "YWmainItemButton.h"
 #import "YWHttptool.h"
 #import "YWGoods.h"
 #import "YWSorts.h"
@@ -33,10 +31,10 @@
 #import "YWfunctionButton.h"
 #import "YWFederalViewController.h"
 #import "YWTestViewController.h"
+#import "YWShopHeader.h"
 
 
-
-@interface YWshoppingController ()<SDCycleScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,YWgoodsCellDelegate,UINavigationControllerDelegate>{
+@interface YWshoppingController ()<UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate>{
     UISearchBar *searchBar;
     UITableView *_tableView;
     NSMutableArray *_dataArray1;
@@ -57,12 +55,6 @@
     _dataArray = [NSMutableArray array];
     
     [self initNavi];
-    
-
-    
-    
-    //创建分类
-    [self creatItemize];
     
     //创建商品列表
     [self createTable];
@@ -113,34 +105,10 @@
     
 }
 
-//创建分类
-- (void)creatItemize{
-    
-    CGFloat itemWidth = kScreenWidth/4;
-    
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, 80)];
-    [self.view addSubview:view];
-    
-    NSArray *titles = @[@"所有商品",@"商品分类",@"联盟商家",@"福利认领"];
-    NSArray *images = @[@"ic_mall_fragment_all_goods.png",
-                        @"ic_mall_fragment_goods_category",
-                        @"federate",
-                        @"ic_mall_fragment_syb"];
-    
-    for (int i = 0; i<4; i++) {
-        YWmainItemButton *button = [[YWmainItemButton alloc]initWithFrame:CGRectMake(i*itemWidth, 0, itemWidth, 80)];
-        button.tag = i;
-        [button setTitle:titles[i] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:images[i]] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [view addSubview:button];
-    }
-    
-}
-
 //创建商品列表
 - (void)createTable{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 145, kScreenWidth, KscreenHeight-145-49) style:UITableViewStyleGrouped];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, KscreenHeight-64-49) style:UITableViewStyleGrouped];
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -148,19 +116,48 @@
     [_tableView setSeparatorInset:UIEdgeInsetsZero];
     [_tableView setLayoutMargins:UIEdgeInsetsZero];
     
-    NSArray *imageNames = @[@"show1",
-                            @"show2",
-                            @"show3"
-                            ];
-
-    // 网络加载 --- 创建自定义图片的pageControlDot的图片轮播器
-    SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 140) shouldInfiniteLoop:YES imageNamesGroup:imageNames];
-    cycleScrollView.delegate = self;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
-    cycleScrollView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-
-    _tableView.tableHeaderView = cycleScrollView;
+    NSMutableArray  *images = [NSMutableArray arrayWithArray: @[@"show1",@"show2",@"show3"]];
+    YWShopHeader *header = [[YWShopHeader alloc]initWithFrame:({
+        CGRect rect = {0,0,kScreenWidth,0};
+            rect;
+    })images:images];
+    header.menuBlcok = ^(NSInteger i){
+        switch (i) {
+            case 0:{
+                NSLog(@"免费商品");
+                YWTestViewController *testVC = [[YWTestViewController alloc]init];
+                [self.navigationController pushViewController:testVC animated:YES];
+            }
+                break;
+            case 1:{
+                YWClassViewController *classVC = [[YWClassViewController alloc]init];
+                classVC.categories = _dataArray;
+                classVC.leftTableCurRow = 0;
+                [self.navigationController pushViewController:classVC animated:YES];
+            }
+                break;
+            case 2:
+            {
+                YWFederalViewController *FederalVC = [[YWFederalViewController alloc]init];
+                [self.navigationController pushViewController:FederalVC animated:YES];
+            }
+                break;
+            case 3:
+            {
+                if (![YWUserTool account]) {
+                    YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
+                    [self presentViewController:loginVC animated:YES completion:nil];
+                    return;
+                }
+                YWGuideViewController *VC = [[YWGuideViewController alloc]init];
+                [self.navigationController pushViewController:VC animated:YES];
+            }
+                break;
+            default:
+                break;
+        }
+    };
+    _tableView.tableHeaderView = header;
     
     [self request];
     
@@ -173,6 +170,7 @@
     parameters[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[Good MD5Digest],sKey]MD5Digest];
     parameters[@"gkd"] = [[@"0" dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWGood parameters:parameters success:^(id responseObject) {
+        NSLog(@"%@",responseObject);
         NSInteger isError = [responseObject[@"isError"] integerValue];
         [MBProgressHUD hideHUDForView:_tableView];
         if (!isError) {
@@ -222,13 +220,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     YWgoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"goodsCell" forIndexPath:indexPath];
-    
     [cell setLayoutMargins:UIEdgeInsetsZero];
     [cell setSeparatorInset:UIEdgeInsetsZero];
-
     YWSorts *sorts = _dataArray[indexPath.section];
     [cell setCellModel:sorts.Goods[indexPath.row]];
-    cell.delegate = self;
     cell.indexPath = indexPath;
     return cell;
 }
@@ -269,7 +264,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+    return 95;
     
 }
 
@@ -283,69 +278,6 @@
     goodsVC.Goods = sorts.Goods[indexPath.row];
     [self.navigationController pushViewController:goodsVC animated:YES];
 }
-
-- (void)coverDidClick:(NSIndexPath *)indexPath{
-    if (![YWUserTool account]) {
-        YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
-        [self presentViewController:loginVC animated:YES completion:nil];
-        return;
-    }
-        YWBuyViewController *buyVC = [[YWBuyViewController alloc]init];
-        YWSorts *sorts = _dataArray[indexPath.section];
-        buyVC.goods = sorts.Goods[indexPath.row];
-        [self.navigationController pushViewController:buyVC animated:YES];
-}
-
-
-
-//点击分类
-- (void)clickBtn:(UIButton *)sender{
-    switch (sender.tag) {
-        case 0:{
-//            YWViewController *classVC = [[YWViewController alloc]init];
-//            NSMutableArray *dataArray = [NSMutableArray array];
-//            for (YWSorts *sorts in _dataArray1) {
-//                for (YWGoods *goods in sorts.Goods) {
-//                    [dataArray addObject:goods];
-//                }
-//            }
-//            classVC.dataArray = dataArray;
-//            [self.navigationController pushViewController:classVC animated:YES];
-            YWTestViewController *testVC = [[YWTestViewController alloc]init];
-            [self.navigationController pushViewController:testVC animated:YES];
-            
-        }
-            break;
-        case 1:{
-            YWClassViewController *classVC = [[YWClassViewController alloc]init];
-            classVC.categories = _dataArray;
-            classVC.leftTableCurRow = 0;
-            [self.navigationController pushViewController:classVC animated:YES];
-        }
-            break;
-        case 2:{
-            YWFederalViewController *FederalVC = [[YWFederalViewController alloc]init];
-            [self.navigationController pushViewController:FederalVC animated:YES];
-        }
-            break;
-        case 3:
-        {
-            if (![YWUserTool account]) {
-                YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
-                [self presentViewController:loginVC animated:YES completion:nil];
-                return;
-            }
-            YWGuideViewController *VC = [[YWGuideViewController alloc]init];
-            [self.navigationController pushViewController:VC animated:YES];
-                   }
-            break;
-        default:
-            break;
-    }
-}
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

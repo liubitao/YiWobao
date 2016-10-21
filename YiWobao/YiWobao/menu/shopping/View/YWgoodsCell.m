@@ -20,9 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *oldPrice;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *width;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *width2;
 @property (weak, nonatomic) IBOutlet UILabel *sale;
-@property (weak, nonatomic) IBOutlet UIButton *buy_btn;
 @property (weak, nonatomic) IBOutlet UIImageView *free;
 
 
@@ -34,8 +32,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _buy_btn.layer.cornerRadius = 5;
-    _buy_btn.layer.masksToBounds = YES;
     
 }
 
@@ -48,37 +44,31 @@
     }else{
         _free.hidden = YES;
     }
+
     
     NSString *picStr = [NSString stringWithFormat:@"%@%@",YWpic,model.pic];
     [_picView sd_setImageWithURL:[NSURL URLWithString:picStr] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     _title.text = model.title;
 
-    _width.constant = [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.selprice] font:17];
-    _width2.constant = [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.price] font:15];
+    _width.constant = [Utils labelWidth:[NSString stringWithFormat:@"%@米",model.selprice] font:16 height:20];
     
     NSAttributedString *attrStr =
-    [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@米",model.price]
+    [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@米",model.price]
                                    attributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:14.f],
-       NSForegroundColorAttributeName:[UIColor colorWithHexString:@"9F9FA0"],
+       NSForegroundColorAttributeName:[UIColor colorWithHexString:@"555555"],
        NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle|NSUnderlinePatternSolid),
-       NSStrikethroughColorAttributeName:[UIColor colorWithHexString:@"9F9FA0"]}];
+       NSStrikethroughColorAttributeName:[UIColor colorWithHexString:@"555555"]}];
     _oldPrice.attributedText = attrStr;
     
-    _price.text = [NSString stringWithFormat:@"%@米",model.selprice];
+    _price.text = [NSString stringWithFormat:@"¥%@",model.selprice];
     
-    _sale.text = [NSString stringWithFormat:@"已出售：%@",model.selnum];
-    _buy_btn.backgroundColor = KthemeColor;
-    
-}
-- (IBAction)buy:(id)sender {
-   
-    if ([self.delegate respondsToSelector:@selector(coverDidClick:)]) {
-        [self.delegate coverDidClick:_indexPath];
-    }
+    _sale.text = [NSString stringWithFormat:@"已售：%@件",model.selnum];
+
     
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

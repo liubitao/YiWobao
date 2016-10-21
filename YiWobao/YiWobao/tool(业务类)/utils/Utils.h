@@ -28,7 +28,7 @@
 
 +(NSMutableDictionary *)paramter:(NSString *)act ID:(NSString *)ID;
 //计算字符串的长度
-+ (CGFloat)labelWidth:(NSString *)text font:(NSInteger)font;
++ (CGFloat)labelWidth:(NSString *)text font:(NSInteger)font height:(CGFloat)height;
 //时间戳转化为时间
 + (NSString*)timeWith:(NSString*)time;
 

@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ic_mall_fragment_all_goods.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "topnav-11.png",
       "scale" : "2x"
     },
     {
