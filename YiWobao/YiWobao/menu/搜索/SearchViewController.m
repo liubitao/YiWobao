@@ -42,6 +42,7 @@
     _tableView.alpha = 0.8;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.tableFooterView = [UIView new];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
  
@@ -123,19 +124,16 @@
 }
 
 -(void)requestWith:(NSString *)poi{
-    [MBProgressHUD showMessage:@"正在加载" toView:_tableView];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[Search MD5Digest],sKey]MD5Digest];
     parameters[@"gsearch"] = [[poi dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWSearch parameters:parameters success:^(id responseObject) {
         NSInteger isError = [responseObject[@"isError"] integerValue];
-        [MBProgressHUD hideHUDForView:_tableView];
         if (!isError) {
             _dataArray = [YWGoods yw_objectWithKeyValuesArray:responseObject[@"result"]];
             [_tableView reloadData];
         }
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUDForView:_tableView];
         [MBProgressHUD showError:@"请检查网络"];
     }];
 }

@@ -41,6 +41,7 @@
 		0C388A341D05423E00DB6927 /* YWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A331D05423E00DB6927 /* YWViewController.m */; };
 		0C4A73D91D86418800FE0084 /* YWCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4A73D71D86418800FE0084 /* YWCodeViewController.m */; };
 		0C4A73DA1D86418800FE0084 /* YWCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C4A73D81D86418800FE0084 /* YWCodeViewController.xib */; };
+		0C52F6551DBDAD56000C9FBE /* YWFreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C52F6541DBDAD56000C9FBE /* YWFreeView.m */; };
 		0C5EB4F41CEB110100870E06 /* YWModel4.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5EB4F31CEB110100870E06 /* YWModel4.m */; };
 		0C5EB90A1CD0A59E00E4431A /* YWSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5EB9091CD0A59E00E4431A /* YWSearchBar.m */; };
 		0C5EEB1F1CE30BF400F585C3 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5EEB1C1CE30BF400F585C3 /* RegisterController.m */; };
@@ -144,13 +145,13 @@
 		0CD33C241CEDB2AD0094C53D /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD33C1D1CEDB2AD0094C53D /* UIView+SDExtension.m */; };
 		0CD33C281CEDC0160094C53D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD33C271CEDC0160094C53D /* SearchViewController.m */; };
 		0CD3948D1D13CBA00000C7A7 /* YWfunctionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD3948C1D13CBA00000C7A7 /* YWfunctionButton.m */; };
+		0CE189CD1DBDF51A004703A2 /* YWFreeGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE189CC1DBDF51A004703A2 /* YWFreeGoodsViewController.m */; };
 		0CE66BE41D75641600E368D6 /* YWclaimModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE66BE31D75641600E368D6 /* YWclaimModel.m */; };
 		0CE66BEB1D75762F00E368D6 /* YWClaimListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE66BEA1D75762F00E368D6 /* YWClaimListViewController.m */; };
 		0CE66BEF1D75764B00E368D6 /* YWClaimListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE66BED1D75764B00E368D6 /* YWClaimListViewCell.m */; };
 		0CE66BF01D75764B00E368D6 /* YWClaimListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CE66BEE1D75764B00E368D6 /* YWClaimListViewCell.xib */; };
 		0CF2D0011D23AFBD007437E8 /* UIColor+YWcolor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF2D0001D23AFBD007437E8 /* UIColor+YWcolor.m */; };
 		0CF4E8071CD842A700DDC120 /* YWFunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF4E8051CD842A700DDC120 /* YWFunctionCell.m */; };
-		0CFD07C51DB9EBBB009088C1 /* YWTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD07C41DB9EBBB009088C1 /* YWTestViewController.m */; };
 		0CFD07C81DBA0807009088C1 /* YWShopHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD07C71DBA0807009088C1 /* YWShopHeader.m */; };
 		0CFD07CB1DBA1B5D009088C1 /* YWshopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD07CA1DBA1B5D009088C1 /* YWshopButton.m */; };
 		AA330537F6E8F0C6CF82656C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A127D5672F8071D02B8F56 /* libPods.a */; };
@@ -239,6 +240,8 @@
 		0C4A73D61D86418800FE0084 /* YWCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCodeViewController.h; sourceTree = "<group>"; };
 		0C4A73D71D86418800FE0084 /* YWCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCodeViewController.m; sourceTree = "<group>"; };
 		0C4A73D81D86418800FE0084 /* YWCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCodeViewController.xib; sourceTree = "<group>"; };
+		0C52F6531DBDAD56000C9FBE /* YWFreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWFreeView.h; sourceTree = "<group>"; };
+		0C52F6541DBDAD56000C9FBE /* YWFreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFreeView.m; sourceTree = "<group>"; };
 		0C5EB4F21CEB110100870E06 /* YWModel4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWModel4.h; sourceTree = "<group>"; };
 		0C5EB4F31CEB110100870E06 /* YWModel4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWModel4.m; sourceTree = "<group>"; };
 		0C5EB9081CD0A59E00E4431A /* YWSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWSearchBar.h; sourceTree = "<group>"; };
@@ -434,6 +437,8 @@
 		0CD33C271CEDC0160094C53D /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		0CD3948B1D13CBA00000C7A7 /* YWfunctionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWfunctionButton.h; sourceTree = "<group>"; };
 		0CD3948C1D13CBA00000C7A7 /* YWfunctionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWfunctionButton.m; sourceTree = "<group>"; };
+		0CE189CB1DBDF51A004703A2 /* YWFreeGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWFreeGoodsViewController.h; sourceTree = "<group>"; };
+		0CE189CC1DBDF51A004703A2 /* YWFreeGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFreeGoodsViewController.m; sourceTree = "<group>"; };
 		0CE66BE21D75641600E368D6 /* YWclaimModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWclaimModel.h; sourceTree = "<group>"; };
 		0CE66BE31D75641600E368D6 /* YWclaimModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWclaimModel.m; sourceTree = "<group>"; };
 		0CE66BE91D75762F00E368D6 /* YWClaimListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWClaimListViewController.h; sourceTree = "<group>"; };
@@ -445,8 +450,6 @@
 		0CF2D0001D23AFBD007437E8 /* UIColor+YWcolor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+YWcolor.m"; sourceTree = "<group>"; };
 		0CF4E8041CD842A700DDC120 /* YWFunctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWFunctionCell.h; sourceTree = "<group>"; };
 		0CF4E8051CD842A700DDC120 /* YWFunctionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFunctionCell.m; sourceTree = "<group>"; };
-		0CFD07C31DB9EBBB009088C1 /* YWTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWTestViewController.h; sourceTree = "<group>"; };
-		0CFD07C41DB9EBBB009088C1 /* YWTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWTestViewController.m; sourceTree = "<group>"; };
 		0CFD07C61DBA0807009088C1 /* YWShopHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWShopHeader.h; sourceTree = "<group>"; };
 		0CFD07C71DBA0807009088C1 /* YWShopHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWShopHeader.m; sourceTree = "<group>"; };
 		0CFD07C91DBA1B5D009088C1 /* YWshopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWshopButton.h; sourceTree = "<group>"; };
@@ -535,8 +538,7 @@
 			children = (
 				0C1A54411CCF62C700216B7F /* YWmainViewController.h */,
 				0C1A54421CCF62C700216B7F /* YWmainViewController.m */,
-				0CFD07C31DB9EBBB009088C1 /* YWTestViewController.h */,
-				0CFD07C41DB9EBBB009088C1 /* YWTestViewController.m */,
+				0CE189CA1DBDF4AA004703A2 /* 免费商品 */,
 				0C07085E1DA8E89E0035ABB9 /* 店铺分类 */,
 				0C83097A1D9CF8430070FFB1 /* 联盟商家 */,
 				0CBC3DC61D95209D00F2729F /* 支付商家 */,
@@ -646,6 +648,8 @@
 				0C25DC921CEEB0B70048B1D6 /* YWgoodsCell.h */,
 				0C25DC931CEEB0B70048B1D6 /* YWgoodsCell.m */,
 				0C25DC941CEEB0B70048B1D6 /* YWgoodsCell.xib */,
+				0C52F6531DBDAD56000C9FBE /* YWFreeView.h */,
+				0C52F6541DBDAD56000C9FBE /* YWFreeView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1501,6 +1505,15 @@
 			path = "搜索";
 			sourceTree = "<group>";
 		};
+		0CE189CA1DBDF4AA004703A2 /* 免费商品 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE189CB1DBDF51A004703A2 /* YWFreeGoodsViewController.h */,
+				0CE189CC1DBDF51A004703A2 /* YWFreeGoodsViewController.m */,
+			);
+			path = "免费商品";
+			sourceTree = "<group>";
+		};
 		0CE66BE51D7575FD00E368D6 /* 福利认领清单 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1795,6 +1808,7 @@
 				0C22543E1CD086D5006E4461 /* YWItemView.m in Sources */,
 				0C1A54561CCF6B3E00216B7F /* YWpersonalViewController.m in Sources */,
 				0C33868D1CE46650005FBA32 /* YWOrderModel.m in Sources */,
+				0CE189CD1DBDF51A004703A2 /* YWFreeGoodsViewController.m in Sources */,
 				0CFD07C81DBA0807009088C1 /* YWShopHeader.m in Sources */,
 				0CBD1A4A1DACB766003E8150 /* IQKeyboardManager.m in Sources */,
 				0CBC3DAE1D94F5CD00F2729F /* YWShop.m in Sources */,
@@ -1829,7 +1843,7 @@
 				0CBF664C1D508206002C0A51 /* UINavigationBar+BTsome.m in Sources */,
 				0C9F28651CD9F3CE00E76450 /* YWmainItemButton.m in Sources */,
 				0C8E28701D0D0641008AD485 /* YWNextPerson.m in Sources */,
-				0CFD07C51DB9EBBB009088C1 /* YWTestViewController.m in Sources */,
+				0C52F6551DBDAD56000C9FBE /* YWFreeView.m in Sources */,
 				0C679C9C1CEC6349004F8FF7 /* YWTurnViewController.m in Sources */,
 				0CFD07CB1DBA1B5D009088C1 /* YWshopButton.m in Sources */,
 				0C25DC951CEEB0B70048B1D6 /* YWgoodsCell.m in Sources */,

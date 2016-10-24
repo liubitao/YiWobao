@@ -30,17 +30,18 @@
 #import "YWmainItemButton.h"
 #import "YWfunctionButton.h"
 #import "YWFederalViewController.h"
-#import "YWTestViewController.h"
 #import "YWShopHeader.h"
+#import "YWFreeGoodsViewController.h"
 
 
 @interface YWshoppingController ()<UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate>{
     UISearchBar *searchBar;
-    UITableView *_tableView;
     NSMutableArray *_dataArray1;
     NSMutableArray *_dataArray;
     int inter;
 }
+
+@property (strong,nonatomic) UITableView *tableView;
 @property (strong, nonatomic) SFTrainsitionAnimate    *animate;
 
 @end
@@ -121,46 +122,82 @@
         CGRect rect = {0,0,kScreenWidth,0};
             rect;
     })images:images];
+    __weak typeof(self) weakSelf = self;
     header.menuBlcok = ^(NSInteger i){
         switch (i) {
             case 0:{
-                NSLog(@"免费商品");
-                YWTestViewController *testVC = [[YWTestViewController alloc]init];
-                [self.navigationController pushViewController:testVC animated:YES];
+                YWFreeGoodsViewController *freeVC = [[YWFreeGoodsViewController alloc]init];
+                freeVC.sort = _dataArray[0];
+                [weakSelf.navigationController pushViewController:freeVC animated:YES];
             }
                 break;
             case 1:{
                 YWClassViewController *classVC = [[YWClassViewController alloc]init];
                 classVC.categories = _dataArray;
                 classVC.leftTableCurRow = 0;
-                [self.navigationController pushViewController:classVC animated:YES];
+                [weakSelf.navigationController pushViewController:classVC animated:YES];
             }
                 break;
             case 2:
             {
                 YWFederalViewController *FederalVC = [[YWFederalViewController alloc]init];
-                [self.navigationController pushViewController:FederalVC animated:YES];
+                [weakSelf.navigationController pushViewController:FederalVC animated:YES];
             }
                 break;
             case 3:
             {
                 if (![YWUserTool account]) {
                     YWLoginViewController *loginVC = [[YWLoginViewController alloc]init];
-                    [self presentViewController:loginVC animated:YES completion:nil];
+                    [weakSelf presentViewController:loginVC animated:YES completion:nil];
                     return;
                 }
                 YWGuideViewController *VC = [[YWGuideViewController alloc]init];
-                [self.navigationController pushViewController:VC animated:YES];
+                [weakSelf.navigationController pushViewController:VC animated:YES];
             }
                 break;
             default:
                 break;
         }
     };
+    header.middleBlcok = ^(NSInteger ID){
+         weakSelf.sf_targetView = nil;
+        [weakSelf requestID:[NSString stringWithFormat:@"%d",ID]];
+    };
+    __weak typeof(header) weakHeader = header;
+    header.heightBlcok = ^(CGFloat height){//头高
+        weakHeader.height = height +310+10;
+        weakSelf.tableView.tableHeaderView = weakHeader;
+    };
+    
     _tableView.tableHeaderView = header;
+    
     
     [self request];
     
+}
+
+- (void)requestID:(NSString *)ID{
+    [MBProgressHUD hideHUDForView:_tableView animated:YES];
+    [MBProgressHUD showMessage:@"正在加载" toView:_tableView];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[goodsDetails MD5Digest],sKey]MD5Digest];
+    parameters[@"gid"] = [[ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+    [YWHttptool GET:YWgoodsDetail parameters:parameters success:^(id responseObject) {
+        NSLog(@"%@",responseObject);
+        NSInteger isError = [responseObject[@"isError"] integerValue];
+        if (!isError) {
+        [MBProgressHUD hideHUDForView:_tableView];
+        YWGoods *goods = [YWGoods yw_objectWithKeyValues:responseObject[@"result"]];
+        YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
+       
+        goodsVC.Goods = goods;
+        [self.navigationController pushViewController:goodsVC animated:YES];
+        }
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideHUDForView:_tableView];
+        [MBProgressHUD showError:@"请检查网络" toView:_tableView];
+    }];
+
 }
 
 - (void)request{
@@ -291,6 +328,7 @@
         [self request];
     }
 }
+
 /*
 #pragma mark - Navigation
 

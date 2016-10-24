@@ -73,6 +73,20 @@
     [backgray addSubview:backwhite];
     [containView addSubview:customView];
  
+    
+    if (!fromVC.sf_targetView ) {
+        [UIView animateWithDuration:_duration/3 animations:^{
+            customView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [backgray removeFromSuperview];
+                [customView removeFromSuperview];
+                [transitionContext completeTransition:YES];
+            }
+        }];
+        [self addPathAnimateWithView:backgray fromPoint:customView.center];
+        return;
+    }
     //动画
     [UIView animateWithDuration:_duration/3 animations:^{
         customView.frame = finishFrame;
@@ -139,8 +153,10 @@
     [self addPathAnimateWithView:backgray fromPoint:customView.center];
     
     [UIView animateWithDuration:_duration/3 delay:_duration/3 options:UIViewAnimationOptionTransitionNone animations:^{
-        customView.frame = finishFrame;
-        customView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+        if (finishFrame.size.width != 0) {
+            customView.frame = finishFrame;
+            customView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+        }
     } completion:^(BOOL finished) {
         if (finished) {
             [fromVC.view removeFromSuperview];

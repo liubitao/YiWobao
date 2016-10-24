@@ -160,7 +160,12 @@
 
 - (void)create{
     UIButton *buy_button = [[UIButton alloc]initWithFrame:CGRectMake(0, KscreenHeight-50, kScreenWidth, 50)];
-    [buy_button setTitle:@"购买" forState:UIControlStateNormal];
+    if (![_Goods.selnum isEqualToString:_Goods.num]){
+        [buy_button setTitle:@"购买" forState:UIControlStateNormal];
+    }else{
+        [buy_button setTitle:@"已售罄" forState:UIControlStateNormal];
+        buy_button.enabled = NO;
+    }
     [buy_button setBackgroundImage:[UIImage imageWithColor:KthemeColor] forState:UIControlStateNormal];
     [buy_button addTarget:self action:@selector(clickBuy:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buy_button];

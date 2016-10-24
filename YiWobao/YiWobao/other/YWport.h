@@ -144,5 +144,7 @@
 #define YWshopList          @"http://api.yiwob.com/shop/ywbapp.php/Goods/shopsList"
 #define shops_list          @"shops_list"
 
+//免费商品
+#define YWFreeGoods         @"http://api.yiwob.com/shop/textindex.php"
 
 #endif /* YWport_h */

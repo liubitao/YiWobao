@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "free.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic_mall_fragment_more.png",
       "scale" : "2x"
     },
     {

@@ -9,11 +9,12 @@
 #import "YWShopHeader.h"
 #import "YWshopButton.h"
 #import "SDCycleScrollView.h"
+#import "YWFreeView.h"
 
 @interface YWShopHeader ()<SDCycleScrollViewDelegate>
 @property (nonatomic,strong) SDCycleScrollView *cycleScrollView;
 @property (nonatomic,strong) NSMutableArray *imageArray;
-
+@property (nonatomic,strong) YWFreeView *freeView;
 
 @end
 
@@ -42,9 +43,7 @@
 }
 
 - (void)setup{
- 
     // 网络加载 --- 创建自定义图片的pageControlDot的图片轮播器
-    
     [self addSubview:self.cycleScrollView];
 
     CGFloat itemWidth = kScreenWidth/4;
@@ -67,11 +66,23 @@
         [view addSubview:button];
     }
     [self addSubview:view];
-    self.height = view.bottom+10;
+    
+    _freeView = [[YWFreeView alloc]initWithFrame:CGRectMake(0, view.bottom+10,kScreenWidth , 220)];
+    __weak typeof(self) weakSelf = self;
+    _freeView.FreeBlcok = ^(NSInteger index){
+        if (weakSelf.middleBlcok) {
+            weakSelf.middleBlcok(index);
+        }
+    };;
+    _freeView.heightBlcok = _heightBlcok;
+    
+    [self addSubview:_freeView];
+    
+    self.height = _freeView.bottom+10;
 }
 
 - (void)clickBtn:(YWshopButton *)sender{
-    if (_menuBlcok) {
+    if (_menuBlcok){
         _menuBlcok(sender.tag);
     }
 }
@@ -87,7 +98,82 @@
 
 /** 点击图片回调 */
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
-    
+    NSLog(@"点击图片");
 }
 
 @end
+
+@interface YWFreeView ()<UIWebViewDelegate>{
+    UIWebView *_webView;
+    BOOL first;
+}
+
+@end
+@implementation YWFreeView
+
+- (instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+        self.userInteractionEnabled = YES;
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup{
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 30)];
+    titleLabel.text = @"免费商品";
+    titleLabel.textColor = KthemeColor;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:titleLabel];
+    
+    UIButton *moreButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-50, 15, 40, 15)];
+    [moreButton setImage:[UIImage imageNamed:@"ic_mall_fragment_more"] forState:UIControlStateNormal];
+    [moreButton addTarget:self action:@selector(clickMore:) forControlEvents:UIControlEventTouchDragInside];
+    [self addSubview:moreButton];
+    
+    
+    _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, titleLabel.bottom, kScreenWidth, 190)];
+    _webView.scrollView.backgroundColor = [UIColor whiteColor];
+    _webView.scrollView.bounces = NO;
+    _webView.contentMode = UIViewContentModeScaleAspectFit;
+    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:YWFreeGoods]]];
+    _webView.backgroundColor = KviewColor;
+    _webView.delegate = self;
+    [self addSubview:_webView];
+}
+
+- (void)clickMore:(UIButton *)sender{
+    
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    CGFloat str = [[_webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] intValue];
+    _webView.height = str+10;
+    self.height = _webView.bottom;
+    
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error{
+    NSLog(@"加载失败");
+}
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;{
+    if (!first) {
+        first = YES;
+        return YES;
+    }
+    NSLog(@"%@",request.URL);
+    // 拿到网页上的请求地址
+    NSString *URLString = [NSString stringWithFormat:@"%@",request.URL.absoluteString];
+    // 判断网页的请求地址协议是否是我们自定义的那个
+    NSRange range = [URLString rangeOfString:@"="];
+    NSString *str = [URLString substringFromIndex:range.location+1];
+    if (_FreeBlcok){
+        _FreeBlcok(str.integerValue);
+    }
+    return NO;
+}
+
+@end
+
