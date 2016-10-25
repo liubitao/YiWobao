@@ -119,7 +119,7 @@
     
     NSMutableArray  *images = [NSMutableArray arrayWithArray: @[@"show1",@"show2",@"show3"]];
     YWShopHeader *header = [[YWShopHeader alloc]initWithFrame:({
-        CGRect rect = {0,0,kScreenWidth,1};
+        CGRect rect = {0,0,kScreenWidth,410};
             rect;
     })images:images];
     __weak typeof(self) weakSelf = self;
