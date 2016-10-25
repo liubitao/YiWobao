@@ -154,4 +154,12 @@
     return [dateFormatter stringFromDate: detaildate];
 }
 
++ (NSMutableAttributedString *)stringWith:(NSString *)string font1:(UIFont*)font1 color1:(UIColor *)color1 font2:(UIFont*)font2 color2:(UIColor *)color2 range:(NSRange)range{
+    NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:string  attributes:@{NSFontAttributeName:font1,
+                                                                                                               NSForegroundColorAttributeName:color1}];
+    [string1 addAttribute:NSForegroundColorAttributeName value:color2 range:range];
+    [string1 addAttribute:NSFontAttributeName value:font2 range:range];
+    return string1;
+}
+
 @end

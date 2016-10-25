@@ -12,7 +12,11 @@ typedef void(^ShopHeaderMenuBlcok)(NSInteger i);
 
 typedef void(^ShopHeaderHeightBlcok)(CGFloat height);
 
+typedef void(^MiddleClickBlcok)();
+
 @interface YWShopHeader : UIView
+
+@property (nonatomic,copy) MiddleClickBlcok middleClick;
 
 @property (nonatomic,copy) ShopHeaderMenuBlcok menuBlcok;
 
@@ -27,9 +31,12 @@ typedef void(^ShopHeaderHeightBlcok)(CGFloat height);
 
 
 typedef void(^FreeGoodsBlcok)(NSInteger i);
+typedef void(^MoreClickBlcok)();
 @interface YWFreeView : UIView
 
 @property (nonatomic,copy) FreeGoodsBlcok FreeBlcok;
+
+@property (nonatomic,copy)  MoreClickBlcok clickBlcok;
 
 @property (nonatomic,copy) ShopHeaderHeightBlcok heightBlcok;
 

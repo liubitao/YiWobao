@@ -119,7 +119,7 @@
     
     NSMutableArray  *images = [NSMutableArray arrayWithArray: @[@"show1",@"show2",@"show3"]];
     YWShopHeader *header = [[YWShopHeader alloc]initWithFrame:({
-        CGRect rect = {0,0,kScreenWidth,0};
+        CGRect rect = {0,0,kScreenWidth,1};
             rect;
     })images:images];
     __weak typeof(self) weakSelf = self;
@@ -128,6 +128,7 @@
             case 0:{
                 YWFreeGoodsViewController *freeVC = [[YWFreeGoodsViewController alloc]init];
                 freeVC.sort = _dataArray[0];
+                freeVC.title = @"免费商品";
                 [weakSelf.navigationController pushViewController:freeVC animated:YES];
             }
                 break;
@@ -169,9 +170,15 @@
         weakSelf.tableView.tableHeaderView = weakHeader;
     };
     
+    header.middleClick = ^(){
+        YWClassViewController *classVC = [[YWClassViewController alloc]init];
+        classVC.categories = _dataArray;
+        classVC.leftTableCurRow = 0;
+        [weakSelf.navigationController pushViewController:classVC animated:YES];
+    };
+    
     _tableView.tableHeaderView = header;
-    
-    
+
     [self request];
     
 }

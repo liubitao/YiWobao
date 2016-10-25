@@ -13,7 +13,7 @@
 #import "YWShopClassViewController.h"
 #import "YWFederalShop.h"
 #import "YwFederalCell.h"
-
+#import "YWShopDetailsController.h"
 
 @interface YWFederalViewController ()<UITableViewDataSource,UITableViewDelegate,YWhomeMenuDelegate>{
     NSMutableArray *_menuArray;
@@ -35,7 +35,8 @@
     [self.view addSubview:self.tableView];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"YwFederalCell" bundle:nil] forCellReuseIdentifier:@"shopcell"];
-    [self initNavi];
+    self.title = @"联盟商家";
+//    [self initNavi];
     
     [self request];
 }
@@ -152,17 +153,22 @@
 
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1 || indexPath.section == 0) {
+        return;
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    YWShopDetailsController *shopVC = [[YWShopDetailsController alloc]init];
+    shopVC.shop = _dataArray[indexPath.section -2];
+    [self.navigationController pushViewController:shopVC animated:YES];
 }
 
 - (void)didSelected:(NSInteger)number{
     YWShopClassViewController *shopVC = [[YWShopClassViewController alloc]init];
+    YWFederal *fedral = _menuArray[number];
     shopVC.federal = _menuArray[number];
+    shopVC.title = fedral.title;
     [self.navigationController pushViewController:shopVC animated:YES];
 }
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; 

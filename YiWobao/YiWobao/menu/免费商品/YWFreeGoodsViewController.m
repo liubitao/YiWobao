@@ -22,8 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initNavi];
-
+//    [self initNavi];
+    
     [self createTableView];
 }
 
@@ -79,6 +79,7 @@
     goodsVC.Goods = _sort.Goods[indexPath.section];
     [self.navigationController pushViewController:goodsVC animated:YES];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -78,7 +78,7 @@
             _dataArray = shop.monyelist;
             [self.tableView reloadData];
         }else{
-            [MBProgressHUD showError:@"获取失败"];
+            [MBProgressHUD showError:responseObject[@"errorMessage"]];
         }
     } failure:^(NSError *error) {
         [MBProgressHUD hideHUDForView:self.tableView animated:YES];

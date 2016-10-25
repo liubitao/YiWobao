@@ -8,6 +8,7 @@
 
 #import "YWShopClassViewController.h"
 #import "YwFederalCell.h"
+#import "YWShopDetailsController.h"
 
 @interface YWShopClassViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -20,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initNavi];
+//    [self initNavi];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, KscreenHeight-64) style:UITableViewStyleGrouped];
@@ -76,8 +77,10 @@
 }
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"1");
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    YWShopDetailsController *shopVC = [[YWShopDetailsController alloc]init];
+    shopVC.shop = _federal.shops[indexPath.section];
+    [self.navigationController pushViewController:shopVC animated:YES];
 }
 
 

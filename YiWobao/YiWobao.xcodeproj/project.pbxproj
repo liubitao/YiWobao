@@ -145,6 +145,9 @@
 		0CD33C241CEDB2AD0094C53D /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD33C1D1CEDB2AD0094C53D /* UIView+SDExtension.m */; };
 		0CD33C281CEDC0160094C53D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD33C271CEDC0160094C53D /* SearchViewController.m */; };
 		0CD3948D1D13CBA00000C7A7 /* YWfunctionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD3948C1D13CBA00000C7A7 /* YWfunctionButton.m */; };
+		0CD77C841DBF2E1B00F72AA5 /* YHWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD77C801DBF2E1B00F72AA5 /* YHWebViewProgress.m */; };
+		0CD77C851DBF2E1B00F72AA5 /* YHWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD77C821DBF2E1B00F72AA5 /* YHWebViewProgressView.m */; };
+		0CD77C891DBF3D8100F72AA5 /* YWShopDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD77C881DBF3D8100F72AA5 /* YWShopDetailsController.m */; };
 		0CE189CD1DBDF51A004703A2 /* YWFreeGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE189CC1DBDF51A004703A2 /* YWFreeGoodsViewController.m */; };
 		0CE66BE41D75641600E368D6 /* YWclaimModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE66BE31D75641600E368D6 /* YWclaimModel.m */; };
 		0CE66BEB1D75762F00E368D6 /* YWClaimListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE66BEA1D75762F00E368D6 /* YWClaimListViewController.m */; };
@@ -437,6 +440,13 @@
 		0CD33C271CEDC0160094C53D /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		0CD3948B1D13CBA00000C7A7 /* YWfunctionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWfunctionButton.h; sourceTree = "<group>"; };
 		0CD3948C1D13CBA00000C7A7 /* YWfunctionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWfunctionButton.m; sourceTree = "<group>"; };
+		0CD77C7F1DBF2E1B00F72AA5 /* YHWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHWebViewProgress.h; sourceTree = "<group>"; };
+		0CD77C801DBF2E1B00F72AA5 /* YHWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHWebViewProgress.m; sourceTree = "<group>"; };
+		0CD77C811DBF2E1B00F72AA5 /* YHWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHWebViewProgressView.h; sourceTree = "<group>"; };
+		0CD77C821DBF2E1B00F72AA5 /* YHWebViewProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHWebViewProgressView.m; sourceTree = "<group>"; };
+		0CD77C831DBF2E1B00F72AA5 /* YHWebViewProgressViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHWebViewProgressViewProtocol.h; sourceTree = "<group>"; };
+		0CD77C871DBF3D8100F72AA5 /* YWShopDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWShopDetailsController.h; sourceTree = "<group>"; };
+		0CD77C881DBF3D8100F72AA5 /* YWShopDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWShopDetailsController.m; sourceTree = "<group>"; };
 		0CE189CB1DBDF51A004703A2 /* YWFreeGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWFreeGoodsViewController.h; sourceTree = "<group>"; };
 		0CE189CC1DBDF51A004703A2 /* YWFreeGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFreeGoodsViewController.m; sourceTree = "<group>"; };
 		0CE66BE21D75641600E368D6 /* YWclaimModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWclaimModel.h; sourceTree = "<group>"; };
@@ -538,6 +548,7 @@
 			children = (
 				0C1A54411CCF62C700216B7F /* YWmainViewController.h */,
 				0C1A54421CCF62C700216B7F /* YWmainViewController.m */,
+				0CD77C861DBF3D6200F72AA5 /* 商家详情 */,
 				0CE189CA1DBDF4AA004703A2 /* 免费商品 */,
 				0C07085E1DA8E89E0035ABB9 /* 店铺分类 */,
 				0C83097A1D9CF8430070FFB1 /* 联盟商家 */,
@@ -1175,6 +1186,7 @@
 		0C9573EF1CD0BE2000BC8430 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				0CD77C7E1DBF2E1B00F72AA5 /* WebProgressView */,
 				0CBD1A1F1DACB766003E8150 /* IQKeyboardManager */,
 				0CBF665B1D508B45002C0A51 /* 动画移动 */,
 				0CD33C0E1CEDB2AD0094C53D /* SDCycleScrollView */,
@@ -1505,6 +1517,27 @@
 			path = "搜索";
 			sourceTree = "<group>";
 		};
+		0CD77C7E1DBF2E1B00F72AA5 /* WebProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				0CD77C7F1DBF2E1B00F72AA5 /* YHWebViewProgress.h */,
+				0CD77C801DBF2E1B00F72AA5 /* YHWebViewProgress.m */,
+				0CD77C811DBF2E1B00F72AA5 /* YHWebViewProgressView.h */,
+				0CD77C821DBF2E1B00F72AA5 /* YHWebViewProgressView.m */,
+				0CD77C831DBF2E1B00F72AA5 /* YHWebViewProgressViewProtocol.h */,
+			);
+			path = WebProgressView;
+			sourceTree = "<group>";
+		};
+		0CD77C861DBF3D6200F72AA5 /* 商家详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0CD77C871DBF3D8100F72AA5 /* YWShopDetailsController.h */,
+				0CD77C881DBF3D8100F72AA5 /* YWShopDetailsController.m */,
+			);
+			path = "商家详情";
+			sourceTree = "<group>";
+		};
 		0CE189CA1DBDF4AA004703A2 /* 免费商品 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1815,6 +1848,7 @@
 				0CBD1A471DACB766003E8150 /* IQUIView+Hierarchy.m in Sources */,
 				0C006B101CEEE6F80014B0F2 /* YWGoodsViewController.m in Sources */,
 				0CBC3D971D94CAC000F2729F /* YWScanViewController.m in Sources */,
+				0CD77C891DBF3D8100F72AA5 /* YWShopDetailsController.m in Sources */,
 				0C9573F31CD0BE2000BC8430 /* FrameAutoScaleLFL.m in Sources */,
 				0C7825481D6D7D810017C6E5 /* YWdetails.m in Sources */,
 				0CBD1A4E1DACB766003E8150 /* IQPreviousNextView.m in Sources */,
@@ -1875,7 +1909,9 @@
 				0C74C74D1D70108B009BC8EE /* YWClaim.m in Sources */,
 				0C7EF0111CCF566000BFC1A6 /* main.m in Sources */,
 				0CD33C241CEDB2AD0094C53D /* UIView+SDExtension.m in Sources */,
+				0CD77C841DBF2E1B00F72AA5 /* YHWebViewProgress.m in Sources */,
 				0CBC3DCA1D95209D00F2729F /* YWShopPayViewController.m in Sources */,
+				0CD77C851DBF2E1B00F72AA5 /* YHWebViewProgressView.m in Sources */,
 				0C8309801D9CF8670070FFB1 /* YWFederalViewController.m in Sources */,
 				0C673BEF1CDB2C290088CA78 /* YWSettingTableController.m in Sources */,
 				0C1A54431CCF62C700216B7F /* YWmainViewController.m in Sources */,

@@ -67,14 +67,23 @@
     }
     [self addSubview:view];
     
-    _freeView = [[YWFreeView alloc]initWithFrame:CGRectMake(0, view.bottom+10,kScreenWidth , 220)];
+    _freeView = [[YWFreeView alloc]initWithFrame:CGRectMake(0, view.bottom+10,kScreenWidth , 1)];
     __weak typeof(self) weakSelf = self;
     _freeView.FreeBlcok = ^(NSInteger index){
         if (weakSelf.middleBlcok) {
             weakSelf.middleBlcok(index);
         }
-    };;
-    _freeView.heightBlcok = _heightBlcok;
+    };
+    _freeView.heightBlcok = ^(CGFloat height){
+        if (weakSelf.heightBlcok) {
+            weakSelf.heightBlcok(height);
+        }
+    };
+    _freeView.clickBlcok = ^(){
+        if (weakSelf.middleBlcok) {
+            weakSelf.middleClick();
+        }
+    };
     
     [self addSubview:_freeView];
     
@@ -123,15 +132,15 @@
 
 - (void)setup{
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 30)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, kScreenWidth, 30)];
     titleLabel.text = @"免费商品";
     titleLabel.textColor = KthemeColor;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:titleLabel];
     
-    UIButton *moreButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-50, 15, 40, 15)];
+    UIButton *moreButton = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth-50, 5, 40, 30)];
     [moreButton setImage:[UIImage imageNamed:@"ic_mall_fragment_more"] forState:UIControlStateNormal];
-    [moreButton addTarget:self action:@selector(clickMore:) forControlEvents:UIControlEventTouchDragInside];
+    [moreButton addTarget:self action:@selector(clickMore:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:moreButton];
     
     
@@ -146,14 +155,18 @@
 }
 
 - (void)clickMore:(UIButton *)sender{
-    
+    if (_clickBlcok){
+        _clickBlcok();
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     CGFloat str = [[_webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] intValue];
     _webView.height = str+10;
     self.height = _webView.bottom;
-    
+    if (_heightBlcok) {
+        _heightBlcok(_webView.height);
+    }
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error{
     NSLog(@"加载失败");
