@@ -69,7 +69,6 @@
     YWUser *user = [YWUserTool account];
     NSMutableDictionary *paramter = [Utils paramter:my_shop ID:user.ID];
     [YWHttptool GET:YWmyshop parameters:paramter success:^(id responseObject) {
-        NSLog(@"%@",responseObject);
         [MBProgressHUD hideHUDForView:self.tableView animated:YES];
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {

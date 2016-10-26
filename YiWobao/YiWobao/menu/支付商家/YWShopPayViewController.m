@@ -45,7 +45,6 @@
     paramter[@"smid"] = [[_shopID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWshop_pay parameters:paramter success:^(id responseObject) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        NSLog(@"%@",responseObject);
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError){
             shop = [YWShop yw_objectWithKeyValues:responseObject[@"result"]];

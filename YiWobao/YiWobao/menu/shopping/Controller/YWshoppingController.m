@@ -119,7 +119,7 @@
     
     NSMutableArray  *images = [NSMutableArray arrayWithArray: @[@"show1",@"show2",@"show3"]];
     YWShopHeader *header = [[YWShopHeader alloc]initWithFrame:({
-        CGRect rect = {0,0,kScreenWidth,410};
+        CGRect rect = {0,0,kScreenWidth,300};
             rect;
     })images:images];
     __weak typeof(self) weakSelf = self;
@@ -190,7 +190,6 @@
     parameters[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[goodsDetails MD5Digest],sKey]MD5Digest];
     parameters[@"gid"] = [[ID dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWgoodsDetail parameters:parameters success:^(id responseObject) {
-        NSLog(@"%@",responseObject);
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {
         [MBProgressHUD hideHUDForView:_tableView];
@@ -200,7 +199,7 @@
         goodsVC.Goods = goods;
         [self.navigationController pushViewController:goodsVC animated:YES];
         }
-    } failure:^(NSError *error) {
+    } failure:^(NSError *error){
         [MBProgressHUD hideHUDForView:_tableView];
         [MBProgressHUD showError:@"请检查网络" toView:_tableView];
     }];

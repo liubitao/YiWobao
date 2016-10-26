@@ -52,7 +52,6 @@
     parameters[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[shops_list MD5Digest],sKey]MD5Digest];
     parameters[@"skd"] = [[@"0" dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWshopList parameters:parameters success:^(id responseObject) {
-        NSLog(@"%@",responseObject);
         NSInteger isError = [responseObject[@"isError"] integerValue];
         [MBProgressHUD hideHUDForView:_tableView];
         if (!isError){

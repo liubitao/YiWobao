@@ -144,7 +144,7 @@
     [self addSubview:moreButton];
     
     
-    _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, titleLabel.bottom, kScreenWidth, 190)];
+    _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, titleLabel.bottom, kScreenWidth, 1)];
     _webView.scrollView.backgroundColor = [UIColor whiteColor];
     _webView.scrollView.bounces = NO;
     _webView.contentMode = UIViewContentModeScaleAspectFit;

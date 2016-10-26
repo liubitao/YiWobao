@@ -280,7 +280,6 @@
     parameter[@"gid"] = [[number dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool Post:YWgoodsDetail parameters:parameter success:^(id responseObject) {
         [MBProgressHUD hideHUDForView:_webView animated:YES];
-        NSLog(@"%@",responseObject);
         YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
         goodsVC.Goods = [YWGoods yw_objectWithKeyValues:responseObject[@"result"]];
         [self.navigationController pushViewController:goodsVC animated:YES];
