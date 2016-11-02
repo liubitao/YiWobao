@@ -37,7 +37,7 @@
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 170)];
     imageView.image = [UIImage imageNamed:@"freeImage"];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.contentMode = UIViewContentModeScaleToFill;
     _tableView.tableHeaderView = imageView;
     
     [_tableView registerNib:[UINib nibWithNibName:@"YWgoodsCell" bundle:nil] forCellReuseIdentifier:@"freeGoods"];
