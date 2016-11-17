@@ -54,6 +54,7 @@
     NSString *str = [NSString stringWithFormat:@"%ld",_style];
     paramter[@"zkd"] = [[str dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWList parameters:paramter success:^(id responseObject) {
+        NSLog(@"%@",responseObject);
         [MBProgressHUD hideHUDForView:_tableView];
         if (![Utils isNull:responseObject[@"result"]]) {
             _dataArray = [YWNextPerson yw_objectWithKeyValuesArray:responseObject[@"result"]];

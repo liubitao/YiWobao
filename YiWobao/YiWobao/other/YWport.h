@@ -147,4 +147,7 @@
 //免费商品
 #define YWFreeGoods         @"http://api.yiwob.com/shop/textindex.php"
 
+//获取商品的分类
+#define YWGoodscateList     @"http://api.yiwob.com/shop/ywbapp.php/Goods/goodscateList"
+#define goodscateList       @"goodscate_list"
 #endif /* YWport_h */

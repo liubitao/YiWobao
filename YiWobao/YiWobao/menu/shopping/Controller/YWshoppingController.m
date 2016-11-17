@@ -36,13 +36,13 @@
 
 @interface YWshoppingController ()<UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate>{
     UISearchBar *searchBar;
-    NSMutableArray *_dataArray1;
     NSMutableArray *_dataArray;
     int inter;
 }
 
 @property (strong,nonatomic) UITableView *tableView;
 @property (strong, nonatomic) SFTrainsitionAnimate    *animate;
+
 
 @end
 
@@ -60,11 +60,11 @@
     //创建商品列表
     [self createTable];
     
-    
     // 注册单元格
     [_tableView registerNib:[UINib nibWithNibName:@"YWgoodsCell" bundle:nil] forCellReuseIdentifier:@"goodsCell"];
     
 }
+
 
 - (void)initNavi{
     [super initNavi];
@@ -125,17 +125,26 @@
     __weak typeof(self) weakSelf = self;
     header.menuBlcok = ^(NSInteger i){
         switch (i) {
-            case 0:{
+            case 0:{//免费
                 YWFreeGoodsViewController *freeVC = [[YWFreeGoodsViewController alloc]init];
-                freeVC.sort = _dataArray[0];
+                freeVC.dataArray = [NSMutableArray array];
+                for (YWSorts *sorts in _dataArray) {
+                    if (sorts.ID.integerValue == 12 || sorts.ID.integerValue == 20) {
+                        [freeVC.dataArray addObjectsFromArray:sorts.Goods];
+                    }
+                }
                 freeVC.title = @"免费商品";
                 [weakSelf.navigationController pushViewController:freeVC animated:YES];
             }
                 break;
             case 1:{
                 YWClassViewController *classVC = [[YWClassViewController alloc]init];
-                classVC.categories = _dataArray;
-                classVC.leftTableCurRow = 0;
+                classVC.dataArray = [NSMutableArray array];
+                for (YWSorts *sorts in _dataArray) {
+                    if (sorts.ID.integerValue != 12 && sorts.ID.integerValue != 20) {
+                        [classVC.dataArray addObject:sorts];
+                    }
+                }
                 [weakSelf.navigationController pushViewController:classVC animated:YES];
             }
                 break;
@@ -160,9 +169,9 @@
                 break;
         }
     };
-    header.middleBlcok = ^(NSInteger ID){
+    header.middleBlcok = ^(NSInteger ID){//点击html页面中的商品
          weakSelf.sf_targetView = nil;
-        [weakSelf requestID:[NSString stringWithFormat:@"%d",ID]];
+        [weakSelf requestID:[NSString stringWithFormat:@"%zi",ID]];
     };
     __weak typeof(header) weakHeader = header;
     header.heightBlcok = ^(CGFloat height){//头高
@@ -170,10 +179,9 @@
         weakSelf.tableView.tableHeaderView = weakHeader;
     };
     
-    header.middleClick = ^(){
+    header.middleClick = ^(){//免费商品更多
         YWClassViewController *classVC = [[YWClassViewController alloc]init];
-        classVC.categories = _dataArray;
-        classVC.leftTableCurRow = 0;
+
         [weakSelf.navigationController pushViewController:classVC animated:YES];
     };
     
@@ -217,28 +225,17 @@
         NSInteger isError = [responseObject[@"isError"] integerValue];
         [MBProgressHUD hideHUDForView:_tableView];
         if (!isError) {
-            [_dataArray removeAllObjects];
             NSMutableArray *array = [YWSorts yw_objectWithKeyValuesArray:responseObject[@"result"]];
             for (YWSorts *sorts in array) {
                 if (![Utils isNull:sorts.Goods]) {
                     [_dataArray addObject:sorts];
                 }
             }
-            _dataArray1 = [NSMutableArray arrayWithArray:_dataArray];
-            NSMutableArray *isfree_array = [NSMutableArray array];
-            for (YWSorts *sort in _dataArray) {
-                for (YWGoods *goods in sort.Goods) {
-                    if ([goods.isfree isEqualToString:@"1"]) {
-                        [isfree_array addObject:goods];
-                    }
+            for (int i = 0;i<_dataArray.count;i++) {
+                YWSorts *sort = _dataArray[i];
+                if (sort.ID.integerValue == 20) {
+                    [_dataArray exchangeObjectAtIndex:0 withObjectAtIndex:i];
                 }
-            }
-            
-            YWSorts *sort = [[YWSorts alloc]init];
-            if (![Utils isNull:isfree_array]) {
-                sort.Goods = isfree_array;
-                sort.title = @"免费";
-                [_dataArray insertObject:sort atIndex:0];
             }
             
             [_tableView reloadData];
@@ -255,10 +252,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     YWSorts *sorts = _dataArray[section];
-    if (sorts.Goods.count<2) {
-        return sorts.Goods.count;
-    }
-    return 2;
+    return sorts.Goods.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -293,8 +287,7 @@
 
 - (void)jumpMore:(UIButton *)sender{
     YWClassViewController *classVC = [[YWClassViewController alloc]init];
-    classVC.categories = _dataArray;
-    classVC.leftTableCurRow = sender.tag;
+
     [self.navigationController pushViewController:classVC animated:YES];
 }
 
@@ -324,25 +317,12 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (_dataArray.count == 0) {
-        [self request];
-    }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

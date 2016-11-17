@@ -22,7 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self initNavi];
     
     [self createTableView];
 }
@@ -40,15 +39,22 @@
     imageView.contentMode = UIViewContentModeScaleToFill;
     _tableView.tableHeaderView = imageView;
     
+    
+    if([Utils isNull:_dataArray]){
+        UILabel *label = [[UILabel alloc]init];
+        label.frame = CGRectMake(0, self.view.center.y-50, kScreenWidth, 40);
+        label.text = @"您还没有相关的商品";
+        label.font = [UIFont systemFontOfSize:20];
+        label.textAlignment = NSTextAlignmentCenter;
+        [self.view addSubview:label];
+    }
+    
     [_tableView registerNib:[UINib nibWithNibName:@"YWgoodsCell" bundle:nil] forCellReuseIdentifier:@"freeGoods"];
 }
 
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-    return YES;
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return _sort.Goods.count;
+    return self.dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -62,7 +68,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     YWgoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"freeGoods" forIndexPath:indexPath];
-    [cell setCellModel:_sort.Goods[indexPath.section]];
+    [cell setCellModel:self.dataArray[indexPath.section]];
     return cell;
 }
 
@@ -76,7 +82,7 @@
     self.sf_targetView = cell.picView;
     
     YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
-    goodsVC.Goods = _sort.Goods[indexPath.section];
+    goodsVC.Goods = self.dataArray[indexPath.section];
     [self.navigationController pushViewController:goodsVC animated:YES];
 }
 
@@ -85,14 +91,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

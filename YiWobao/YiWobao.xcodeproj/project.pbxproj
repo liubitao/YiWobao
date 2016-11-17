@@ -36,9 +36,10 @@
 		0C33868D1CE46650005FBA32 /* YWOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C33868C1CE46650005FBA32 /* YWOrderModel.m */; };
 		0C3386901CE469D4005FBA32 /* YWGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C33868F1CE469D4005FBA32 /* YWGoods.m */; };
 		0C3386931CE475AB005FBA32 /* YWOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3386921CE475AB005FBA32 /* YWOrderCell.m */; };
-		0C388A2F1D0541F700DB6927 /* TabHomeRightTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A2B1D0541F700DB6927 /* TabHomeRightTableCell.m */; };
 		0C388A301D0541F700DB6927 /* YWClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A2E1D0541F700DB6927 /* YWClassViewController.m */; };
 		0C388A341D05423E00DB6927 /* YWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C388A331D05423E00DB6927 /* YWViewController.m */; };
+		0C42DBEE1DDD7A8900444BC4 /* YWClassHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C42DBED1DDD7A8900444BC4 /* YWClassHeader.m */; };
+		0C42DBF21DDD7FD200444BC4 /* YWClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C42DBF11DDD7FD200444BC4 /* YWClassModel.m */; };
 		0C4A73D91D86418800FE0084 /* YWCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4A73D71D86418800FE0084 /* YWCodeViewController.m */; };
 		0C4A73DA1D86418800FE0084 /* YWCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C4A73D81D86418800FE0084 /* YWCodeViewController.xib */; };
 		0C52F6551DBDAD56000C9FBE /* YWFreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C52F6541DBDAD56000C9FBE /* YWFreeView.m */; };
@@ -234,12 +235,14 @@
 		0C33868F1CE469D4005FBA32 /* YWGoods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWGoods.m; sourceTree = "<group>"; };
 		0C3386911CE475AB005FBA32 /* YWOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWOrderCell.h; sourceTree = "<group>"; };
 		0C3386921CE475AB005FBA32 /* YWOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWOrderCell.m; sourceTree = "<group>"; };
-		0C388A2A1D0541F700DB6927 /* TabHomeRightTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabHomeRightTableCell.h; sourceTree = "<group>"; };
-		0C388A2B1D0541F700DB6927 /* TabHomeRightTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabHomeRightTableCell.m; sourceTree = "<group>"; };
 		0C388A2D1D0541F700DB6927 /* YWClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWClassViewController.h; sourceTree = "<group>"; };
 		0C388A2E1D0541F700DB6927 /* YWClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWClassViewController.m; sourceTree = "<group>"; };
 		0C388A321D05423E00DB6927 /* YWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWViewController.h; sourceTree = "<group>"; };
 		0C388A331D05423E00DB6927 /* YWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWViewController.m; sourceTree = "<group>"; };
+		0C42DBEC1DDD7A8900444BC4 /* YWClassHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWClassHeader.h; sourceTree = "<group>"; };
+		0C42DBED1DDD7A8900444BC4 /* YWClassHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWClassHeader.m; sourceTree = "<group>"; };
+		0C42DBF01DDD7FD200444BC4 /* YWClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWClassModel.h; sourceTree = "<group>"; };
+		0C42DBF11DDD7FD200444BC4 /* YWClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWClassModel.m; sourceTree = "<group>"; };
 		0C4A73D61D86418800FE0084 /* YWCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCodeViewController.h; sourceTree = "<group>"; };
 		0C4A73D71D86418800FE0084 /* YWCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCodeViewController.m; sourceTree = "<group>"; };
 		0C4A73D81D86418800FE0084 /* YWCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCodeViewController.xib; sourceTree = "<group>"; };
@@ -823,19 +826,11 @@
 		0C388A281D0541F700DB6927 /* 分类 */ = {
 			isa = PBXGroup;
 			children = (
-				0C388A291D0541F700DB6927 /* cell */,
+				0C42DBEF1DDD7FC300444BC4 /* model */,
+				0C42DBEB1DDD7A7600444BC4 /* view */,
 				0C388A2C1D0541F700DB6927 /* viewController */,
 			);
 			path = "分类";
-			sourceTree = "<group>";
-		};
-		0C388A291D0541F700DB6927 /* cell */ = {
-			isa = PBXGroup;
-			children = (
-				0C388A2A1D0541F700DB6927 /* TabHomeRightTableCell.h */,
-				0C388A2B1D0541F700DB6927 /* TabHomeRightTableCell.m */,
-			);
-			path = cell;
 			sourceTree = "<group>";
 		};
 		0C388A2C1D0541F700DB6927 /* viewController */ = {
@@ -854,6 +849,24 @@
 				0C388A331D05423E00DB6927 /* YWViewController.m */,
 			);
 			path = "全部的商品";
+			sourceTree = "<group>";
+		};
+		0C42DBEB1DDD7A7600444BC4 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0C42DBEC1DDD7A8900444BC4 /* YWClassHeader.h */,
+				0C42DBED1DDD7A8900444BC4 /* YWClassHeader.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		0C42DBEF1DDD7FC300444BC4 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0C42DBF01DDD7FD200444BC4 /* YWClassModel.h */,
+				0C42DBF11DDD7FD200444BC4 /* YWClassModel.m */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		0C5EEB1A1CE30BF400F585C3 /* changePass */ = {
@@ -1851,6 +1864,7 @@
 				0CD77C891DBF3D8100F72AA5 /* YWShopDetailsController.m in Sources */,
 				0C9573F31CD0BE2000BC8430 /* FrameAutoScaleLFL.m in Sources */,
 				0C7825481D6D7D810017C6E5 /* YWdetails.m in Sources */,
+				0C42DBF21DDD7FD200444BC4 /* YWClassModel.m in Sources */,
 				0CBD1A4E1DACB766003E8150 /* IQPreviousNextView.m in Sources */,
 				0C9573E71CD0AA2900BC8430 /* UIView+Frame.m in Sources */,
 				0CBD1A461DACB766003E8150 /* IQUITextFieldView+Additions.m in Sources */,
@@ -1873,6 +1887,7 @@
 				0C84B2931CE5D33200A0B4BE /* YWInViewController.m in Sources */,
 				0C33868A1CE464B9005FBA32 /* YWOrderViewController.m in Sources */,
 				0C27EC5C1CE182AB003BBF23 /* YWAddressController.m in Sources */,
+				0C42DBEE1DDD7A8900444BC4 /* YWClassHeader.m in Sources */,
 				0CBC3DAB1D94ED4900F2729F /* YWShoplistViewController.m in Sources */,
 				0CBF664C1D508206002C0A51 /* UINavigationBar+BTsome.m in Sources */,
 				0C9F28651CD9F3CE00E76450 /* YWmainItemButton.m in Sources */,
@@ -1889,7 +1904,6 @@
 				0C21C88D1CD2F88B00561938 /* UIImage+YWimage.m in Sources */,
 				0C130B441CE1E3B800ABCEF8 /* YWAddressEditController.m in Sources */,
 				0C6151E81D6AFC4200DE1183 /* YWDetailsViewController.m in Sources */,
-				0C388A2F1D0541F700DB6927 /* TabHomeRightTableCell.m in Sources */,
 				0C6955A11D854F5D0031B68E /* YWPayViewController.m in Sources */,
 				0C27EC631CE1831A003BBF23 /* YWAderssCell.m in Sources */,
 				0C21C8991CD3074000561938 /* YWLeftViewController.m in Sources */,
@@ -2056,8 +2070,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = YiWobao/YiWobao.pch;
 				INFOPLIST_FILE = YiWobao/Info.plist;
@@ -2079,7 +2093,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yiwo.YiWobao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f4a22e8c-f94a-4ac3-b0ac-09983b057fb0";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2091,8 +2105,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = YiWobao/YiWobao.pch;
 				INFOPLIST_FILE = YiWobao/Info.plist;
@@ -2114,7 +2128,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yiwo.YiWobao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f4a22e8c-f94a-4ac3-b0ac-09983b057fb0";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -2216,8 +2230,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yuanfeng Gou (2VLJW4JUKS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = YiWobao/YiWobao.pch;
 				INFOPLIST_FILE = YiWobao/Info.plist;
@@ -2239,7 +2253,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yiwo.YiWobao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f4a22e8c-f94a-4ac3-b0ac-09983b057fb0";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = distribution;

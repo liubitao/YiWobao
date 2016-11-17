@@ -33,11 +33,11 @@
 // __VA_ARGS__:表示函数里面的可变参数
 #ifdef DEBUG // 调试
 
-#define YWLog(...) NSLog(__VA_ARGS__)
+#define NSLog(...) NSLog(__VA_ARGS__)
 
 #else // 发布
 
-#define YWLog(...)
+#define NSLog(...)
 #endif
 
 #define YWKeyWindow [UIApplication sharedApplication].keyWindow

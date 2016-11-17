@@ -10,7 +10,5 @@
 
 @interface YWClassViewController : UIViewController
 
-@property (nonatomic,strong) NSArray *categories;
-
-@property (nonatomic,assign) NSInteger leftTableCurRow;
+@property (nonatomic,strong) NSMutableArray *dataArray;
 @end

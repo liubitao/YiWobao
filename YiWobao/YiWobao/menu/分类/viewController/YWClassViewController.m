@@ -11,19 +11,21 @@
 #import "YWHttptool.h"
 #import "YWSorts.h"
 #import "YWGoods.h"
-#import "TabHomeRightTableCell.h"
 #import "YWGoodsViewController.h"
 #import "Utils.h"
-#import "MBProgressHUD+MJ.h"
+#import "YWgoodsCell.h"
+#import "SFTrainsitionAnimate.h"
+#import "YWClassHeader.h"
+#import "YWfunctionButton.h"
+#import "UIViewController+SFTrainsitionExtension.h"
+#import "YWClassModel.h"
+#import "YWFreeGoodsViewController.h"
 
-@interface YWClassViewController ()<UITableViewDelegate,UITableViewDataSource>
-{
-    UITableView *_leftTable;
-    
-    UITableView *_rightTable;
-    
-    CGFloat _leftTableWidth;
-}
+@interface YWClassViewController ()<UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic,strong) NSMutableArray *menus;
+@property (strong,nonatomic) UITableView *tableView;
+@property (strong, nonatomic) SFTrainsitionAnimate    *animate;
 @end
 
 @implementation YWClassViewController
@@ -31,193 +33,142 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"商品分类";
-    self.view.backgroundColor = KviewColor;
-    
-    _leftTableWidth = 80.f;
-    
-    _leftTable =  [[UITableView alloc] init];
+    self.view.backgroundColor = [UIColor whiteColor];
 
-    _leftTable.backgroundColor = [UIColor clearColor];
-    [_leftTable setSeparatorInset:UIEdgeInsetsZero];
-    [_leftTable setLayoutMargins:UIEdgeInsetsZero];
-    _leftTable.bounces = NO;
-    [self.view addSubview:_leftTable];
-    _leftTable.frame = CGRectMake(0, 35, _leftTableWidth, KscreenHeight-64-35);
+    [self request];
     
-    _leftTable.dataSource = self;
-    _leftTable.delegate = self;
+    //创建商品列表
+    [self createTable];
+   
     
-    _rightTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    _rightTable.tableFooterView = [[UIView alloc]init]; //去掉多余的空行分割线
-    _rightTable.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_rightTable];
-    _rightTable.frame = CGRectMake(90, 40, kScreenWidth-100, KscreenHeight-64-20);
-    _rightTable.dataSource = self;
-    _rightTable.delegate = self;
-    
-    if (![Utils isNull:_categories]) {
-        //设置选中leftTable的第一行
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_leftTableCurRow inSection:0];
-        [_leftTable selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
-        [self tableView:_leftTable didSelectRowAtIndexPath:indexPath];
-    }else{
-        [MBProgressHUD showMessage:@"正在加载" toView:self.view];
-    }
+    //注册单元格
+    [_tableView registerNib:[UINib nibWithNibName:@"YWgoodsCell" bundle:nil] forCellReuseIdentifier:@"goodsCell"];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    NSInteger num = 0;
-    //leftTable
-    if (tableView == _leftTable) {
-        num = 1;
-    }
-    //rightTable
-    else if (tableView == _rightTable) {
-        if (_categories && _categories.count > 0) {
-            YWSorts *category = _categories[_leftTableCurRow];
-            num = category.Goods.count;
-        }else{
-            UILabel *label = [[UILabel alloc]init];
-            [_rightTable addSubview:label];
-            [_rightTable mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(_rightTable);
-                make.width.mas_equalTo(100);
-                make.height.mas_equalTo(50);
-            }];
-            label.text = @"暂时还没有添加该类的商品";
-            label.font = [UIFont systemFontOfSize:20];
+- (void)request{
+    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[goodscateList MD5Digest],sKey]MD5Digest];
+    [YWHttptool GET:YWGoodscateList parameters:parameters success:^(id responseObject) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        NSLog(@"%@",responseObject);
+        NSInteger isError = [responseObject[@"isError"] integerValue];
+        if (!isError) {
+            _menus = [YWClassModel yw_objectWithKeyValuesArray:responseObject[@"result"]];
+                YWClassHeader *header = [[YWClassHeader alloc]initWithFrame:({
+                    CGRect rect = {0,0,kScreenWidth,300};
+                    rect;
+                })images:_menus];
+                __weak typeof(self) weakSelf = self;
+                header.menuBlcok = ^(NSInteger i){
+                    YWClassModel *classModel = weakSelf.menus[i];
+                    YWFreeGoodsViewController *freeVC = [[YWFreeGoodsViewController alloc]init];
+                    freeVC.title = classModel.title;
+                    for (YWSorts *sorts in weakSelf.dataArray) {
+                        if ([sorts.ID isEqualToString:classModel.ID]) {
+                            freeVC.dataArray = sorts.Goods.mutableCopy;
+                        }
+                    }
+                    [weakSelf.navigationController pushViewController:freeVC animated:YES];
+                };
+                _tableView.tableHeaderView = header;
+            
         }
-    }
-    return num;
+    } failure:^(NSError *error){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"请检查网络" toView:self.view];
+    }];
+
+}
+
+//创建商品列表
+- (void)createTable{
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, KscreenHeight-64) style:UITableViewStyleGrouped];
+    _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    [_tableView setSeparatorInset:UIEdgeInsetsZero];
+    [_tableView setLayoutMargins:UIEdgeInsetsZero];
+    
+    
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return _dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSInteger num = 0;
-    //leftTable
-    if (tableView == _leftTable) {
-        if (_categories && _categories.count > 0) {
-            num = _categories.count;
-        }
-    }
-    //rightTable
-    else if (tableView == _rightTable) {
-        num = 1;
-    }
-    return num;
+    YWSorts *sorts = _dataArray[section];
+    return sorts.Goods.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (_leftTable == tableView) {
-        return 0.5;
-    }
-    return 0.1;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    YWgoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"goodsCell" forIndexPath:indexPath];
+    [cell setLayoutMargins:UIEdgeInsetsZero];
+    [cell setSeparatorInset:UIEdgeInsetsZero];
+    YWSorts *sorts = _dataArray[indexPath.section];
+    [cell setCellModel:sorts.Goods[indexPath.row]];
+    cell.indexPath = indexPath;
+    return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
+    view.backgroundColor = [UIColor whiteColor];
+    YWfunctionButton *button = [[YWfunctionButton alloc]initWithFrame:CGRectMake(17.6, 0, 200, 40)];
+    button.titleLabel.textAlignment = NSTextAlignmentLeft;
+    YWSorts *sorts = _dataArray[section];
+    [button setTitle:[NSString stringWithFormat:@"  %@",sorts.title] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"ic_goods_icon"] forState:UIControlStateNormal];
+    [view addSubview:button];
+    button.titleLabel.font = [UIFont fontWithName:@"FZLanTingHei-L-GBK" size:16];
+    [button setTitleColor:[UIColor colorWithHexString:@"3E3A39"] forState:UIControlStateNormal];
+    
+    UIButton *more_btn = [[UIButton alloc]initWithFrame:[FrameAutoScaleLFL CGLFLMakeX:330 Y:20 width:35 height:14]];
+    more_btn.tag = section;
+    [more_btn setImage:[UIImage imageNamed:@"ic_mall_fragment_more"] forState:UIControlStateNormal];
+    [more_btn addTarget:self action:@selector(jumpMore:) forControlEvents:UIControlEventTouchUpInside];
+    more_btn.tag = section;
+    [view addSubview:more_btn];
+    return view;
+}
+
+- (void)jumpMore:(UIButton *)sender{
+    YWFreeGoodsViewController  *freeVC = [[YWFreeGoodsViewController alloc]init];
+    YWSorts *sorts = self.dataArray[sender.tag];
+    freeVC.dataArray = sorts.Goods.mutableCopy;
+    freeVC.title = sorts.title;
+    [self.navigationController pushViewController:freeVC animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (_leftTable == tableView) {
-        return 0.5;
-    }
-    return 5;
+    return 40;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //leftTable
-    if (tableView == _leftTable) {
-        NSString *identifier = @"leftTableCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell setLayoutMargins:UIEdgeInsetsZero];
-            [cell setSeparatorInset:UIEdgeInsetsZero];
-            cell.backgroundColor = [UIColor whiteColor];
-            cell.textLabel.center = cell.center;
-            
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(79.5, 0, 0.5, 43.5)];
-            view.backgroundColor = [UIColor colorWithHexString:@"B4B5B5" withAlpha:0.5];
-            view.tag = 1;
-            [cell.contentView addSubview:view];
-            
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80, 43.5)];
-            label.font = [UIFont systemFontOfSize:16];
-            label.tag = 2;
-            label.textAlignment = NSTextAlignmentCenter;
-            [cell.contentView addSubview:label];
-        }
-        UILabel *label = (UILabel*)[cell.contentView viewWithTag:2];
-        YWSorts *category = _categories[indexPath.row];
-        label.text = category.title;
-        if (indexPath.row == _leftTableCurRow) {
-            label.textColor = KthemeColor;
-            cell.backgroundColor = [UIColor clearColor];
-            [cell.contentView viewWithTag:1].hidden = YES;
-        }
-        return cell;
-    }
-    //rightTable
-    else {
-        NSString *identifier = @"rightTableCell";
-        TabHomeRightTableCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (cell == nil) {
-            cell = [[TabHomeRightTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        }
-        YWSorts *category = _categories[_leftTableCurRow];
-        YWGoods *product = category.Goods[indexPath.section];
-        [cell fillContentWithProduct:product];
-        return cell;
-    }
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 10;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat height = 0;
-    //leftTable
-    if (tableView == _leftTable) {
-        height = 43.5;
-    }
-    //rightTable
-    else if (tableView == _rightTable) {
-        height = [TabHomeRightTableCell height];
-    }
-    return height;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 95;
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    YWgoodsCell *cell = (YWgoodsCell *)[tableView cellForRowAtIndexPath:indexPath];
+    self.sf_targetView = cell.picView;
+    
+    YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
+    YWSorts *sorts = _dataArray[indexPath.section];
+    goodsVC.Goods = sorts.Goods[indexPath.row];
+    [self.navigationController pushViewController:goodsVC animated:YES];
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //leftTable，更新rightTable的数据
-    if (tableView == _leftTable) {
-        
-        _leftTableCurRow = indexPath.row;
-        UILabel *label = (UILabel*)[[tableView cellForRowAtIndexPath:indexPath].contentView viewWithTag:2];
-        [tableView cellForRowAtIndexPath:indexPath].backgroundColor = [UIColor clearColor];
-        label.textColor = KthemeColor;
-        [[tableView cellForRowAtIndexPath:indexPath].contentView viewWithTag:1].hidden = YES;
-        
-        [_rightTable reloadData];
-    }
-    //rightTable
-    else if (tableView == _rightTable) {
-        YWSorts *category = _categories[_leftTableCurRow];
-        YWGoods *product = category.Goods[indexPath.section];
-        YWGoodsViewController *goodsVC = [[YWGoodsViewController alloc]init];
-        goodsVC.Goods = product;
-        [self.navigationController pushViewController:goodsVC animated:YES];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(3_0);
-{
-    //leftTable
-    if (tableView == _leftTable) {
-       
-        UILabel *label = (UILabel*)[[tableView cellForRowAtIndexPath:indexPath].contentView viewWithTag:2];
-        [tableView cellForRowAtIndexPath:indexPath].backgroundColor = [UIColor whiteColor];
-        label.textColor = [UIColor blackColor];
-        [[tableView cellForRowAtIndexPath:indexPath].contentView viewWithTag:1].hidden = NO;
-    }
-}
 
 
 

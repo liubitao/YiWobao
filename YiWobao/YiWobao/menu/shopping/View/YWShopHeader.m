@@ -80,7 +80,7 @@
         }
     };
     _freeView.clickBlcok = ^(){
-        if (weakSelf.middleBlcok) {
+        if (weakSelf.middleClick) {
             weakSelf.middleClick();
         }
     };

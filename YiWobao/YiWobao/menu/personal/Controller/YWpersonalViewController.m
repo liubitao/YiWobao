@@ -24,7 +24,6 @@
 #import "YWInViewController.h"
 #import "YWtransferViewController.h"
 #import "YWTjrTableController.h"
-#import <UMSocial.h>
 #import "MBProgressHUD+MJ.h"
 #import "YWNextPerson.h"
 #import "YWNextViewController.h"
@@ -36,7 +35,7 @@
 #import "YWShoplistViewController.h"
 
 
-@interface YWpersonalViewController ()<YWCoverDelegate,YWLeftDelegate,YWmainViewDelegate,UMSocialUIDelegate,UIGestureRecognizerDelegate>{
+@interface YWpersonalViewController ()<YWCoverDelegate,YWLeftDelegate,YWmainViewDelegate,UIGestureRecognizerDelegate>{
     UILabel *ant_number;
     UILabel *dj_number;
     UILabel *name_label;
@@ -383,13 +382,13 @@
     if (number == 6 || number == 7 ) {
         NSArray *array = @[@"转账记录",@"充值记录"];
         YWListViewController *listVC = [[YWListViewController alloc]init];
-        listVC.type = [NSString stringWithFormat:@"%ld",number-2];
+        listVC.type = [NSString stringWithFormat:@"%zi",number-2];
         listVC.title = array[number-6];
         [self.navigationController pushViewController:listVC animated:YES];
     }else if (number == 4 || number == 5 ) {
         NSArray *array = @[@"收益记录",@"提现记录"];
         YWListViewController *listVC = [[YWListViewController alloc]init];
-        listVC.type = [NSString stringWithFormat:@"%ld",number-3];
+        listVC.type = [NSString stringWithFormat:@"%zi",number-3];
         listVC.title = array[number-4];
         [self.navigationController pushViewController:listVC animated:YES];
     }else if (number == 3 ){
@@ -398,7 +397,7 @@
     }else if(number == 0 || number == 1 || number == 2){
         NSArray *array = @[@"我的订单",@"帮我代付",@"我要代付"];
         YWOrderViewController *orderVC = [[YWOrderViewController alloc]init];
-        orderVC.type = [NSString stringWithFormat:@"%ld",number+1];
+        orderVC.type = [NSString stringWithFormat:@"%zi",number+1];
         orderVC.title = array[number];
         [self.navigationController pushViewController:orderVC animated:YES];
     }else if(number == 8){
@@ -436,6 +435,7 @@
     parameter[@"mpd"] = user.logpwd;
     //每次切换到该界面的时候，就会自动的刷新个人中心的界面
     [YWHttptool Post:YWLogin parameters:parameter success:^(id responseObject) {
+        NSLog(@"%@",responseObject);
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {
             YWUser *user = [YWUser yw_objectWithKeyValues:responseObject[@"result"]];
@@ -486,17 +486,6 @@
     
 }
 
--(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
-    
-    //根据`responseCode`得到发送结果,如果分享成功
-    if(response.responseCode == UMSResponseCodeSuccess)
-    {
-        [MBProgressHUD showSuccess:@"分享成功"];
-    }
-    else{
-        [MBProgressHUD showError:@"分享失败"];
-    }
-}
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];

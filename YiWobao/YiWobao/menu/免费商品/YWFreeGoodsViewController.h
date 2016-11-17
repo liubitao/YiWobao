@@ -12,6 +12,6 @@
 
 @interface YWFreeGoodsViewController : YWBaseViewController
 
-@property (nonatomic,strong) YWSorts *sort;
+@property (nonatomic,strong) NSMutableArray *dataArray;
 
 @end
