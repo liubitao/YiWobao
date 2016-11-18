@@ -38,6 +38,8 @@
 - (void)setCellModel:(YWGoods *)model{
     if (![model.selnum isEqualToString:model.num]) {
         _sellOut.hidden = YES;
+    }else{
+        _sellOut.hidden = NO;
     }
     
     if ([model.gstc isEqualToString:@"1"]) {
