@@ -34,6 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _money.delegate = self;
+    _pay_btn.layer.cornerRadius = 5;
+    _pay_btn.layer.masksToBounds = YES;
     [self request];
     
 }
@@ -110,15 +112,16 @@
     {
         return NO;
     }
-    if (![Utils isNull:textField.text]) {
-        _pay_btn.enabled = YES;
-    }
     return YES;
     
 }
 
 
 - (IBAction)pay:(id)sender {
+    if (_money.text.length == 0) {
+        [MBProgressHUD showError:@"请输入支付金额"];
+        return;
+    }
     NSMutableDictionary *buyarr = [NSMutableDictionary dictionary];
     buyarr[@"smid"] = _shopID;
     buyarr[@"pje"] = _money.text;

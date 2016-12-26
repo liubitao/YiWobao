@@ -60,7 +60,7 @@
             for (YWFederal *federal in _menuArray) {
                 [shops addObject:federal.title];
                 NSArray *array = federal.shops;
-                if (![Utils isNull:array]) {
+                if (![Utils isNull:array]){
                     [_dataArray addObjectsFromArray:array];
                 }
             }

@@ -26,7 +26,7 @@
 #import "YWGuideViewController.h"
 #import "UIViewController+SFTrainsitionExtension.h"
 #import "SFTrainsitionAnimate.h"
-#import "YWScanViewController.h"
+#import "MPQRCodeViewController.h"
 #import "YWmainItemButton.h"
 #import "YWfunctionButton.h"
 #import "YWFederalViewController.h"
@@ -79,7 +79,7 @@
 
 //二维码扫描
 - (void)scan{
-    YWScanViewController *scanVC = [[YWScanViewController alloc]init];
+    MPQRCodeViewController *scanVC = [[MPQRCodeViewController alloc]init];
     [self.navigationController pushViewController:scanVC animated:YES];
 }
 
@@ -180,9 +180,15 @@
     };
     
     header.middleClick = ^(){//免费商品更多
-        YWClassViewController *classVC = [[YWClassViewController alloc]init];
-
-        [weakSelf.navigationController pushViewController:classVC animated:YES];
+        YWFreeGoodsViewController *freeVC = [[YWFreeGoodsViewController alloc]init];
+        freeVC.dataArray = [NSMutableArray array];
+        for (YWSorts *sorts in _dataArray) {
+            if (sorts.ID.integerValue == 12 || sorts.ID.integerValue == 20) {
+                [freeVC.dataArray addObjectsFromArray:sorts.Goods];
+            }
+        }
+        freeVC.title = @"免费商品";
+        [weakSelf.navigationController pushViewController:freeVC animated:YES];
     };
     
     _tableView.tableHeaderView = header;
@@ -286,9 +292,12 @@
 }
 
 - (void)jumpMore:(UIButton *)sender{
-    YWClassViewController *classVC = [[YWClassViewController alloc]init];
-
-    [self.navigationController pushViewController:classVC animated:YES];
+    YWFreeGoodsViewController *freeVC = [[YWFreeGoodsViewController alloc]init];
+    freeVC.dataArray = [NSMutableArray array];
+    YWSorts *sorts = _dataArray[sender.tag];
+    [freeVC.dataArray addObjectsFromArray:sorts.Goods];
+    freeVC.title = sorts.title;
+    [self.navigationController pushViewController:freeVC animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

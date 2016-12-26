@@ -39,14 +39,8 @@
         //创建8个
         CGFloat itemWidth = (kScreenWidth)/5;
         for (int i = 0; i < menuArray.count; i++) {
-            int index;
-            if (menuArray.count%8 == 0) {
-                index = menuArray.count/8;
-            }else if (menuArray.count%8 > 0 ){
-                index = menuArray.count/8+1;
-            }
-            
-            CGRect frame = CGRectMake( i%4*itemWidth + (index - 1)*kScreenWidth+0.5*itemWidth, ((i/4)%2 == 0)? 10:75, itemWidth, 65);
+            int indexCurrent = i/8;
+            CGRect frame = CGRectMake( i%4*itemWidth + indexCurrent*kScreenWidth+0.5*itemWidth, ((i/4)%2 == 0)? 10:75, itemWidth, 65);
             YWFederal *federal = menuArray[i];
             NSString *title = federal.title;
             NSString *imageStr = federal.pic;
@@ -72,7 +66,7 @@
 }
 
 - (void)awakeFromNib {
-    // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
