@@ -97,11 +97,12 @@
 }
 
 - (void)setImages:(NSMutableArray *)images{
-    for (int i = 0; self.subviews; i++) {
+    for (int i = 0; i<self.subviews.count; i++) {
         if ([self.subviews[i] isKindOfClass:[SDCycleScrollView class]]) {
             [self.subviews[i] removeFromSuperview];
         }
     }
+    _imageArray = images;
     [self addSubview:self.cycleScrollView];
 }
 
@@ -181,6 +182,9 @@
     NSString *URLString = [NSString stringWithFormat:@"%@",request.URL.absoluteString];
     // 判断网页的请求地址协议是否是我们自定义的那个
     NSRange range = [URLString rangeOfString:@"="];
+    if (range.length == 0) {
+        return NO;
+    }
     NSString *str = [URLString substringFromIndex:range.location+1];
     if (_FreeBlcok){
         _FreeBlcok(str.integerValue);

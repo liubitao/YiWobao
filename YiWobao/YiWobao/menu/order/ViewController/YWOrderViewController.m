@@ -49,6 +49,11 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.hidden = YES;
     [self.view addSubview:label];
+   
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     //请求数据
     [self request];
 }

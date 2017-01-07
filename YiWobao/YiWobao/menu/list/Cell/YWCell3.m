@@ -43,7 +43,7 @@
     
     _money.attributedText = string1;
     
-    NSString *str2 = [NSString stringWithFormat:@"说明：%@",model.memo];
+    NSString *str2 = [NSString stringWithFormat:@"说明：%@",model.memo ? model.memo:@""];
     NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:str2 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.f],                                                                                                                                                NSForegroundColorAttributeName:[UIColor redColor]}];
     [string2 addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
     _mome.attributedText = string2;

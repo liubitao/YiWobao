@@ -69,32 +69,24 @@
  * 获取当前呈现的ViewController
  */
 + (UIViewController *)getCurrentViewController {
-    UIViewController *result = nil;
-    
-    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    if (window.windowLevel != UIWindowLevelNormal)
+    //获得当前活动窗口的根视图
+    UIViewController* vc = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (1)
     {
-        NSArray *windows = [[UIApplication sharedApplication] windows];
-        for(UIWindow * tmpWin in windows)
-        {
-            if (tmpWin.windowLevel == UIWindowLevelNormal)
-            {
-                window = tmpWin;
-                break;
-            }
+        //根据不同的页面切换方式，逐步取得最上层的viewController
+        if ([vc isKindOfClass:[UITabBarController class]]) {
+            vc = ((UITabBarController*)vc).selectedViewController;
+        }
+        if ([vc isKindOfClass:[UINavigationController class]]) {
+            vc = ((UINavigationController*)vc).visibleViewController;
+        }
+        if (vc.presentedViewController) {
+            vc = vc.presentedViewController;
+        }else{
+            break;
         }
     }
-    
-    UIView *frontView = [[window subviews] objectAtIndex:0];
-    id nextResponder = [frontView nextResponder];
-    
-    
-    if ([nextResponder isKindOfClass:[UIViewController class]])
-        result = nextResponder;
-    else
-        result = window.rootViewController;
-    
-    return result;
+    return vc;
 }
 
 @end

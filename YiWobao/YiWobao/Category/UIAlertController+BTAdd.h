@@ -31,4 +31,5 @@
  */
 + (void)showActionSheetWithTitle:(NSString *)title Message:(NSString *)message cancelBtnTitle:(NSString *)cancelBtnTitle OtherBtnTitles:(NSArray<NSString *> *)otherBtnTitles ClickBtn:(void(^)(NSInteger index))clickBtnBlock;
 
++ (UIViewController *)getCurrentViewController;
 @end

@@ -466,7 +466,7 @@
             [string2 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:range2];
             dj_number.attributedText = string2;
             
-            if ([Utils isNull:user.sr_0]) {
+            if ([Utils isNull:user.sr_0]){
                 all_number.text = @"+0";
             }else{
                 all_number.text = [NSString stringWithFormat:@"+%@",user.sr_0];

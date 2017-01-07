@@ -83,7 +83,7 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
         //增加确定按钮；
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [MBProgressHUD showMessage:@"正在支付" toView:self.view];
+            [MBProgressHUD showMessage:@"正在提现" toView:self.view];
             YWUser *user = [YWUserTool account];
             if ([user.paypwd isEqualToString:[alertController.textFields[0].text MD5Digest]]) {
                 NSMutableDictionary *parameter = [Utils paramter:Pick ID:user.ID];
@@ -92,7 +92,7 @@
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                     NSInteger isError = [responseObject[@"isError"] integerValue];
                     if (!isError) {
-                        [UIAlertController showAlertViewWithTitle:nil Message:@"提现成功" BtnTitles:@[@"知道了"] ClickBtn:nil];
+                        [UIAlertController showAlertViewWithTitle:nil Message:@"提现成功,请等待工作人员操作..." BtnTitles:@[@"知道了"] ClickBtn:nil];
                     }else{
                        [UIAlertController showAlertViewWithTitle:nil Message:@"提现失败" BtnTitles:@[@"知道了"] ClickBtn:nil];
                     }

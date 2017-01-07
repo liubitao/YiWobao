@@ -14,4 +14,11 @@
 
 
 - (void)shared;
+
+/**push不隐藏tabbar
+ */
+- (void)pushController:(UIViewController *)controller;
+/**push隐藏tabbar
+ */
+- (void)hideBottomBarPush:(UIViewController *)controller;
 @end

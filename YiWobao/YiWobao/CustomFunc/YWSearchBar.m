@@ -32,10 +32,10 @@
 }
 
 
-- (CGRect)borderRectForBounds:(CGRect)bounds{
-    bounds.size.height = 80;
-    return bounds;
-}
+//- (CGRect)borderRectForBounds:(CGRect)bounds{
+//    bounds.size.height = 50;
+//    return bounds;
+//}
 
 
 /*

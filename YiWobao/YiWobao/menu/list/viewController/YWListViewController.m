@@ -42,12 +42,14 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.hidden = YES;
     [self.view addSubview:label];
-    //请求数据
-    [self request];
     
     // 注册单元格
     [self.tableView registerNib:[UINib nibWithNibName:@"YWCell3" bundle:nil] forCellReuseIdentifier:@"cell3"];
     
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self request];
 }
 
 - (void)request{

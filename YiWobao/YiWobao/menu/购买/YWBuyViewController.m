@@ -109,7 +109,7 @@
     buyarr[@"gnum"] = self.num.text;
     buyarr[@"aid"] = self.addressModel.ID;
     buyarr[@"onum"] = self.buyGoods.buyGoodsON;
-    buyarr[@"pkd"] = [NSString stringWithFormat:@"%d",self.last_btn.tag];
+    buyarr[@"pkd"] = [NSString stringWithFormat:@"%zi",self.last_btn.tag];
     if (self.last_btn.tag == 0) {
         YWPayViewController *payVC = [[YWPayViewController alloc]init];
         payVC.buyArr = buyarr;
@@ -122,7 +122,7 @@
         [self presentViewController:payVC animated:YES completion:nil];
     }else{
         YWCodeViewController *codeVC = [[YWCodeViewController alloc]init];
-        buyarr[@"g_c"] = @"1";
+        buyarr[@"g_c"] = @"0";
         codeVC.buyDic = buyarr;
         [self presentViewController:codeVC animated:YES completion:nil];
     }
@@ -156,13 +156,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"buyCell"];
+    
     for (UIView *view in cell.contentView.subviews) {
         [view removeFromSuperview];
     }
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"buyCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
     }
     if (indexPath.section == 0) {
         if ([Utils isNull:_addressModel]) {

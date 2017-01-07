@@ -50,14 +50,11 @@
     _money_text.delegate = self;
     
     YWUser *user = [YWUserTool account];
-    NSLog(@"%@",user.transkind);
-    if ([user.transkind isEqualToString:@"1"]) {
+    if ([user.transkind isEqualToString:@"1"]){
         _transfer2.hidden = YES;
     }else if ([user.transkind isEqualToString:@"2"]){
         _transfer1.hidden = YES;
     }
-    _transfer1.enabled = NO;
-    _transfer2.enabled = NO;
 }
 
 
@@ -109,10 +106,6 @@
         {
             return NO;
         }
-    if (![Utils isNull:textField.text]) {
-        _transfer1.enabled = YES;
-        _transfer2.enabled = YES;
-    }
     return YES;
     
 }
@@ -120,13 +113,13 @@
 
 - (IBAction)turnMoney:(id)sender {
     [self transfer:@"0"];
- 
 }
 - (IBAction)transfer2:(UIButton *)sender {
     [self transfer:@"1"];
 }
 
 - (void)transfer:(NSString *)kind{
+    self.editing = NO;
     YWCodeViewController *codeVC = [[YWCodeViewController alloc]init];
     codeVC.type = @"transfer";
     NSMutableDictionary *transDic = [NSMutableDictionary dictionary];

@@ -150,4 +150,9 @@
 //获取商品的分类
 #define YWGoodscateList     @"http://api.yiwob.com/shop/ywbapp.php/Goods/goodscateList"
 #define goodscateList       @"goodscate_list"
+
+//福利认购轮播图
+#define YWgetPics           @"http://api.yiwob.com/shop/ywbapp.php/Goods/getPics"
+#define getPics             @"get_pics"
+
 #endif /* YWport_h */

@@ -22,6 +22,17 @@
     self.view.backgroundColor = KviewColor;
 }
 
+- (void)pushController:(UIViewController *)controller {
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
+
+- (void)hideBottomBarPush:(UIViewController *)controller {
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (void)initNavi{
     NSString *str;
   

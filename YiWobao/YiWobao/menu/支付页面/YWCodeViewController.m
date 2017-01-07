@@ -14,6 +14,8 @@
 #import "YWHttptool.h"
 #import "MBProgressHUD+MJ.h"
 #import "YWmainViewController.h"
+#import "YWBaseViewController.h"
+#import "YWResultViewController.h"
 
 
 @interface YWCodeViewController ()<UIViewControllerTransitioningDelegate>
@@ -56,9 +58,8 @@
     NSString *str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [MBProgressHUD showMessage:@"正在支付" toView:[[UIApplication sharedApplication] keyWindow]];
     
-    if ([self.type isEqualToString:@"shop_dpay"]){
+    if ([self.type isEqualToString:@"shop_dpay"]){//支付商户
         NSMutableDictionary *parameter = [Utils paramter:shop_dpay ID:user.ID];
-        
         _buyDic[@"paypwd"] = [_textField.text MD5Digest];
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_buyDic options:NSJSONWritingPrettyPrinted error:nil];
         str = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -67,10 +68,11 @@
             [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication] keyWindow] animated:YES];
             NSInteger isError = [responseObject[@"isError"] integerValue];
             if (!isError) {
-                YWmainViewController *mainVC = [[YWmainViewController alloc]init];
-                [self presentViewController:mainVC animated:YES completion:^{
-                    [MBProgressHUD showSuccess:@"支付成功" toView:[[UIApplication sharedApplication] keyWindow]];
-                }];
+                YWResultViewController *resultVC = [[YWResultViewController alloc]init];
+                resultVC.msgStr = @"支付成功";
+                resultVC.secondPre = @"1";
+                UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:resultVC];
+                [self presentViewController:navc animated:YES completion:nil];
             }
             else{
                 [MBProgressHUD showError:responseObject[@"errorMessage"] toView:[[UIApplication sharedApplication] keyWindow]];
@@ -81,7 +83,7 @@
         }];
         return;
     }
-    if ([self.type isEqualToString:@"buy_proj"]) {
+    if ([self.type isEqualToString:@"buy_proj"]) {//福利支付
        NSMutableDictionary *parameter = [Utils paramter:shop_dpay ID:user.ID];
 
         _buyDic[@"paypwd"] = [_textField.text MD5Digest];
@@ -91,9 +93,11 @@
         [YWHttptool Post:YWbuyProj parameters:parameter success:^(id responseObject) {
             [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication] keyWindow] animated:YES];
             NSInteger isError = [responseObject[@"isError"] integerValue];
-            if (!isError) {
-                [self dismissViewControllerAnimated:YES completion:nil];
-                 [MBProgressHUD showSuccess:@"认领成功" toView:[[UIApplication sharedApplication] keyWindow]];
+            if (!isError){
+                YWResultViewController *resultVC = [[YWResultViewController alloc]init];
+                resultVC.msgStr = @"福利认领成功";
+                UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:resultVC];
+                [self presentViewController:navc animated:YES completion:nil];
             }
             else{
                 [MBProgressHUD showError:responseObject[@"errorMessage"] toView:[[UIApplication sharedApplication] keyWindow]];
@@ -105,7 +109,7 @@
         return;
 
     }
-    if ([self.type isEqualToString:@"transfer"]) {
+    if ([self.type isEqualToString:@"transfer"]) {//转账
         NSMutableDictionary *paramters = [Utils paramter:Trans ID:user.ID];
         _buyDic[@"tpaypwd"] = [_textField.text MD5Digest];
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_buyDic options:NSJSONWritingPrettyPrinted error:nil];
@@ -116,8 +120,10 @@
             [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication] keyWindow] animated:YES];
             NSInteger isError = [responseObject[@"isError"] integerValue];
             if (!isError) {
-                [self dismissViewControllerAnimated:YES completion:nil];
-                [MBProgressHUD showSuccess:@"转账成功" toView:[[UIApplication sharedApplication] keyWindow]];
+                YWResultViewController *resultVC = [[YWResultViewController alloc]init];
+                resultVC.msgStr = @"转账成功";
+                UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:resultVC];
+                [self presentViewController:navc animated:YES completion:nil];
             }
             else{
                 [MBProgressHUD showError:responseObject[@"errorMessage"] toView:[[UIApplication sharedApplication] keyWindow]];
@@ -129,17 +135,18 @@
 
         return;
     }
-    if ([Utils isNull:_buyDic[@"gid"]]) {
+    if ([Utils isNull:_buyDic[@"gid"]]) {//代付
         NSMutableDictionary *paramters = [Utils paramter:do_order ID:user.ID];
         paramters[@"payarr"] = str;
         [YWHttptool Post:YWDoOrder parameters:paramters success:^(id responseObject) {
             NSInteger isError = [responseObject[@"isError"] integerValue];
               [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication] keyWindow] animated:YES];
             if (!isError){
-                YWmainViewController *mainVC = [[YWmainViewController alloc]init];
-                [self presentViewController:mainVC animated:YES completion:^{
-                    [MBProgressHUD showSuccess:@"代付成功" toView:[[UIApplication sharedApplication] keyWindow]];
-                }];
+                YWResultViewController *resultVC = [[YWResultViewController alloc]init];
+                resultVC.msgStr = @"代付成功";
+                resultVC.secondPre = @"1";
+                UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:resultVC];
+                [self presentViewController:navc animated:YES completion:nil];
             }
             else{
                 [MBProgressHUD showError:responseObject[@"errorMessage"] toView:[[UIApplication sharedApplication] keyWindow]];
@@ -150,22 +157,22 @@
         }];
         return;
 
-    }
-    
-    else{
-        NSMutableDictionary *paramters = [Utils paramter:Goods_order ID:user.ID];
-        paramters[@"buyarr"] = str;
+    }else{//购买支付
+    NSMutableDictionary *paramters = [Utils paramter:Goods_order ID:user.ID];
+    paramters[@"buyarr"] = str;
     [YWHttptool Post:YWGoodsOrder parameters:paramters success:^(id responseObject) {
          NSInteger isError = [responseObject[@"isError"] integerValue];
           [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication] keyWindow] animated:YES];
          if (!isError){
-             [self presentViewController:[[YWmainViewController alloc]init] animated:YES completion:^{
                  if ([_buyDic[@"pkd"] isEqualToString:@"0"]) {
-                    [MBProgressHUD showSuccess:@"支付成功" toView:[[UIApplication sharedApplication] keyWindow]];
+                     YWResultViewController *resultVC = [[YWResultViewController alloc]init];
+                     resultVC.msgStr = @"购买成功";
+                     resultVC.secondPre = @"1";
+                     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:resultVC];
+                     [self presentViewController:navc animated:YES completion:nil];
                  }else{
                     [MBProgressHUD showSuccess:@"等待代付" toView:[[UIApplication sharedApplication] keyWindow]];
                  }
-             }];
          }
          else{
              [MBProgressHUD showError:responseObject[@"errorMessage"] toView:[[UIApplication sharedApplication] keyWindow]];

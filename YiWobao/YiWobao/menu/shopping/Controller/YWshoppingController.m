@@ -32,16 +32,20 @@
 #import "YWFederalViewController.h"
 #import "YWShopHeader.h"
 #import "YWFreeGoodsViewController.h"
+#import "YWWelfareTarBarController.h"
 
 
 @interface YWshoppingController ()<UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate>{
     UISearchBar *searchBar;
-    NSMutableArray *_dataArray;
+    
     int inter;
+    YWShopHeader *header;
 }
 
 @property (strong,nonatomic) UITableView *tableView;
 @property (strong, nonatomic) SFTrainsitionAnimate    *animate;
+@property (nonatomic,strong) NSMutableArray *dataArray;
+@property (nonatomic,strong) NSMutableArray *imageArray;
 
 
 @end
@@ -118,7 +122,7 @@
     [_tableView setLayoutMargins:UIEdgeInsetsZero];
     
     NSMutableArray  *images = [NSMutableArray arrayWithArray: @[@"show1",@"show2",@"show3"]];
-    YWShopHeader *header = [[YWShopHeader alloc]initWithFrame:({
+    header = [[YWShopHeader alloc]initWithFrame:({
         CGRect rect = {0,0,kScreenWidth,300};
             rect;
     })images:images];
@@ -128,7 +132,7 @@
             case 0:{//免费
                 YWFreeGoodsViewController *freeVC = [[YWFreeGoodsViewController alloc]init];
                 freeVC.dataArray = [NSMutableArray array];
-                for (YWSorts *sorts in _dataArray) {
+                for (YWSorts *sorts in weakSelf.dataArray) {
                     if (sorts.ID.integerValue == 12 || sorts.ID.integerValue == 20) {
                         [freeVC.dataArray addObjectsFromArray:sorts.Goods];
                     }
@@ -140,7 +144,7 @@
             case 1:{
                 YWClassViewController *classVC = [[YWClassViewController alloc]init];
                 classVC.dataArray = [NSMutableArray array];
-                for (YWSorts *sorts in _dataArray) {
+                for (YWSorts *sorts in weakSelf.dataArray) {
                     if (sorts.ID.integerValue != 12 && sorts.ID.integerValue != 20) {
                         [classVC.dataArray addObject:sorts];
                     }
@@ -161,8 +165,9 @@
                     [weakSelf presentViewController:loginVC animated:YES completion:nil];
                     return;
                 }
-                YWGuideViewController *VC = [[YWGuideViewController alloc]init];
-                [weakSelf.navigationController pushViewController:VC animated:YES];
+                YWWelfareTarBarController *VC = [[YWWelfareTarBarController alloc]init];
+//                VC.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+                [weakSelf presentViewController:VC animated:YES completion:nil];
             }
                 break;
             default:
@@ -182,7 +187,7 @@
     header.middleClick = ^(){//免费商品更多
         YWFreeGoodsViewController *freeVC = [[YWFreeGoodsViewController alloc]init];
         freeVC.dataArray = [NSMutableArray array];
-        for (YWSorts *sorts in _dataArray) {
+        for (YWSorts *sorts in weakSelf.dataArray) {
             if (sorts.ID.integerValue == 12 || sorts.ID.integerValue == 20) {
                 [freeVC.dataArray addObjectsFromArray:sorts.Goods];
             }
@@ -198,6 +203,7 @@
 }
 
 - (void)requestID:(NSString *)ID{
+    
     [MBProgressHUD hideHUDForView:_tableView animated:YES];
     [MBProgressHUD showMessage:@"正在加载" toView:_tableView];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -221,6 +227,25 @@
 }
 
 - (void)request{
+    
+    NSMutableDictionary *parameter1 = [NSMutableDictionary dictionary];
+    parameter1[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[getPics MD5Digest],sKey]MD5Digest];
+    parameter1[@"getkd"] = [[@"2" dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
+    [YWHttptool Post:YWgetPics parameters:parameter1 success:^(id responseObject) {
+        NSInteger isError = [responseObject[@"isError"] integerValue];
+        if (!isError) {
+            if (![Utils isNull:responseObject[@"result"]]) {
+                self.imageArray = [NSMutableArray array];
+                for (NSString *imageStr in responseObject[@"result"]) {
+                    NSString *str = [NSString stringWithFormat:@"%@%@",YWpic,imageStr];
+                    [self.imageArray addObject:str];
+                }
+                [header setImages:self.imageArray];
+            }
+            return ;
+        }
+    } failure:^(NSError *error) {
+    }];
     [MBProgressHUD hideHUDForView:_tableView animated:YES];
     [MBProgressHUD showMessage:@"正在加载" toView:_tableView];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];

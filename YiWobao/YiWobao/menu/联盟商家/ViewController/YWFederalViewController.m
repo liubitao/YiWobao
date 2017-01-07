@@ -46,14 +46,13 @@
 }
 
 - (void)request{
-    [MBProgressHUD hideHUDForView:_tableView animated:YES];
-    [MBProgressHUD showMessage:@"正在加载" toView:_tableView];
+    [MBProgressHUD showMessage:@"正在加载" ];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"mKey"] = [[NSString stringWithFormat:@"%@%@",[shops_list MD5Digest],sKey]MD5Digest];
     parameters[@"skd"] = [[@"0" dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWshopList parameters:parameters success:^(id responseObject) {
         NSInteger isError = [responseObject[@"isError"] integerValue];
-        [MBProgressHUD hideHUDForView:_tableView];
+        [MBProgressHUD hideHUD];
         if (!isError){
             _menuArray = [YWFederal yw_objectWithKeyValuesArray:responseObject[@"result"]];
             NSMutableArray *shops = [NSMutableArray array];
@@ -70,8 +69,8 @@
             [self.tableView reloadData];
         }
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUDForView:_tableView];
-        [MBProgressHUD showError:@"请检查网络" toView:_tableView];
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"请检查网络"];
     }];
 }
 
