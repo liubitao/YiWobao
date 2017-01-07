@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -10,34 +14,32 @@
             <rect key="frame" x="0.0" y="0.0" width="358" height="87"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="358" height="86"/>
+                <rect key="frame" x="0.0" y="0.0" width="358" height="86.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="noj-As-qYH" userLabel="money">
-                        <rect key="frame" x="225" y="0.0" width="118" height="43"/>
+                        <rect key="frame" x="303.5" y="0.0" width="39.5" height="43"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="43" id="WnK-2u-8bc"/>
-                            <constraint firstAttribute="width" constant="118" id="gkr-dq-AiN"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" red="0.24313725490196078" green="0.22745098039215686" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.24313725490196078" green="0.22745098039215686" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8P-BF-Nbi">
                         <rect key="frame" x="0.0" y="43" width="358" height="1"/>
-                        <color key="backgroundColor" red="0.44313725490196076" green="0.4392156862745098" blue="0.44313725490196076" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.44313725490196076" green="0.4392156862745098" blue="0.44313725490196076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="TJu-wA-Qwk"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duT-7E-Gmg" userLabel="time">
-                        <rect key="frame" x="20" y="0.0" width="158" height="43"/>
+                        <rect key="frame" x="20" y="0.0" width="39.5" height="43"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="43" id="FYY-yB-J08"/>
-                            <constraint firstAttribute="width" constant="158" id="KZn-kJ-rv1"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" red="0.24313725490196078" green="0.22745098039215686" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.24313725490196078" green="0.22745098039215686" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WM5-xE-r1B" userLabel="收入说明">
@@ -46,7 +48,7 @@
                             <constraint firstAttribute="height" constant="33" id="Lgf-fG-jDz"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" red="0.24313725490196078" green="0.22745098039215686" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.24313725490196078" green="0.22745098039215686" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -69,7 +71,7 @@
                 <outlet property="money" destination="noj-As-qYH" id="s4v-tq-d7I"/>
                 <outlet property="time" destination="duT-7E-Gmg" id="SNk-TR-eqc"/>
             </connections>
-            <point key="canvasLocation" x="221" y="110.5"/>
+            <point key="canvasLocation" x="305" y="316"/>
         </tableViewCell>
     </objects>
 </document>

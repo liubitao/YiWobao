@@ -18,9 +18,8 @@
 
 
 
-@interface YWListViewController (){
+@interface YWListViewController ()<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>{
     NSMutableArray *_dataArray;
-    UILabel *label;
 }
 
 @end
@@ -34,14 +33,8 @@
     
     self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.tableView.showsVerticalScrollIndicator = NO;
-    
-    label = [[UILabel alloc]init];
-    label.frame = CGRectMake(0, self.view.center.y-50, kScreenWidth, 40);
-    label.text = @"您还没有相关的订单";
-    label.font = [UIFont systemFontOfSize:20];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.hidden = YES;
-    [self.view addSubview:label];
+    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.emptyDataSetSource = self;
     
     // 注册单元格
     [self.tableView registerNib:[UINib nibWithNibName:@"YWCell3" bundle:nil] forCellReuseIdentifier:@"cell3"];
@@ -53,7 +46,6 @@
 }
 
 - (void)request{
-    label.hidden = YES;
     [MBProgressHUD showMessage:@"正在获取数据" toView:self.tableView];
     YWUser *user = [YWUserTool account];
     NSMutableDictionary *paramter = [Utils paramter:Trlist ID:user.ID];
@@ -63,18 +55,14 @@
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {
             NSArray *array = responseObject[@"result"];
-            if ([Utils isNull:array]) {
-                label.hidden = NO;
-            }else{
+            if (![Utils isNull:array]){
                 for (NSDictionary *dict in array) {
                     YWModel4 *model4 = [YWModel4 mj_objectWithKeyValues:dict];
                     [_dataArray addObject:model4];
                 }
-                [self.tableView reloadData];
             }
-        }else{
-             [MBProgressHUD showError:@"获取失败"];
         }
+        [self.tableView reloadData];
     } failure:^(NSError *error) {
         [MBProgressHUD hideHUDForView:self.tableView animated:YES];
         [MBProgressHUD showError:@"请检查网络"];
@@ -118,6 +106,18 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 10;
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"暂无相关记录...";
+    return [[NSAttributedString alloc] initWithString:text attributes:@{
+                                                                        NSFontAttributeName:[UIFont systemFontOfSize:20]
+                                                                        }];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView;{
+    return -64;
 }
 
 @end

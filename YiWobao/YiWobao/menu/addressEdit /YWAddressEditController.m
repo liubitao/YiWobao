@@ -47,6 +47,13 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    if ([_feedbackTextView isFirstResponder]) {
+        [_feedbackTextView resignFirstResponder];
+    }
+    [super viewWillDisappear:animated];
+    
+}
 - (void)createUI{
     //右边的按钮
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
@@ -142,7 +149,6 @@
     _feedbackTextView.backgroundColor = [UIColor whiteColor];
     
     _pickView = [[CityPickView alloc] initWithFrame:CGRectMake(0, KscreenHeight-180, self.view.bounds.size.width, 180)];
-    _pickView.backgroundColor = [UIColor yellowColor];
     _pickView.delegate = self;
     [self.view addSubview:_pickView];
     _pickView.hidden = YES;

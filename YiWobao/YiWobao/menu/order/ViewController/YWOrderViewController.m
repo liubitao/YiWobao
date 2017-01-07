@@ -23,11 +23,7 @@
 #define kRequestTime 3.0f
 #define kDelay 1.0f
 
-@interface YWOrderViewController ()<YWOrderCellDelegate,UMSocialUIDelegate>
-{
-    UILabel *label;
-    
-}
+@interface YWOrderViewController ()<YWOrderCellDelegate,UMSocialUIDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic,strong) NSMutableArray *dataArray;
 
 @end
@@ -41,15 +37,8 @@
     
     self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.tableView.showsVerticalScrollIndicator = NO;
-    
-    label = [[UILabel alloc]init];
-    label.frame = CGRectMake(0, self.view.center.y-50, kScreenWidth, 40);
-    label.text = @"您还没有相关的订单";
-    label.font = [UIFont systemFontOfSize:20];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.hidden = YES;
-    [self.view addSubview:label];
-   
+    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.emptyDataSetSource = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -59,33 +48,26 @@
 }
 
 - (void)request{
-    [MBProgressHUD showMessage:@"正在获取数据" toView:self.tableView];
-    label.hidden = YES;
+    [MBProgressHUD showMessage:@"正在获取数据"];
     YWUser *user = [YWUserTool account];
     NSMutableDictionary *paramter = [Utils paramter:Trlist ID:user.ID];
     paramter[@"okd"] = [[_type dataUsingEncoding:NSUTF8StringEncoding]base64EncodedStringWithOptions:0];
     [YWHttptool GET:YWOrderList parameters:paramter success:^(id responseObject) {
-        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
+        [MBProgressHUD hideHUD];
         NSInteger isError = [responseObject[@"isError"] integerValue];
         if (!isError) {
             [_dataArray removeAllObjects];
-            NSArray *array = responseObject[@"result"];
-            if ([Utils isNull:array]) {
-                label.hidden = NO;
-            }else{
-            for (NSDictionary *dict in array) {
+            if (![Utils isNull:responseObject[@"result"]]){
+            for (NSDictionary *dict in responseObject[@"result"]) {
                YWOrderModel *orderModel = [YWOrderModel yw_objectWithKeyValues:dict];
                 [_dataArray addObject:orderModel];
             }
-                [self.tableView reloadData];
-            }
         }
-        else{
-            [MBProgressHUD showError:@"获取失败"];
-            
         }
+        [self.tableView reloadData];
+       
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
+        [MBProgressHUD hideHUD];
         [MBProgressHUD showError:@"请检查网络"];
     }];
 }
@@ -248,7 +230,16 @@
         
 }
 
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"暂无相关记录...";
+    return [[NSAttributedString alloc] initWithString:text attributes:@{
+                                                                        NSFontAttributeName:[UIFont systemFontOfSize:20]
+                                                                        }];
+}
 
-
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView;{
+    return -64;
+}
 
 @end

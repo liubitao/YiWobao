@@ -35,7 +35,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     button.frame = CGRectMake(0, CGRectGetMaxY(_pickerView.frame), self.bounds.size.width, 35);
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.backgroundColor = [UIColor redColor];
+    button.backgroundColor = KthemeColor;
     [button setTitle:@"确定" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(selectjia) forControlEvents:UIControlEventTouchUpInside];
     
